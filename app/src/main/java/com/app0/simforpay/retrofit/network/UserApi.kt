@@ -13,6 +13,9 @@ interface UserApi {
     @POST("user")
     fun SignupCall(@Body userInfo: Signup) : Call<SignupSuccess>
 
+    @POST("validUserId")
+    fun validUserCall(@Body userInfo: validUser) : Call<validUserSuccess>
+
     @POST("contract")
     fun ContractCall(@Body contractInfo: Contract) : Call<ContractSuccess>
 

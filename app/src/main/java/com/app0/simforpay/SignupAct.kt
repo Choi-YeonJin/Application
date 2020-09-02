@@ -9,12 +9,15 @@ import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Base64
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.Signup
 import com.app0.simforpay.retrofit.domain.SignupSuccess
+import com.app0.simforpay.retrofit.domain.validUser
+import com.app0.simforpay.retrofit.domain.validUserSuccess
 import com.google.android.material.textfield.TextInputLayout
 import gun0912.tedimagepicker.builder.TedImagePicker
 import kotlinx.android.synthetic.main.act_signup.*
@@ -49,6 +52,26 @@ class SignupAct : AppCompatActivity() {
                 }
         }
 
+        btnCheckId.setOnClickListener {
+            val userId = validUser(suId.text.toString())
+            userRetrofit.validUserCall(userId)
+                .enqueue(object : Callback<validUserSuccess> {
+                    override fun onResponse(call: Call<validUserSuccess>, response: Response<validUserSuccess>){
+                        if(response.body()?.result=="true"){
+                            val idOverlap=true;
+                            Toast.makeText(applicationContext, "사용가능한 아이디입니다.", Toast.LENGTH_LONG).show()
+                        }else {
+                            val idOverlap=false;
+                            Toast.makeText(applicationContext, "이미 사용중인 아이디입니다.", Toast.LENGTH_LONG).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<validUserSuccess>, t: Throwable) {
+                        t.printStackTrace()
+                    }
+                })
+        }
+
         TextInput.CheckFour(btnCompl, name, suId, suPw, pwAgain)
 
         btnCompl.setOnClickListener(View.OnClickListener {
@@ -59,7 +82,7 @@ class SignupAct : AppCompatActivity() {
 //                Log.d("phoneNumber", intent.getStringExtra("phoneNumber").toString())
             val imageEncodeUri = if (imageUri != null) bitmapToString(imageUri!!) else ""
             val userInfo = Signup(suId.text.toString(), suPw.text.toString(), name.text.toString(), imageEncodeUri, intent.getStringExtra("phoneNumber").toString())
-
+            
             userRetrofit.SignupCall(userInfo)
                 .enqueue(object : Callback<SignupSuccess> {
                     override fun onResponse(call: Call<SignupSuccess>, response: Response<SignupSuccess>){
@@ -112,9 +135,8 @@ class SignupAct : AppCompatActivity() {
 //        (? =\S + $) # 전체 문자열에 공백이 허용되지 않습니다.
 //        {8,} # 최소한 6 자리 이상
     }
-}
 
-private fun bitmapToString(bitmap: Bitmap): String {
+    private fun bitmapToString(bitmap: Bitmap): String {
 
         val byteArrayOutputStream = ByteArrayOutputStream()
         val byteArray = byteArrayOutputStream.toByteArray()
@@ -129,4 +151,5 @@ private fun bitmapToString(bitmap: Bitmap): String {
 
         return BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.size)
     }
+}
 
