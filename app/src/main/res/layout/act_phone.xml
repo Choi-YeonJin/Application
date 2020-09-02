@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        style="@style/basicP">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/icWH"
+            android:layout_height="@dimen/icWH"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/btnBack"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="@dimen/size24"
+            android:text="회원가입"
+            android:textSize="@dimen/font24"
+            android:fontFamily="@font/nanumbarungothic_bold" />
+
+        <TextView
+            android:id="@+id/subTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="@dimen/size4"
+            android:text="전화번호를 입력해 주세요." />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layPhoneNum"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/subTitle"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/layCertiNum"
+            android:layout_marginTop="@dimen/size48"
+            android:hint="전화번호"
+            app:startIconDrawable="@drawable/ic_phone">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phoneNum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:maxLength="11" />
+
+        </com.google.android.material.textfield.TextInputLayout> <!-- 전화번호 -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layCertiNum"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/layPhoneNum"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/btnSend"
+            android:hint="인증번호"
+            app:startIconDrawable="@drawable/ic_check">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/certiNum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nanumbarungothic"
+                android:inputType="number"
+                android:maxLength="4" />
+
+        </com.google.android.material.textfield.TextInputLayout> <!-- 인증번호 -->
+
+        <Button
+            android:id="@+id/btnSend"
+            style="@style/CustomTxtBtnStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/layCertiNum"
+            app:layout_constraintLeft_toRightOf="@id/layCertiNum"
+            app:layout_constraintBottom_toBottomOf="@id/layCertiNum"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginLeft="@dimen/size8"
+            android:text="인증번호 전송" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/btnNext"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/mainGray"
+        android:text="다음"
+        android:textSize="@dimen/font16" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,10 +1,48 @@
-<resources>
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowBackground">@color/white</item>
+        <item name="fontFamily">@font/nanumbarungothic</item>
+        <item name="android:textColor">@color/dark1</item>
+        <item name="colorAccent">@color/mainBlue</item>
+        <item name="colorPrimary">@color/mainBlue</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+        <item name="imageButtonStyle">@style/imgBtnStyle</item>
+        <item name="textInputStyle">@style/CustomTxtInputStyle</item>
+        <item name="checkboxStyle">@style/CustomCheckBoxStyle</item>
+    </style>
+
+    <style name="basicP">
+        <item name="android:paddingLeft">@dimen/layPLR</item>
+        <item name="android:paddingRight">@dimen/layPLR</item>
+        <item name="android:paddingTop">@dimen/layPT</item>
+    </style>
+
+    <style name="imgBtnStyle">
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:background">@color/transparent</item>
+    </style>
+
+    <style name="CustomTxtInputStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="endIconMode">clear_text</item>
+    </style>
+
+    <style name="idEditTxtStyle">
+        <item name="android:maxLength">20</item>
+        <item name="android:inputType">text</item>
+    </style>
+
+    <style name="CustomTxtBtnStyle" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textSize">@dimen/font12</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+    </style>
+
+    <style name="CustomCheckBoxStyle" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
     </style>
 
 </resources>
