@@ -2,17 +2,16 @@ package com.app0.simforpay
 
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Base64
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.Signup
 import com.app0.simforpay.retrofit.domain.SignupSuccess
@@ -52,17 +51,37 @@ class SignupAct : AppCompatActivity() {
                 }
         }
 
+        var idOverlap = false;
+
+        suId.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if(idOverlap){
+                    layId.setStartIconDrawable(R.drawable.ic_person)
+                    layId.setStartIconTintMode(PorterDuff.Mode.SRC_IN)
+                    idOverlap = false
+                }
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+        })
+
+
         btnCheckId.setOnClickListener {
             val userId = validUser(suId.text.toString())
             userRetrofit.validUserCall(userId)
                 .enqueue(object : Callback<validUserSuccess> {
                     override fun onResponse(call: Call<validUserSuccess>, response: Response<validUserSuccess>){
                         if(response.body()?.result=="true"){
-                            val idOverlap=true;
-                            Toast.makeText(applicationContext, "사용가능한 아이디입니다.", Toast.LENGTH_LONG).show()
+                            idOverlap=true;
+                            ChangeIcon(layId)
+
                         }else {
-                            val idOverlap=false;
-                            Toast.makeText(applicationContext, "이미 사용중인 아이디입니다.", Toast.LENGTH_LONG).show()
+                            idOverlap = false;
+                            layId.error = "이미 사용중인 아이디입니다."
                         }
                     }
 
@@ -74,12 +93,13 @@ class SignupAct : AppCompatActivity() {
 
         TextInput.CheckFour(btnCompl, name, suId, suPw, pwAgain)
 
-        btnCompl.setOnClickListener(View.OnClickListener {
-            if(!pwVaild())
-                layPw.error = "8~20자 이내, 영문/숫자/특수문자 필수 사용"
+        btnCompl.setOnClickListener{
+            if(!idOverlap)
+                layId.error = "아이디 중복 확인을 해주세요."
 
 //                Log.d("phoneNumber", intent.extras!!.getString("phoneNumber", ""))
 //                Log.d("phoneNumber", intent.getStringExtra("phoneNumber").toString())
+
             val imageEncodeUri = if (imageUri != null) bitmapToString(imageUri!!) else ""
             val userInfo = Signup(suId.text.toString(), suPw.text.toString(), name.text.toString(), imageEncodeUri, intent.getStringExtra("phoneNumber").toString())
             
@@ -98,21 +118,12 @@ class SignupAct : AppCompatActivity() {
                         t.printStackTrace()
                     }
                 })
-        })
-    }
-
-    override fun onStart() {
-        super.onStart()
+        }
 
         suPw.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                if(pwVaild()){
-                    layPw.endIconMode = TextInputLayout.END_ICON_CUSTOM
-                    layPw.setEndIconDrawable(R.drawable.ic_check)
-//                    layPw.setEndIconTintMode(R.color.green)
-                }
-                else
-                    layPw.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
+                if(pwVaild())
+                    ChangeIcon(layPw)
             }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
@@ -122,18 +133,31 @@ class SignupAct : AppCompatActivity() {
             }
         })
 
+        pwAgain.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if(suPw.text.toString() == pwAgain.text.toString())
+                    ChangeIcon(layPwAgain)
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+        })
+    }
+
+    fun ChangeIcon(textInputLayout: TextInputLayout){
+        textInputLayout.setStartIconDrawable(R.drawable.ic_check_circle)
+        textInputLayout.setStartIconTintList(ContextCompat.getColorStateList(applicationContext, R.color.starticon_selector))
     }
 
     fun pwVaild() : Boolean {
-        val pwPattern = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[\$@!%*#?&]).{8,20}.\$"
-        return Regex(pwPattern).containsMatchIn(suPw.text.toString())
+        val pwPattern = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#\$%^*+=-]).{8,20}.\$"
 
-//        (? =. * [0-9]) # 숫자는 한 번 이상 발생해야합니다
-//        (? =. * [a-z]) # 소문자는 한 번 이상 발생해야합니다
-//        (? =. * [A-Z]) # 대문자는 한 번 이상 발생해야합니다
-//        (? =. [-@ % [} + '!/# $ ^? :;, ( ") ~`. = & {>] <_]) # 특수 문자는 적어도 한 번은 반드시 특수 문자로 대체해야합니다
-//        (? =\S + $) # 전체 문자열에 공백이 허용되지 않습니다.
-//        {8,} # 최소한 6 자리 이상
+        Log.e("loggggggg", Regex(pwPattern).containsMatchIn(suPw.text.toString()).toString())
+
+        return Regex(pwPattern).containsMatchIn(suPw.text.toString())
     }
 
     private fun bitmapToString(bitmap: Bitmap): String {
@@ -144,12 +168,6 @@ class SignupAct : AppCompatActivity() {
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
 
         return Base64.encodeToString(byteArray, Base64.DEFAULT)
-    }
-
-    private fun stringToBitmap(encodedString: String): Bitmap {
-        val encodeByte = Base64.decode(encodedString, Base64.DEFAULT)
-
-        return BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.size)
     }
 }
 

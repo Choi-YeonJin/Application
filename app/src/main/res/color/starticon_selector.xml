@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/green" android:state_enabled="false"/> // focus 있을 때
+    <item android:alpha="0.7"
+        android:color="@color/green"/> // focus 없을 때
+</selector>
