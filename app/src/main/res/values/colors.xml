@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="mainBlue">#5773FF</color>
+    <color name="mainBlueLight">#1A5773FF</color>
+    <color name="mainSky">#EEF3F9</color>
+    <color name="mainBlueGray">#AFB2D9</color>
+    <color name="mainGray">#C8C9CE</color>
+    <color name="mainYellow">#FBC20F</color>
+    <color name="mainYellowLight">#1AFBC20F</color>
+    <color name="dark1">#13141C</color>
+    <color name="dark2">#454F63</color>
+    <color name="dark3">#78849E</color>
+    <color name="dark4">#F7F7FA</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="red">#FF3B30</color>
+    <color name="redLight">#1AFF3B30</color>
+    <color name="orange">#FF9500</color>
+    <color name="yellow">#FFCC00</color>
+    <color name="green">#34C759</color>
+    <color name="sky">#5AC8FA</color>
+    <color name="blue">#007AFF</color>
+    <color name="blueLight">#1A007AFF</color>
+    <color name="navy">#5856D6</color>
+    <color name="purple">#AF52DE</color>
+    <color name="transparent">#00000000</color>
+    <color name="black_overlay">#66000000</color>
 </resources>

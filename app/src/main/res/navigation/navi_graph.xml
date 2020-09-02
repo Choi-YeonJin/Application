@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/fragHome">
+
+    <action
+        android:id="@+id/action_to_fragContract"
+        app:destination="@id/fragContract"
+        app:enterAnim="@android:anim/fade_in"
+        app:exitAnim="@anim/sliding_up" />
+
+    <fragment
+        android:id="@+id/fragHome"
+        android:name="com.app0.simforpay.HomeFrag"
+        tools:layout="@layout/frag_home" />
+
+    <fragment
+        android:id="@+id/fragCalendar"
+        android:name="com.app0.simforpay.CalendarFrag"
+        tools:layout="@layout/frag_calendar" />
+
+    <fragment
+        android:id="@+id/fragContract"
+        android:name="com.app0.simforpay.ContractFrag"
+        tools:layout="@layout/frag_contract" >
+        <action
+            android:id="@+id/action_fragContract_to_fragHome"
+            app:destination="@id/fragHome"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@anim/sliding_down" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragFriends"
+        android:name="com.app0.simforpay.FriendsFrag"
+        tools:layout="@layout/frag_friends" />
+
+    <fragment
+        android:id="@+id/fragSetting"
+        android:name="com.app0.simforpay.SettingFrag"
+        tools:layout="@layout/frag_setting" />
+</navigation>
