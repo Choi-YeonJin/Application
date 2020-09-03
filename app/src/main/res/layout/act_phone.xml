@@ -49,7 +49,8 @@
             app:layout_constraintBottom_toTopOf="@id/layCertiNum"
             android:layout_marginTop="@dimen/size48"
             android:hint="전화번호"
-            app:startIconDrawable="@drawable/ic_phone">
+            app:startIconDrawable="@drawable/ic_phone"
+            app:helperText="전화번호를 입력하면 버튼이 활성화됩니다.">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/phoneNum"
@@ -103,6 +104,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:background="@color/mainGray"
         android:text="다음"
-        android:textSize="@dimen/font16" />
+        android:textSize="@dimen/font16"
+        android:enabled="false" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

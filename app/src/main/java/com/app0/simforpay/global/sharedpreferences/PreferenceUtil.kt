@@ -1,4 +1,4 @@
-package com.app0.simforpay
+package com.app0.simforpay.global.sharedpreferences
 
 import android.content.Context
 import android.content.SharedPreferences

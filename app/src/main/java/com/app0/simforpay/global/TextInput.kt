@@ -1,4 +1,4 @@
-package com.app0.simforpay
+package com.app0.simforpay.global
 
 import android.text.Editable
 import android.text.TextWatcher
@@ -6,6 +6,25 @@ import android.widget.Button
 import android.widget.EditText
 
 object TextInput{
+
+    fun CheckOne(button: Button, editText1: EditText){
+        editText1.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                val et1 = editText1.text.toString().trim()
+
+                button.isEnabled = et1.isNotEmpty()
+            }
+
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int, count: Int, after: Int) {
+            }
+
+            override fun afterTextChanged(
+                s: Editable
+            ) {
+            }
+        })
+    }
 
     fun CheckTwo(button: Button, editText1: EditText, editText2: EditText){
         val editTexts = listOf(editText1, editText2)

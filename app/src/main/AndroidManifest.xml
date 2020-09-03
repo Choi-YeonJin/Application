@@ -10,20 +10,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name="MyApplication" >
-        <activity android:name=".SplashAct">
+        android:name="com.app0.simforpay.global.sharedpreferences.MyApplication" >
+        <activity android:name=".activity.SplashAct">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="MainAct">
+        <activity android:name=".activity.MainAct">
 
         </activity>
-        <activity android:name=".SigninAct" />
-        <activity android:name=".PhoneAct" />
-        <activity android:name=".SignupAct" />
+        <activity android:name="com.app0.simforpay.activity.login.SigninAct" />
+        <activity android:name="com.app0.simforpay.activity.login.PhoneAct" />
+        <activity android:name="com.app0.simforpay.activity.login.SignupAct" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"/>

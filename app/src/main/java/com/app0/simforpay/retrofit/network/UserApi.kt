@@ -7,13 +7,13 @@ import retrofit2.http.POST
 
 interface UserApi {
 
-    @POST("signin")
+    @POST("sign-in")
     fun SigninCall(@Body userInfo: Signin) : Call<SigninSuccess>
 
     @POST("user")
     fun SignupCall(@Body userInfo: Signup) : Call<SignupSuccess>
 
-    @POST("validUserId")
+    @POST("valid-userId")
     fun validUserCall(@Body userInfo: validUser) : Call<validUserSuccess>
 
     @POST("contract")

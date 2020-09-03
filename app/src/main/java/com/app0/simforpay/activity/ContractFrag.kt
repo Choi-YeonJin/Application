@@ -1,4 +1,4 @@
-package com.app0.simforpay
+package com.app0.simforpay.activity
 
 import android.app.DatePickerDialog
 import android.os.Bundle
@@ -11,9 +11,12 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.app0.simforpay.R
+import com.app0.simforpay.global.TextInput
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.Contract
 import com.app0.simforpay.retrofit.domain.ContractSuccess
+import com.app0.simforpay.global.sharedpreferences.PreferenceUtil
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.frag_contract.*

@@ -1,14 +1,13 @@
-package com.app0.simforpay
+package com.app0.simforpay.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
+import com.app0.simforpay.R
 import com.app0.simforpay.databinding.ActMainBinding
-import kotlinx.android.synthetic.main.act_main.*
 
 class MainAct : AppCompatActivity() {
     private lateinit var binding: ActMainBinding
