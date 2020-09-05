@@ -593,11 +593,12 @@
                         android:background="@color/dark4" />
 
                     <TextView
+                        android:id="@+id/txt9"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@+id/swAlert"
+                        app:layout_constraintTop_toBottomOf="@id/line"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintBottom_toBottomOf="@id/swAlert"
+                        android:layout_marginTop="@dimen/size16"
                         android:text="알림"
                         android:fontFamily="@font/nanumbarungothic_bold" />
 
@@ -605,12 +606,31 @@
                         android:id="@+id/swAlert"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/size16"
-                        app:layout_constraintRight_toRightOf="@id/line"
-                        app:layout_constraintTop_toBottomOf="@id/line"
-                        app:sb_checked="true"
+                        app:layout_constraintTop_toTopOf="@id/txt9"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@id/txt10"
                         app:sb_checked_color="@color/mainBlue"
                         app:sb_show_indicator="false" />
+
+                    <TextView
+                        android:id="@+id/txt10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/txt9"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_marginTop="@dimen/size4"
+                        android:text="알림을 설정하려면 완료일을 지정해주세요."
+                        android:textColor="@color/mainBlue"
+                        android:textSize="@dimen/font12" />
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/txt9"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginTop="@dimen/size40" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

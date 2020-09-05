@@ -52,15 +52,24 @@ class ContractFrag : Fragment() {
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
         bank.setAdapter(adapter)
 
+        // datepicker
         tradeDay.setOnClickListener {
             showDatePickerDialog(tradeDay, "trade")
         }
 
         complDay.setOnClickListener {
+            swAlert.isEnabled = true
+
             if(!tradeDay.text.isNullOrEmpty())
                 showDatePickerDialog(complDay, "compl")
             else
                 Toast.makeText(context, "거래일을 입력해주세요.", Toast.LENGTH_SHORT).show()
+        }
+
+        btnDelComplDay.setOnClickListener {
+            complDay.setText("")
+            swAlert.isChecked = false
+            swAlert.isEnabled = false
         }
 
         // add&delete borrower
@@ -77,6 +86,15 @@ class ContractFrag : Fragment() {
             cnt--
             LayBorrower(cnt)
         }
+
+        swAlert.isEnabled = false
+        if(!swAlert.isEnabled){
+            swAlert.setOnClickListener {
+                Toast.makeText(context, "완료일을 입력해주세요.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+            
 
         TextInput.CheckFive(btnSave, contractName, tradeDay, price, lender, borrower1)
 
