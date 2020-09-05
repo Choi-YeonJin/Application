@@ -34,7 +34,6 @@ class SignupAct : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        overridePendingTransition(R.anim.fragment_fade_exit, android.R.anim.slide_out_right)
         setContentView(R.layout.act_signup)
 
         var idOverlap = false // id 중복 체크(bool)
@@ -44,8 +43,6 @@ class SignupAct : AppCompatActivity() {
 
         // Click Back Button
         btnBack.setOnClickListener{
-            val intent = Intent(applicationContext, PhoneAct::class.java)
-            startActivity(intent)
             finish()
         }
 

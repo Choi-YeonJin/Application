@@ -12,13 +12,11 @@ import kotlinx.android.synthetic.main.act_phone.*
 
 class PhoneAct : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
-        overridePendingTransition(android.R.anim.slide_out_right, android.R.anim.slide_in_left)
         setContentView(R.layout.act_phone)
 
         btnBack.setOnClickListener{
-            val intent = Intent(applicationContext, SigninAct::class.java)
-            startActivity(intent)
             finish()
         }
 
@@ -43,7 +41,6 @@ class PhoneAct : AppCompatActivity() {
                 val intent = Intent(applicationContext, SignupAct::class.java)
                 intent.putExtra("phoneNumber", phoneNum.text.toString())
                 startActivity(intent)
-                finish()
             }
             else {
                 layPhoneNum.error = "전화번호 형식이 틀렸습니다."
