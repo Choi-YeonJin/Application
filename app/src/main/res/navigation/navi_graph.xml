@@ -13,17 +13,17 @@
 
     <fragment
         android:id="@+id/fragHome"
-        android:name="com.app0.simforpay.HomeFrag"
+        android:name="com.app0.simforpay.activity.HomeFrag"
         tools:layout="@layout/frag_home" />
 
     <fragment
         android:id="@+id/fragCalendar"
-        android:name="com.app0.simforpay.CalendarFrag"
+        android:name="com.app0.simforpay.activity.CalendarFrag"
         tools:layout="@layout/frag_calendar" />
 
     <fragment
         android:id="@+id/fragContract"
-        android:name="com.app0.simforpay.ContractFrag"
+        android:name="com.app0.simforpay.activity.ContractFrag"
         tools:layout="@layout/frag_contract" >
         <action
             android:id="@+id/action_fragContract_to_fragHome"
@@ -34,11 +34,11 @@
 
     <fragment
         android:id="@+id/fragFriends"
-        android:name="com.app0.simforpay.FriendsFrag"
+        android:name="com.app0.simforpay.activity.FriendsFrag"
         tools:layout="@layout/frag_friends" />
 
     <fragment
         android:id="@+id/fragSetting"
-        android:name="com.app0.simforpay.SettingFrag"
+        android:name="com.app0.simforpay.activity.SettingFrag"
         tools:layout="@layout/frag_setting" />
 </navigation>

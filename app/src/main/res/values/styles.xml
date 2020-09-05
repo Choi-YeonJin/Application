@@ -10,12 +10,31 @@
         <item name="imageButtonStyle">@style/imgBtnStyle</item>
         <item name="textInputStyle">@style/CustomTxtInputStyle</item>
         <item name="checkboxStyle">@style/CustomCheckBoxStyle</item>
+        <item name="android:windowAnimationStyle">@style/CustomActSlideAnim</item>
+    </style>
+
+    <style name="FadeTheme" parent="AppTheme">
+        <item name="android:windowAnimationStyle">@style/CustomActFadeAnim</item>
     </style>
 
     <style name="basicP">
         <item name="android:paddingLeft">@dimen/layPLR</item>
         <item name="android:paddingRight">@dimen/layPLR</item>
         <item name="android:paddingTop">@dimen/layPT</item>
+    </style>
+
+    <style name="CustomActSlideAnim" parent="android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
+    </style>
+
+    <style name="CustomActFadeAnim" parent="android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/hold</item>
+        <item name="android:activityCloseEnterAnimation">@android:anim/fade_out</item>
+        <item name="android:activityCloseExitAnimation">@anim/hold</item>
     </style>
 
     <style name="imgBtnStyle">

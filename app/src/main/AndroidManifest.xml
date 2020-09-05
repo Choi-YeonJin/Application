@@ -2,30 +2,31 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.app0.simforpay">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
-        android:usesCleartextTraffic="true"
-        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name="MyApplication" >
-        <activity android:name=".SplashAct">
+        android:name="com.app0.simforpay.global.sharedpreferences.MyApplication"
+        android:launchMode = "singleTop"
+        android:fullBackupContent="true"
+        android:allowBackup="true">
+        <activity android:name=".activity.SplashAct">
 
         </activity>
-        <activity android:name="MainAct">
+        <activity android:name=".activity.MainAct">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SigninAct" />
-        <activity android:name=".PhoneAct" />
-        <activity android:name=".SignupAct" />
+        <activity android:name="com.app0.simforpay.activity.login.SigninAct" android:theme="@style/FadeTheme" />
+        <activity android:name="com.app0.simforpay.activity.login.PhoneAct" />
+        <activity android:name="com.app0.simforpay.activity.login.SignupAct" />
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>
