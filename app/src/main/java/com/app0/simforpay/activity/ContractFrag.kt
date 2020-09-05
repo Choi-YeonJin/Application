@@ -1,4 +1,4 @@
-package com.app0.simforpay.activity
+package com.app0.simforpay
 
 import android.app.DatePickerDialog
 import android.os.Bundle
@@ -11,12 +11,10 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.app0.simforpay.R
-import com.app0.simforpay.global.TextInput
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.Contract
 import com.app0.simforpay.retrofit.domain.ContractSuccess
-import com.app0.simforpay.global.sharedpreferences.PreferenceUtil
+import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.frag_contract.*
@@ -24,6 +22,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
+import kotlin.math.min
 
 class ContractFrag : Fragment() {
 
@@ -77,24 +76,38 @@ class ContractFrag : Fragment() {
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
         bank.setAdapter(adapter)
 
-        // datepicker
-        val builder: MaterialDatePicker.Builder<*> = MaterialDatePicker.Builder.datePicker()
+        val calendar = Calendar.getInstance()
+        val complDayListener = DatePickerDialog.OnDateSetListener {
+                view, year, month, dayOfMonth -> complDay.setText("${year}년 ${month+1}월 ${dayOfMonth}일")
+        }
+        val complDayDatePickerDialog = DatePickerDialog(this.requireContext(), complDayListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
+
+        val tradeDayListener = DatePickerDialog.OnDateSetListener{view, year, month, dayOfMonth ->
+
+            tradeDay.setText("${year}년 ${month+1}월 ${dayOfMonth}일")
+
+            calendar.set(Calendar.YEAR, year)
+            calendar.set(Calendar.MONTH, month)
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+            complDayDatePickerDialog.datePicker.minDate = calendar.time.time
+        }
+
+        val tradeDayDatePickerDialog = DatePickerDialog(this.requireContext(), tradeDayListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
 
         tradeDay.setOnClickListener {
-//            val picker = builder.build()
-//            picker.show(this.parentFragmentManager, "DATE_PICKER")
-//            picker.addOnPositiveButtonClickListener {
-//                tradeDay.setText(picker.headerText)
-//            }
 
-            showDatePickerDialog()
+            tradeDayDatePickerDialog.show()
         }
 
         complDay.setOnClickListener {
-            val picker = builder.build()
-            picker.show(this.parentFragmentManager, "DATE_PICKER")
-            picker.addOnPositiveButtonClickListener {
-                complDay.setText(picker.headerText)
+
+            if(!tradeDay.text.isNullOrEmpty()){
+
+                complDayDatePickerDialog.show()
+
+            }else{
+                Toast.makeText(context, "거래일을 입력해주세요.", Toast.LENGTH_LONG).show()
             }
         }
 
