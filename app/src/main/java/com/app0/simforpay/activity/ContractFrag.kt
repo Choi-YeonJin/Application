@@ -125,6 +125,22 @@ class ContractFrag : Fragment() {
             TextBorrowerPrice(cnt, borrowerPrices)
         }
 
+        // random checkbox
+        val randomPenalty = listOf("이목구비 최대한 멀리 떨어트리기", "노래 한 소절 부르기", "노래 없이 춤추기", "심부름하기",
+            "치킨 쏘기", "소원 하나 들어주기", "사극 말투 쓰기", "프리스타일 랩 60초동안 하기", "세상에서 가장 웃긴 표정 짓기",
+            "굴욕 각도로 셀카 찍어서 SNS 올리기", "혓바닥 코에 붙이고 있기")
+
+        cbRandom.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked){
+                val randomNum = Random().nextInt(randomPenalty.size)
+
+                penalty.setText(randomPenalty[randomNum])
+            }
+            else{
+                penalty.setText("")
+            }
+        }
+
         btnSave.setOnClickListener{
             val title = contractName.text.toString()
             val borrow_date = tradeDay.text.toString()
