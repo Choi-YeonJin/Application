@@ -4,18 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:paddingLeft="@dimen/size16"
+        android:paddingRight="@dimen/size16"
+        android:layout_marginBottom="@dimen/size48"
+        android:overScrollMode="never"
+        android:scrollbars="none">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            style="@style/basicP"
+            android:id="@+id/parent_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            android:layout_height="match_parent">
 
             <ImageButton
                 android:id="@+id/btnBack"
@@ -24,6 +29,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/title"
+                android:layout_marginTop="@dimen/size32"
                 android:src="@drawable/ic_back" />
 
             <TextView
@@ -32,603 +38,602 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/btnBack"
                 app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/layContractName"
                 android:layout_marginTop="@dimen/size24"
                 android:text="계약서"
                 android:textSize="@dimen/font24"
                 android:fontFamily="@font/nanumbarungothic_bold" />
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
+            <TextView
+                android:id="@+id/txt1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/layContractName"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/layContractName"
+                android:text="계약서명"
+                android:fontFamily="@font/nanumbarungothic_bold" />
+
+            <TextView
+                android:id="@+id/txt01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/txt1"
+                app:layout_constraintLeft_toRightOf="@id/txt1"
+                android:text="*"
+                android:textColor="@color/mainYellow" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layContractName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/title"
+                app:layout_constraintLeft_toRightOf="@id/txt5"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/layTradeDay"
+                android:layout_marginTop="@dimen/size16"
+                android:layout_marginLeft="@dimen/size8">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/contractName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLength="15" />
+
+            </com.google.android.material.textfield.TextInputLayout> <!-- 계약서명 -->
+
+            <TextView
+                android:id="@+id/txt2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/layTradeDay"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/layTradeDay"
+                android:text="거래일"
+                android:fontFamily="@font/nanumbarungothic_bold"/>
+
+            <TextView
+                android:id="@+id/txt02"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/txt2"
+                app:layout_constraintLeft_toRightOf="@id/txt2"
+                android:text="*"
+                android:textColor="@color/mainYellow" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layTradeDay"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/layContractName"
+                app:layout_constraintLeft_toRightOf="@id/txt5"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/layComplDay"
+                android:layout_marginLeft="@dimen/size8"
+                android:layout_marginTop="@dimen/size8"
+                app:endIconDrawable="@drawable/ic_dropdown"
+                app:endIconMode="custom"
+                app:endIconTint="@color/mainBlue">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tradeDay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusableInTouchMode="false"
+                    android:inputType="date"/>
+
+            </com.google.android.material.textfield.TextInputLayout> <!-- 거래일 -->
+
+            <TextView
+                android:id="@+id/txt3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/layComplDay"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/layComplDay"
+                android:text="완료일"
+                android:fontFamily="@font/nanumbarungothic_bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layComplDay"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/layTradeDay"
+                app:layout_constraintLeft_toRightOf="@id/txt5"
+                app:layout_constraintRight_toLeftOf="@id/btnDelComplDay"
+                app:layout_constraintBottom_toTopOf="@id/layPrice"
+                android:layout_marginLeft="@dimen/size8"
+                android:layout_marginTop="@dimen/size8"
+                app:endIconDrawable="@drawable/ic_dropdown"
+                app:endIconMode="custom"
+                app:endIconTint="@color/mainBlue">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/complDay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusableInTouchMode="false"
+                    android:inputType="date" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnDelComplDay"
+                style="@style/CustomTxtBtnStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/layComplDay"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/layComplDay"
+                android:text="삭제" /> <!-- 완료일 -->
+
+            <TextView
+                android:id="@+id/txt4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/layPrice"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/layPrice"
+                android:text="금액"
+                android:fontFamily="@font/nanumbarungothic_bold" />
+
+            <TextView
+                android:id="@+id/txt04"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/txt4"
+                app:layout_constraintLeft_toRightOf="@id/txt4"
+                android:text="*"
+                android:textColor="@color/mainYellow" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/layComplDay"
+                app:layout_constraintLeft_toRightOf="@id/txt5"
+                app:layout_constraintRight_toLeftOf="@id/cbN1"
+                app:layout_constraintBottom_toTopOf="@id/layLender"
+                android:layout_marginLeft="@dimen/size8"
+                android:layout_marginTop="@dimen/size8"
+                app:suffixText="원"
+                app:suffixTextColor="@color/mainGray">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <CheckBox
+                android:id="@+id/cbN1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/layPrice"
+                app:layout_constraintLeft_toRightOf="@id/layPrice"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/txtN1"
+                app:layout_constraintVertical_chainStyle="packed"
+                android:buttonTint="@color/mainBlue" />
+
+            <TextView
+                android:id="@+id/txtN1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/cbN1"
+                app:layout_constraintLeft_toRightOf="@id/layPrice"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/layPrice"
+                android:text="1/N"
+                android:textColor="@color/mainBlue"
+                android:textSize="@dimen/font10" /> <!-- 금액 -->
+
+            <TextView
+                android:id="@+id/txt5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/layLender"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/layLender"
+                android:text="빌려주는 사람"
+                android:fontFamily="@font/nanumbarungothic_bold" />
+
+            <TextView
+                android:id="@+id/txt05"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/txt5"
+                app:layout_constraintLeft_toRightOf="@id/txt5"
+                android:text="*"
+                android:textColor="@color/mainYellow" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layLender"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/layPrice"
+                app:layout_constraintLeft_toRightOf="@id/txt5"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/layBank"
+                android:layout_marginLeft="@dimen/size8"
+                android:layout_marginTop="@dimen/size8">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/lender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout> <!-- 빌려주는 사람 -->
+
+            <TextView
+                android:id="@+id/txt8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/layBank"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/layBank"
+                android:text="계좌번호"
+                android:fontFamily="@font/nanumbarungothic_bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layBank"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@id/layLender"
+                app:layout_constraintLeft_toRightOf="@id/txt5"
+                app:layout_constraintRight_toLeftOf="@id/layAccountNum"
+                app:layout_constraintBottom_toTopOf="@+id/btnAddBorrower"
+                app:layout_constraintWidth_percent="0.35"
+                android:layout_marginLeft="@dimen/size8"
+                android:layout_marginTop="@dimen/size8"
+                app:endIconMode="dropdown_menu"
+                app:endIconTint="@color/mainBlue">
+
+                <AutoCompleteTextView
+                    android:id="@+id/bank"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:focusableInTouchMode="false" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layAccountNum"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/layBank"
+                app:layout_constraintLeft_toRightOf="@id/layBank"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/layBank"
+                android:layout_marginLeft="@dimen/size4">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/accountNum"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout> <!-- 계좌번호 -->
+
+            <TextView
+                android:id="@+id/txt6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="빌리는 사람"
+                android:fontFamily="@font/nanumbarungothic_bold"
+                app:layout_constraintTop_toTopOf="@id/btnAddBorrower"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/btnAddBorrower"
+                app:layout_constraintBottom_toBottomOf="@id/btnAddBorrower"
+                app:layout_constraintHorizontal_chainStyle="spread_inside" />
+
+            <TextView
+                android:id="@+id/txt06"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="*"
+                android:textColor="@color/mainYellow"
+                app:layout_constraintLeft_toRightOf="@id/txt6"
+                app:layout_constraintTop_toTopOf="@id/txt6" />
+
+            <Button
+                android:id="@+id/btnAddBorrower"
+                style="@style/CustomTxtBtnStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/layBank"
+                app:layout_constraintLeft_toRightOf="@+id/txt6"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/layBorrower1"
+                android:layout_marginTop="@dimen/size8"
+                android:text="추가"
+                app:icon="@drawable/ic_add"
+                app:iconGravity="textStart" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layBorrower1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/btnAddBorrower"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/borrowerPrice1"
+                app:layout_constraintBottom_toTopOf="@+id/layBorrower2"
+                android:layout_marginTop="@dimen/size8">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/borrower1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/borrowerPrice1"
+                android:layout_width="@dimen/size80"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/layBorrower1"
+                app:layout_constraintRight_toLeftOf="@id/btnDelBorrower"
+                app:layout_constraintBottom_toBottomOf="@id/layBorrower1"
+                android:text="원"
+                android:textAlignment="gravity"
+                android:gravity="right" /> <!-- 빌리는 사람 1 -->
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layBorrower2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/layBorrower1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/borrowerPrice2"
+                app:layout_constraintBottom_toTopOf="@id/layBorrower3"
+                android:layout_marginTop="@dimen/size8"
+                android:visibility="gone">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/borrower2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/borrowerPrice2"
+                android:layout_width="@dimen/size80"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/layBorrower2"
+                app:layout_constraintRight_toLeftOf="@id/btnDelBorrower"
+                app:layout_constraintBottom_toBottomOf="@id/layBorrower2"
+                android:text="원"
+                android:textAlignment="gravity"
+                android:gravity="right"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnDelBorrower"
+                style="@style/CustomTxtBtnStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/layBorrower2"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/layBorrower2"
+                android:text="삭제"
+                android:visibility="invisible" /> <!-- 빌리는 사람 2 -->
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layBorrower3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/layBorrower2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/borrowerPrice3"
+                app:layout_constraintBottom_toTopOf="@id/layBorrower4"
+                android:layout_marginTop="@dimen/size8"
+                android:visibility="gone">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/borrower3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/borrowerPrice3"
+                android:layout_width="@dimen/size80"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/layBorrower3"
+                app:layout_constraintRight_toLeftOf="@id/btnDelBorrower"
+                app:layout_constraintBottom_toBottomOf="@id/layBorrower3"
+                android:text="원"
+                android:textAlignment="gravity"
+                android:gravity="right"
+                android:visibility="gone" /> <!-- 빌리는 사람 3 -->
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layBorrower4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/layBorrower3"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/borrowerPrice4"
+                app:layout_constraintBottom_toTopOf="@id/layBorrower5"
+                android:layout_marginTop="@dimen/size8"
+                android:visibility="gone">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/borrower4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/borrowerPrice4"
+                android:layout_width="@dimen/size80"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/layBorrower4"
+                app:layout_constraintRight_toLeftOf="@id/btnDelBorrower"
+                app:layout_constraintBottom_toBottomOf="@id/layBorrower4"
+                android:text="원"
+                android:textAlignment="gravity"
+                android:gravity="right"
+                android:visibility="gone" /> <!-- 빌리는 사람 4 -->
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layBorrower5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/layBorrower4"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/borrowerPrice5"
+                app:layout_constraintBottom_toTopOf="@id/cbRandom"
+                android:layout_marginTop="@dimen/size8"
+                android:visibility="gone">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/borrower5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/borrowerPrice5"
+                android:layout_width="@dimen/size80"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/layBorrower5"
+                app:layout_constraintRight_toLeftOf="@id/btnDelBorrower"
+                app:layout_constraintBottom_toBottomOf="@id/layBorrower5"
+                android:text="원"
+                android:textAlignment="gravity"
+                android:gravity="right"
+                android:visibility="gone" /> <!-- 빌리는 사람 5 -->
+
+            <TextView
+                android:id="@+id/txt7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@+id/cbRandom"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/cbRandom"
+                app:layout_constraintBottom_toBottomOf="@id/cbRandom"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                android:text="벌칙"
+                android:fontFamily="@font/nanumbarungothic_bold" />
+
+            <ImageView
+                android:layout_width="@dimen/size16"
+                android:layout_height="@dimen/size16"
+                app:layout_constraintTop_toTopOf="@id/txt7"
+                app:layout_constraintLeft_toRightOf="@id/txt7"
+                app:layout_constraintBottom_toBottomOf="@id/txt7"
+                android:background="@drawable/img_redcard" />
+
+            <CheckBox
+                android:id="@+id/cbRandom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/layBorrower5"
+                app:layout_constraintLeft_toRightOf="@+id/txt7"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/layPenalty"
+                android:layout_marginTop="@dimen/size8"
+                android:buttonTint="@color/mainBlue"
+                android:text="랜덤"
+                android:textSize="@dimen/font10" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layPenalty"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size8"
+                app:layout_constraintBottom_toTopOf="@+id/line"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cbRandom">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/penalty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine" />
+
+            </com.google.android.material.textfield.TextInputLayout> <!-- 벌칙 -->
+
+            <View
+                android:id="@+id/line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/layPenalty"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/swAlert"
+                android:layout_marginTop="@dimen/size16"
+                android:layout_marginBottom="@dimen/size16"
+                android:background="@color/dark4" />
+
+            <TextView
+                android:id="@+id/txt9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/line"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="@dimen/size16"
+                android:text="알림"
+                android:fontFamily="@font/nanumbarungothic_bold" />
+
+            <com.suke.widget.SwitchButton
+                android:id="@+id/swAlert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/txt9"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/txt10"
+                app:sb_checked_color="@color/mainBlue"
+                app:sb_show_indicator="false" />
+
+            <TextView
+                android:id="@+id/txt10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/txt9"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="@dimen/size4"
+                android:text="알림을 설정하려면 완료일을 지정해주세요."
+                android:textColor="@color/mainBlue"
+                android:textSize="@dimen/font12" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/txt10"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginTop="@dimen/size16"
-                android:layout_marginBottom="@dimen/size48"
-                android:overScrollMode="never"
-                android:scrollbars="none">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/parent_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/txt1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@id/layContractName"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintBottom_toBottomOf="@id/layContractName"
-                        android:text="계약서명"
-                        android:fontFamily="@font/nanumbarungothic_bold" />
-
-                    <TextView
-                        android:id="@+id/txt01"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@id/txt1"
-                        app:layout_constraintLeft_toRightOf="@id/txt1"
-                        android:text="*"
-                        android:textColor="@color/mainYellow" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/layContractName"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintLeft_toRightOf="@id/txt5"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/layTradeDay"
-                        android:layout_marginLeft="@dimen/size8">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/contractName"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="text"
-                            android:maxLength="15" />
-
-                    </com.google.android.material.textfield.TextInputLayout> <!-- 계약서명 -->
-
-                    <TextView
-                        android:id="@+id/txt2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@id/layTradeDay"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintBottom_toBottomOf="@id/layTradeDay"
-                        android:text="거래일"
-                        android:fontFamily="@font/nanumbarungothic_bold"/>
-
-                    <TextView
-                        android:id="@+id/txt02"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@id/txt2"
-                        app:layout_constraintLeft_toRightOf="@id/txt2"
-                        android:text="*"
-                        android:textColor="@color/mainYellow" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/layTradeDay"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/layContractName"
-                        app:layout_constraintLeft_toRightOf="@id/txt5"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/layComplDay"
-                        android:layout_marginLeft="@dimen/size8"
-                        android:layout_marginTop="@dimen/size8"
-                        app:endIconDrawable="@drawable/ic_dropdown"
-                        app:endIconMode="custom"
-                        app:endIconTint="@color/mainBlue">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/tradeDay"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:clickable="true"
-                            android:focusableInTouchMode="false"
-                            android:inputType="date"/>
-
-                    </com.google.android.material.textfield.TextInputLayout> <!-- 거래일 -->
-
-                    <TextView
-                        android:id="@+id/txt3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@id/layComplDay"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintBottom_toBottomOf="@id/layComplDay"
-                        android:text="완료일"
-                        android:fontFamily="@font/nanumbarungothic_bold" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/layComplDay"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/layTradeDay"
-                        app:layout_constraintLeft_toRightOf="@id/txt5"
-                        app:layout_constraintRight_toLeftOf="@id/btnDelComplDay"
-                        app:layout_constraintBottom_toTopOf="@id/layPrice"
-                        android:layout_marginLeft="@dimen/size8"
-                        android:layout_marginTop="@dimen/size8"
-                        app:endIconDrawable="@drawable/ic_dropdown"
-                        app:endIconMode="custom"
-                        app:endIconTint="@color/mainBlue">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/complDay"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:clickable="true"
-                            android:focusableInTouchMode="false"
-                            android:inputType="date" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <Button
-                        android:id="@+id/btnDelComplDay"
-                        style="@style/CustomTxtBtnStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@id/layComplDay"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintBottom_toBottomOf="@id/layComplDay"
-                        android:text="삭제" /> <!-- 완료일 -->
-
-                    <TextView
-                        android:id="@+id/txt4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@id/layPrice"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintBottom_toBottomOf="@id/layPrice"
-                        android:text="금액"
-                        android:fontFamily="@font/nanumbarungothic_bold" />
-
-                    <TextView
-                        android:id="@+id/txt04"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@id/txt4"
-                        app:layout_constraintLeft_toRightOf="@id/txt4"
-                        android:text="*"
-                        android:textColor="@color/mainYellow" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/layPrice"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/layComplDay"
-                        app:layout_constraintLeft_toRightOf="@id/txt5"
-                        app:layout_constraintRight_toLeftOf="@id/n1"
-                        app:layout_constraintBottom_toTopOf="@id/layLender"
-                        android:layout_marginLeft="@dimen/size8"
-                        android:layout_marginTop="@dimen/size8"
-                        app:suffixText="원"
-                        app:suffixTextColor="@color/mainGray">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/price"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="number" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <CheckBox
-                        android:id="@+id/n1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@id/layPrice"
-                        app:layout_constraintLeft_toRightOf="@id/layPrice"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/txtN1"
-                        app:layout_constraintVertical_chainStyle="packed"
-                        android:buttonTint="@color/mainBlue" />
-
-                    <TextView
-                        android:id="@+id/txtN1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/n1"
-                        app:layout_constraintLeft_toRightOf="@id/layPrice"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintBottom_toBottomOf="@id/layPrice"
-                        android:text="1/N"
-                        android:textColor="@color/mainBlue"
-                        android:textSize="@dimen/font10" /> <!-- 금액 -->
-
-                    <TextView
-                        android:id="@+id/txt5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@id/layLender"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintBottom_toBottomOf="@id/layLender"
-                        android:text="빌려주는 사람"
-                        android:fontFamily="@font/nanumbarungothic_bold" />
-
-                    <TextView
-                        android:id="@+id/txt05"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@id/txt5"
-                        app:layout_constraintLeft_toRightOf="@id/txt5"
-                        android:text="*"
-                        android:textColor="@color/mainYellow" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/layLender"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/layPrice"
-                        app:layout_constraintLeft_toRightOf="@id/txt5"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintBottom_toTopOf="@+id/layBank"
-                        android:layout_marginLeft="@dimen/size8"
-                        android:layout_marginTop="@dimen/size8">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/lender"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="text" />
-
-                    </com.google.android.material.textfield.TextInputLayout> <!-- 빌려주는 사람 -->
-
-                    <TextView
-                        android:id="@+id/txt8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@id/layBank"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintBottom_toBottomOf="@id/layBank"
-                        android:text="계좌번호"
-                        android:fontFamily="@font/nanumbarungothic_bold" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/layBank"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        app:layout_constraintTop_toBottomOf="@id/layLender"
-                        app:layout_constraintLeft_toRightOf="@id/txt5"
-                        app:layout_constraintRight_toLeftOf="@id/layAccountNum"
-                        app:layout_constraintBottom_toTopOf="@+id/btnAddBorrower"
-                        app:layout_constraintWidth_percent="0.35"
-                        android:layout_marginLeft="@dimen/size8"
-                        android:layout_marginTop="@dimen/size8"
-                        app:endIconMode="dropdown_menu"
-                        app:endIconTint="@color/mainBlue">
-
-                        <AutoCompleteTextView
-                            android:id="@+id/bank"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:focusableInTouchMode="false" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/layAccountNum"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@id/layBank"
-                        app:layout_constraintLeft_toRightOf="@id/layBank"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintBottom_toBottomOf="@id/layBank"
-                        android:layout_marginLeft="@dimen/size4">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/accountNum"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="number" />
-
-                    </com.google.android.material.textfield.TextInputLayout> <!-- 계좌번호 -->
-
-                    <TextView
-                        android:id="@+id/txt6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="빌리는 사람"
-                        android:fontFamily="@font/nanumbarungothic_bold"
-                        app:layout_constraintTop_toTopOf="@id/btnAddBorrower"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/btnAddBorrower"
-                        app:layout_constraintBottom_toBottomOf="@id/btnAddBorrower"
-                        app:layout_constraintHorizontal_chainStyle="spread_inside" />
-
-                    <TextView
-                        android:id="@+id/txt06"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="*"
-                        android:textColor="@color/mainYellow"
-                        app:layout_constraintLeft_toRightOf="@id/txt6"
-                        app:layout_constraintTop_toTopOf="@id/txt6" />
-
-                    <Button
-                        android:id="@+id/btnAddBorrower"
-                        style="@style/CustomTxtBtnStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/layBank"
-                        app:layout_constraintLeft_toRightOf="@+id/txt6"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/layBorrower1"
-                        android:layout_marginTop="@dimen/size8"
-                        android:text="추가"
-                        app:icon="@drawable/ic_add"
-                        app:iconGravity="textStart" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/layBorrower1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/btnAddBorrower"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/borrowerPrice1"
-                        app:layout_constraintBottom_toTopOf="@+id/layBorrower2"
-                        android:layout_marginTop="@dimen/size8">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/borrower1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="text" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <TextView
-                        android:id="@+id/borrowerPrice1"
-                        android:layout_width="@dimen/size80"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@id/layBorrower1"
-                        app:layout_constraintRight_toLeftOf="@id/btnDelBorrower"
-                        app:layout_constraintBottom_toBottomOf="@id/layBorrower1"
-                        android:text="원"
-                        android:textAlignment="gravity"
-                        android:gravity="right" /> <!-- 빌리는 사람 1 -->
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/layBorrower2"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/layBorrower1"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/borrowerPrice2"
-                        app:layout_constraintBottom_toTopOf="@id/layBorrower3"
-                        android:layout_marginTop="@dimen/size8"
-                        android:visibility="gone">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/borrower2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="text" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <TextView
-                        android:id="@+id/borrowerPrice2"
-                        android:layout_width="@dimen/size80"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@id/layBorrower2"
-                        app:layout_constraintRight_toLeftOf="@id/btnDelBorrower"
-                        app:layout_constraintBottom_toBottomOf="@id/layBorrower2"
-                        android:text="원"
-                        android:textAlignment="gravity"
-                        android:gravity="right"
-                        android:visibility="gone" />
-
-                    <Button
-                        android:id="@+id/btnDelBorrower"
-                        style="@style/CustomTxtBtnStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@id/layBorrower2"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintBottom_toBottomOf="@id/layBorrower2"
-                        android:text="삭제"
-                        android:visibility="invisible" /> <!-- 빌리는 사람 2 -->
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/layBorrower3"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/layBorrower2"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/borrowerPrice3"
-                        app:layout_constraintBottom_toTopOf="@id/layBorrower4"
-                        android:layout_marginTop="@dimen/size8"
-                        android:visibility="gone">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/borrower3"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="text" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <TextView
-                        android:id="@+id/borrowerPrice3"
-                        android:layout_width="@dimen/size80"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@id/layBorrower3"
-                        app:layout_constraintRight_toLeftOf="@id/btnDelBorrower"
-                        app:layout_constraintBottom_toBottomOf="@id/layBorrower3"
-                        android:text="원"
-                        android:textAlignment="gravity"
-                        android:gravity="right"
-                        android:visibility="gone" /> <!-- 빌리는 사람 3 -->
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/layBorrower4"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/layBorrower3"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/borrowerPrice4"
-                        app:layout_constraintBottom_toTopOf="@id/layBorrower5"
-                        android:layout_marginTop="@dimen/size8"
-                        android:visibility="gone">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/borrower4"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="text" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <TextView
-                        android:id="@+id/borrowerPrice4"
-                        android:layout_width="@dimen/size80"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@id/layBorrower4"
-                        app:layout_constraintRight_toLeftOf="@id/btnDelBorrower"
-                        app:layout_constraintBottom_toBottomOf="@id/layBorrower4"
-                        android:text="원"
-                        android:textAlignment="gravity"
-                        android:gravity="right"
-                        android:visibility="gone" /> <!-- 빌리는 사람 4 -->
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/layBorrower5"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/layBorrower4"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/borrowerPrice5"
-                        app:layout_constraintBottom_toTopOf="@id/cbRandom"
-                        android:layout_marginTop="@dimen/size8"
-                        android:visibility="gone">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/borrower5"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="text" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <TextView
-                        android:id="@+id/borrowerPrice5"
-                        android:layout_width="@dimen/size80"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@id/layBorrower5"
-                        app:layout_constraintRight_toLeftOf="@id/btnDelBorrower"
-                        app:layout_constraintBottom_toBottomOf="@id/layBorrower5"
-                        android:text="원"
-                        android:textAlignment="gravity"
-                        android:gravity="right"
-                        android:visibility="gone" /> <!-- 빌리는 사람 5 -->
-
-                    <TextView
-                        android:id="@+id/txt7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@+id/cbRandom"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@+id/cbRandom"
-                        app:layout_constraintBottom_toBottomOf="@id/cbRandom"
-                        app:layout_constraintHorizontal_chainStyle="spread_inside"
-                        android:text="벌칙"
-                        android:fontFamily="@font/nanumbarungothic_bold" />
-
-                    <ImageView
-                        android:layout_width="@dimen/size16"
-                        android:layout_height="@dimen/size16"
-                        app:layout_constraintTop_toTopOf="@id/txt7"
-                        app:layout_constraintLeft_toRightOf="@id/txt7"
-                        app:layout_constraintBottom_toBottomOf="@id/txt7"
-                        android:background="@drawable/img_redcard" />
-
-                    <CheckBox
-                        android:id="@+id/cbRandom"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/layBorrower5"
-                        app:layout_constraintLeft_toRightOf="@+id/txt7"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/layPenalty"
-                        android:layout_marginTop="@dimen/size8"
-                        android:buttonTint="@color/mainBlue"
-                        android:text="랜덤"
-                        android:textSize="@dimen/font10" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/layPenalty"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/size8"
-                        app:layout_constraintBottom_toTopOf="@+id/line"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/cbRandom">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/penalty"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="textMultiLine" />
-
-                    </com.google.android.material.textfield.TextInputLayout> <!-- 벌칙 -->
-
-                    <View
-                        android:id="@+id/line"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        app:layout_constraintTop_toBottomOf="@id/layPenalty"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/swAlert"
-                        android:layout_marginTop="@dimen/size16"
-                        android:layout_marginBottom="@dimen/size16"
-                        android:background="@color/dark4" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@+id/swAlert"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintBottom_toBottomOf="@id/swAlert"
-                        android:text="알림"
-                        android:fontFamily="@font/nanumbarungothic_bold" />
-
-                    <com.suke.widget.SwitchButton
-                        android:id="@+id/swAlert"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/size16"
-                        app:layout_constraintRight_toRightOf="@id/line"
-                        app:layout_constraintTop_toBottomOf="@id/line"
-                        app:sb_checked="true"
-                        app:sb_checked_color="@color/mainBlue"
-                        app:sb_show_indicator="false" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </ScrollView>
+                android:layout_marginTop="@dimen/size40" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <Button
-            android:id="@+id/btnSave"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:background="@color/mainGray"
-            android:text="저장"
-            android:textSize="@dimen/font16" />
+    </ScrollView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/mainGray"
+        android:text="저장"
+        android:textSize="@dimen/font16" />
 
 </FrameLayout>
