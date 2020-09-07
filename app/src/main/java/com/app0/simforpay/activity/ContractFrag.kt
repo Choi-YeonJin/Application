@@ -2,6 +2,8 @@ package com.app0.simforpay.activity
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +25,7 @@ import kotlinx.android.synthetic.main.frag_contract.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.NumberFormat
 import java.util.*
 
 class ContractFrag : Fragment() {
@@ -31,54 +34,96 @@ class ContractFrag : Fragment() {
     val calendar = Calendar.getInstance()
 
     override fun onCreateView(
-
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.frag_contract, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        btnBack.setOnClickListener {
-            findNavController().navigate(R.id.action_fragContract_to_fragHome)
-        }
-
-        // bank dropdown
+        // Bank Dropdown
         val items = listOf("NH농협", "KB국민", "신한", "우리", "하나", "IBK기업", "SC제일", "씨티", "KDB산업", "SBI저축",
             "새마을", "대구", "광주", "우체국", "신협", "전북", "경남", "부산", "수협", "제주", "카카오뱅크")
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
         bank.setAdapter(adapter)
 
+        // Enable Switch
+        swAlert.isEnabled = false
+        if(!swAlert.isEnabled){
+            swAlert.setOnClickListener {
+                Toast.makeText(context, "완료일을 입력해주세요.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        TextInput.CheckFive(btnSave, contractName, tradeDay, price, lender, borrower1)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        var cnt = 1 // borrower cnt
+        val borrowerPrices = listOf(borrowerPrice1, borrowerPrice2, borrowerPrice3, borrowerPrice4, borrowerPrice5)
+
+        // Click Back Button
+        btnBack.setOnClickListener {
+            findNavController().navigate(R.id.action_fragContract_to_fragHome)
+        }
+
+        // Datepicker
         tradeDay.setOnClickListener {
-            showDatePickerDialog(tradeDay, "trade")
+            ShowDatePickerDialog(tradeDay, "trade")
         }
 
         complDay.setOnClickListener {
+            swAlert.isEnabled = true
+
             if(!tradeDay.text.isNullOrEmpty())
-                showDatePickerDialog(complDay, "compl")
+                ShowDatePickerDialog(complDay, "compl")
             else
                 Toast.makeText(context, "거래일을 입력해주세요.", Toast.LENGTH_SHORT).show()
         }
 
-        // add&delete borrower
-        var cnt = 1
+        btnDelComplDay.setOnClickListener {
+            complDay.setText("")
+            swAlert.isChecked = false
+            swAlert.isEnabled = false
+        }
 
+        // Set individual Price
+        price.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                TextBorrowerPrice(cnt, borrowerPrices)
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+        })
+
+        cbN1.setOnCheckedChangeListener { buttonView, isChecked ->
+            TextBorrowerPrice(cnt, borrowerPrices)
+        }
+
+        // Add & Delete Borrower
         btnAddBorrower.setOnClickListener {
             cnt++
             VisibilBorrower(cnt, 0)
             LayBorrower(cnt)
+
+            TextBorrowerPrice(cnt, borrowerPrices)
         }
 
         btnDelBorrower.setOnClickListener {
             VisibilBorrower(cnt, 1)
             cnt--
             LayBorrower(cnt)
-        }
 
-        TextInput.CheckFive(btnSave, contractName, tradeDay, price, lender, borrower1)
+            TextBorrowerPrice(cnt, borrowerPrices)
+        }
 
         btnSave.setOnClickListener{
             val title = contractName.text.toString()
@@ -93,7 +138,7 @@ class ContractFrag : Fragment() {
             val contractInfo = Contract(title, borrow_date, payback_date, price, lender_id, lender_name, penalty, alarm)
 
             userRetrofit.ContractCall(contractInfo)
-                .enqueue(object : Callback<ContractSuccess>{
+                .enqueue(object : Callback<ContractSuccess> {
                     override fun onResponse(call: Call<ContractSuccess>, response: Response<ContractSuccess>) {
                         if(response.body()?.result=="true")
                             findNavController().navigate(R.id.action_fragContract_to_fragHome)
@@ -109,7 +154,7 @@ class ContractFrag : Fragment() {
         }
     }
 
-    fun showDatePickerDialog(editText: EditText, str: String) {
+    fun ShowDatePickerDialog(editText: EditText, str: String) {
         val listener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
             editText.setText("${year}년 ${month + 1}월 ${dayOfMonth}일")
 
@@ -193,5 +238,15 @@ class ContractFrag : Fragment() {
         params.topToTop = layBorrowerId
         params.bottomToBottom = layBorrowerId
         btnDelBorrower.requestLayout()
+    }
+
+    fun TextBorrowerPrice(cnt: Int, borrowerPrices: List<TextView>){
+        var borrowerPrice = 0
+
+        borrowerPrice = if(cbN1.isChecked) price.text.toString().toInt()/cnt else price.text.toString().toInt()
+
+        for(textView in borrowerPrices){
+            textView.text = NumberFormat.getInstance(Locale.KOREA).format(borrowerPrice) + "원"
+        }
     }
 }
