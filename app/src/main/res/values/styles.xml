@@ -39,7 +39,6 @@
 
     <style name="imgBtnStyle">
         <item name="android:scaleType">centerInside</item>
-        <item name="android:background">@color/transparent</item>
     </style>
 
     <style name="CustomTxtInputStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
