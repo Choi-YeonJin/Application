@@ -266,7 +266,7 @@
                 <com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
                     android:id="@+id/lender"
                     android:layout_width="match_parent"
-                    android:layout_height="52dp"
+                    android:layout_height="50dp"
                     android:inputType="text"/>
 
             </com.google.android.material.textfield.TextInputLayout> <!-- 빌려주는 사람 -->
@@ -366,11 +366,11 @@
                 app:layout_constraintBottom_toTopOf="@+id/layBorrower2"
                 android:layout_marginTop="@dimen/size8">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
                     android:id="@+id/borrower1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
+                    android:layout_height="50dp"
+                    android:inputType="text"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -396,11 +396,11 @@
                 android:layout_marginTop="@dimen/size8"
                 android:visibility="gone">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
                     android:id="@+id/borrower2"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
+                    android:layout_height="50dp"
+                    android:inputType="text"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -438,11 +438,11 @@
                 android:layout_marginTop="@dimen/size8"
                 android:visibility="gone">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
                     android:id="@+id/borrower3"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
+                    android:layout_height="50dp"
+                    android:inputType="text"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -469,11 +469,11 @@
                 android:layout_marginTop="@dimen/size8"
                 android:visibility="gone">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
                     android:id="@+id/borrower4"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
+                    android:layout_height="50dp"
+                    android:inputType="text"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -500,11 +500,11 @@
                 android:layout_marginTop="@dimen/size8"
                 android:visibility="gone">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
                     android:id="@+id/borrower5"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
+                    android:layout_height="50dp"
+                    android:inputType="text"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 

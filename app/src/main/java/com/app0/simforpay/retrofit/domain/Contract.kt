@@ -15,6 +15,10 @@ data class Contract(
     val lender_id: Int,
     @SerializedName("lender_name")
     val lender_name: String,
+    @SerializedName("lender_bank")
+    val lender_bank: String,
+    @SerializedName("lender_account")
+    val lender_account: Int,
     @SerializedName("penalty")
     val penalty: String,
     @SerializedName("alarm")
