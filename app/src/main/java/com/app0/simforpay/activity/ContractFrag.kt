@@ -1,6 +1,7 @@
 package com.app0.simforpay.activity
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,8 +13,8 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.app0.simforpay.R
@@ -36,6 +37,17 @@ class ContractFrag : Fragment() {
 
     private val Retrofit = RetrofitHelper.getRetrofit()
     val calendar = Calendar.getInstance()
+    private lateinit var callback: OnBackPressedCallback
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                Log.e("back pressed", "back back")
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -203,7 +215,12 @@ class ContractFrag : Fragment() {
         }
     }
 
-        fun ShowDatePickerDialog(editText: EditText, str: String) {
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
+    }
+
+    fun ShowDatePickerDialog(editText: EditText, str: String) {
         val listener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
             editText.setText("${year}년 ${month + 1}월 ${dayOfMonth}일")
 
@@ -290,12 +307,14 @@ class ContractFrag : Fragment() {
     }
 
     fun TextBorrowerPrice(cnt: Int, borrowerPrices: List<TextView>){
-        var borrowerPrice = 0
+        if(price.text.toString() != ""){
+            var borrowerPrice = 0
+            
+            borrowerPrice = if(cbN1.isChecked) price.text.toString().toInt()/cnt else price.text.toString().toInt()
 
-        borrowerPrice = if(cbN1.isChecked) price.text.toString().toInt()/cnt else price.text.toString().toInt()
-
-        for(textView in borrowerPrices){
-            textView.text = NumberFormat.getInstance(Locale.KOREA).format(borrowerPrice) + "원"
+            for(textView in borrowerPrices){
+                textView.text = NumberFormat.getInstance(Locale.KOREA).format(borrowerPrice) + "원"
+            }
         }
     }
 }

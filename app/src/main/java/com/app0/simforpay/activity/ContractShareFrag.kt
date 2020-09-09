@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.app0.simforpay.R
@@ -16,6 +17,8 @@ import java.io.FileOutputStream
 
 
 class ContractShareFrag : Fragment() {
+
+    private lateinit var callback: OnBackPressedCallback
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
