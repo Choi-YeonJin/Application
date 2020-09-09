@@ -17,8 +17,6 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.app0.simforpay.R
-import com.app0.simforpay.global.TextInput
-import com.app0.simforpay.global.sharedpreferences.PreferenceUtil
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.Contract
 import com.app0.simforpay.retrofit.domain.ContractSuccess
@@ -27,9 +25,6 @@ import com.google.android.material.textfield.TextInputLayout
 import com.hendraanggrian.appcompat.widget.Mention
 import com.hendraanggrian.appcompat.widget.MentionArrayAdapter
 import kotlinx.android.synthetic.main.frag_contract.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.text.NumberFormat
 import java.util.*
 
@@ -86,7 +81,7 @@ class ContractFrag : Fragment() {
             }
         }
 
-        TextInput.CheckFive(btnSave, contractName, tradeDay, price, lender, borrower1)
+//        TextInput.CheckFive(btnSave, contractName, tradeDay, price, lender, borrower1)
     }
 
     override fun onResume() {
@@ -170,35 +165,37 @@ class ContractFrag : Fragment() {
         }
 
         btnSave.setOnClickListener{
-            val title = contractName.text.toString()
-            val borrow_date = tradeDay.text.toString()
-            val payback_date = complDay.text.toString()
-            val price = Integer.parseInt(price.text.toString())
-            val lender_id = Integer.parseInt(PreferenceUtil(this.requireContext()).getString(Key.LENDER_ID.toString(), ""))
-            val lender_name = lender.text.toString()
-            val penalty = penalty.text.toString()
-            val alarm = if (swAlert.isChecked) 1 else 0
-
-            val contractInfo = Contract(title, borrow_date, payback_date, price, lender_id, lender_name, penalty, alarm)
-
-            userRetrofit.ContractCall(contractInfo)
-                .enqueue(object : Callback<ContractSuccess> {
-                    override fun onResponse(call: Call<ContractSuccess>, response: Response<ContractSuccess>) {
-                        if(response.body()?.result=="true")
-                            findNavController().navigate(R.id.action_fragContract_to_fragHome)
-                        else
-                            Toast.makeText(context, "잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
-                    }
-
-                    override fun onFailure(call: Call<ContractSuccess>, t: Throwable) {
-
-                    }
-                })
-
+            requireFragmentManager().beginTransaction().replace(R.id.layFull, ContractShareFrag()).commit()
+//            val title = contractName.text.toString()
+//            val borrow_date = tradeDay.text.toString()
+//            val payback_date = complDay.text.toString()
+//            val price = Integer.parseInt(price.text.toString())
+//            val lender_id = Integer.parseInt(PreferenceUtil(this.requireContext()).getString(Key.LENDER_ID.toString(), ""))
+//            val lender_name = lender.text.toString()
+//            val penalty = penalty.text.toString()
+//            val alarm = if (swAlert.isChecked) 1 else 0
+//
+//            val contractInfo = Contract(title, borrow_date, payback_date, price, lender_id, lender_name, penalty, alarm)
+//
+//            userRetrofit.ContractCall(contractInfo)
+//                .enqueue(object : Callback<ContractSuccess> {
+//                    override fun onResponse(call: Call<ContractSuccess>, response: Response<ContractSuccess>) {
+//                        if(response.body()?.result=="true"){
+//                            val fragment: ContractShareFrag = ContractShareFrag()
+//                            fragmentManager!!.beginTransaction().replace(R.id.fl_container, fragment).commit()
+//                        }
+//                        else
+//                            Toast.makeText(context, "잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+//                    }
+//
+//                    override fun onFailure(call: Call<ContractSuccess>, t: Throwable) {
+//
+//                    }
+//                })
         }
     }
 
-    fun ShowDatePickerDialog(editText: EditText, str: String) {
+        fun ShowDatePickerDialog(editText: EditText, str: String) {
         val listener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
             editText.setText("${year}년 ${month + 1}월 ${dayOfMonth}일")
 

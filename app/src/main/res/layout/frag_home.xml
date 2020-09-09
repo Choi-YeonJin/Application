@@ -1,14 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.HomeFrag">
+    style="@style/basicP">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="홈" />
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="Simfor Pay"
+        android:textSize="@dimen/font24"
+        android:fontFamily="@font/nanumbarungothic_bold" />
 
-</FrameLayout>
+    <ImageButton
+        android:id="@+id/btnSearch"
+        android:layout_width="@dimen/size24"
+        android:layout_height="@dimen/size24"
+        app:layout_constraintTop_toTopOf="@id/title"
+        app:layout_constraintRight_toLeftOf="@+id/btnNotification"
+        app:layout_constraintBottom_toBottomOf="@id/title"
+        android:padding="@dimen/size2"
+        android:layout_marginRight="@dimen/size8"
+        android:src="@drawable/ic_search"
+        android:background="@drawable/btngray_background" />
+
+    <ImageButton
+        android:id="@+id/btnNotification"
+        android:layout_width="@dimen/size24"
+        android:layout_height="@dimen/size24"
+        app:layout_constraintTop_toTopOf="@id/title"
+        app:layout_constraintRight_toLeftOf="@+id/btnMypage"
+        app:layout_constraintBottom_toBottomOf="@id/title"
+        android:padding="@dimen/size2"
+        android:layout_marginRight="@dimen/size8"
+        android:src="@drawable/ic_notification"
+        android:background="@drawable/btnyellow_background" />
+
+    <ImageButton
+        android:id="@+id/btnMypage"
+        android:layout_width="@dimen/size24"
+        android:layout_height="@dimen/size24"
+        app:layout_constraintTop_toTopOf="@id/title"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/title"
+        android:src="@drawable/img_profile" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
