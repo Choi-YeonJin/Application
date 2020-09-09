@@ -56,6 +56,9 @@ dependencies {
     // ios style switch
     implementation 'com.github.zcweng:switch-button:0.0.3@aar'
 
+    // auto fit textview
+    implementation 'me.grantland:autofittextview:0.2.+'
+
     // RxJava
     implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
 

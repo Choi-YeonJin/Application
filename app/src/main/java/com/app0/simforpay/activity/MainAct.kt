@@ -19,6 +19,11 @@ class MainAct : AppCompatActivity() {
         initNavigation()
     }
 
+    override fun onResume() {
+        super.onResume()
+
+    }
+
     private fun initNavigation() {
         val navController = findNavController(R.id.navi_host)
         binding.navi.setupWithNavController(navController)

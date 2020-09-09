@@ -118,7 +118,7 @@ class SignupAct : AppCompatActivity() {
                 })
         }
 
-        btnCompl.setOnClickListener{
+        suBtnCompl.setOnClickListener{
             if(!idOverlap)
                 layId.error = "아이디 중복 확인을 해주세요."
             if(!idCheck)
@@ -200,7 +200,7 @@ class SignupAct : AppCompatActivity() {
             }
         })
 
-        TextInput.CheckFour(btnCompl, name, suId, suPw, pwAgain) // 모든 eidttext에 text가 있어야 Button 활성화
+        TextInput.CheckFour(suBtnCompl, name, suId, suPw, pwAgain) // 모든 eidttext에 text가 있어야 Button 활성화
     }
 
     fun DefaultIcon(textInputLayout: TextInputLayout){

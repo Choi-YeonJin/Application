@@ -10,10 +10,10 @@
         <item name="imageButtonStyle">@style/imgBtnStyle</item>
         <item name="textInputStyle">@style/CustomTxtInputStyle</item>
         <item name="checkboxStyle">@style/CustomCheckBoxStyle</item>
-        <item name="android:windowAnimationStyle">@style/CustomActSlideAnim</item>
+        <item name="android:windowAnimationStyle">@style/CustomSlideAnim</item>
     </style>
 
-    <style name="FadeTheme" parent="AppTheme">
+    <style name="FadeActTheme" parent="AppTheme">
         <item name="android:windowAnimationStyle">@style/CustomActFadeAnim</item>
     </style>
 
@@ -23,7 +23,7 @@
         <item name="android:paddingTop">@dimen/layPT</item>
     </style>
 
-    <style name="CustomActSlideAnim" parent="android:style/Animation.Activity">
+    <style name="CustomSlideAnim" parent="android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
         <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
         <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
