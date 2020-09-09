@@ -29,7 +29,7 @@ import retrofit2.Response
 
 class SignupAct : AppCompatActivity() {
 
-    private val userRetrofit = RetrofitHelper.getUserRetrofit()
+    private val Retrofit = RetrofitHelper.getRetrofit()
     private var imageUri: Bitmap?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -97,7 +97,7 @@ class SignupAct : AppCompatActivity() {
         // ID 중복 체크
         btnCheckId.setOnClickListener {
             val userId = validUser(suId.text.toString())
-            userRetrofit.validUserCall(userId)
+            Retrofit.validUserCall(userId)
                 .enqueue(object : Callback<validUserSuccess> {
                     override fun onResponse(call: Call<validUserSuccess>, response: Response<validUserSuccess>){
                         if(response.body()?.result=="true"){
@@ -139,7 +139,7 @@ class SignupAct : AppCompatActivity() {
                     intent.getStringExtra("phoneNumber").toString()
                 )
 
-                userRetrofit.SignupCall(userInfo)
+                Retrofit.SignupCall(userInfo)
                     .enqueue(object : Callback<SignupSuccess> {
                         override fun onResponse(call: Call<SignupSuccess>, response: Response<SignupSuccess>){
                             if(response.body()?.result=="true"){

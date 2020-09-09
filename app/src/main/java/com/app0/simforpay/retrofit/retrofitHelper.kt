@@ -1,6 +1,6 @@
 package com.app0.simforpay.retrofit
 
-import com.app0.simforpay.retrofit.network.UserApi
+import com.app0.simforpay.retrofit.network.Api
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -21,7 +21,7 @@ class RetrofitHelper{
             .writeTimeout(15, TimeUnit.SECONDS)
             .build()
 
-        fun getUserRetrofit() : UserApi{
+        fun getRetrofit() : Api{
 
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
@@ -30,7 +30,7 @@ class RetrofitHelper{
                 .client(okHttpClient)
                 .build()
 
-            return retrofit.create(UserApi::class.java)
+            return retrofit.create(Api::class.java)
         }
 
     }

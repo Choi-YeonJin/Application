@@ -35,7 +35,7 @@ import java.util.*
 
 class ContractFrag : Fragment() {
 
-    private val userRetrofit = RetrofitHelper.getUserRetrofit()
+    private val Retrofit = RetrofitHelper.getRetrofit()
     val calendar = Calendar.getInstance()
 
     override fun onCreateView(
@@ -55,7 +55,7 @@ class ContractFrag : Fragment() {
 
         val mentionAdapter : ArrayAdapter<Mention> = MentionArrayAdapter(this.requireContext())
 
-        userRetrofit.getUsers().enqueue(object : Callback<List<User>>{
+        Retrofit.getUsers().enqueue(object : Callback<List<User>>{
             override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
 
                 mentionAdapter.clear()
@@ -170,18 +170,22 @@ class ContractFrag : Fragment() {
         }
 
         btnSave.setOnClickListener{
+            val user_id = Integer.parseInt(PreferenceUtil(this.requireContext()).getString(Key.LENDER_ID.toString(), ""))
             val title = contractName.text.toString()
             val borrow_date = tradeDay.text.toString()
             val payback_date = complDay.text.toString()
             val price = Integer.parseInt(price.text.toString())
             val lender_id = Integer.parseInt(PreferenceUtil(this.requireContext()).getString(Key.LENDER_ID.toString(), ""))
             val lender_name = lender.text.toString()
+            val lender_bank = bank.text.toString()
+            val lender_account = Integer.parseInt(accountNum.text.toString())
+            val borrowerList : ArrayList<String> = ArrayList()
             val penalty = penalty.text.toString()
             val alarm = if (swAlert.isChecked) 1 else 0
 
-            val contractInfo = Contract(title, borrow_date, payback_date, price, lender_id, lender_name, penalty, alarm)
+            val contractInfo = Contract(user_id,title, borrow_date, payback_date, price, lender_id, lender_name,lender_bank,lender_account,borrowerList, penalty, alarm)
 
-            userRetrofit.ContractCall(contractInfo)
+            Retrofit.ContractCall(contractInfo)
                 .enqueue(object : Callback<ContractSuccess> {
                     override fun onResponse(call: Call<ContractSuccess>, response: Response<ContractSuccess>) {
                         if(response.body()?.result=="true")
