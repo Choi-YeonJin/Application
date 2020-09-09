@@ -3,9 +3,13 @@ package com.app0.simforpay.retrofit.network
 import com.app0.simforpay.retrofit.domain.*
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface UserApi {
+
+    @GET("users")
+    fun getUsers() : Call<List<User>>
 
     @POST("sign-in")
     fun SigninCall(@Body userInfo: Signin) : Call<SigninSuccess>

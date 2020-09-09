@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.app0.simforpay.R
@@ -20,7 +22,10 @@ import com.app0.simforpay.global.sharedpreferences.PreferenceUtil
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.Contract
 import com.app0.simforpay.retrofit.domain.ContractSuccess
+import com.app0.simforpay.retrofit.domain.User
 import com.google.android.material.textfield.TextInputLayout
+import com.hendraanggrian.appcompat.widget.Mention
+import com.hendraanggrian.appcompat.widget.MentionArrayAdapter
 import kotlinx.android.synthetic.main.frag_contract.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -44,7 +49,30 @@ class ContractFrag : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Bank Dropdown
+        btnBack.setOnClickListener {
+            findNavController().navigate(R.id.action_fragContract_to_fragHome)
+        }
+
+        val mentionAdapter : ArrayAdapter<Mention> = MentionArrayAdapter(this.requireContext())
+
+        userRetrofit.getUsers().enqueue(object : Callback<List<User>>{
+            override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
+
+                mentionAdapter.clear()
+
+                response.body()?.forEach {
+                    mentionAdapter.add(Mention(it.name))
+                }
+            }
+            override fun onFailure(call: Call<List<User>>, t: Throwable) { }
+
+        })
+
+        Log.d("size", mentionAdapter.count.toString())
+
+        lender.mentionAdapter = mentionAdapter
+
+        // bank dropdown
         val items = listOf("NH농협", "KB국민", "신한", "우리", "하나", "IBK기업", "SC제일", "씨티", "KDB산업", "SBI저축",
             "새마을", "대구", "광주", "우체국", "신협", "전북", "경남", "부산", "수협", "제주", "카카오뱅크")
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
