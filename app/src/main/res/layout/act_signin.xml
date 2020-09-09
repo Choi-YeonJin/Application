@@ -63,7 +63,7 @@
     <Button
         android:id="@+id/btnSignin"
         android:layout_width="0dp"
-        android:layout_height="@dimen/BtnSigninH"
+        android:layout_height="@dimen/btnWH"
         app:layout_constraintTop_toBottomOf="@id/layPw"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

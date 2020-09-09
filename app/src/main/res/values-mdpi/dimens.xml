@@ -33,7 +33,7 @@
     <dimen name="splLogoW">72dp</dimen>
     <dimen name="siLogoW">40dp</dimen>
 
-    <dimen name="BtnSigninH">40dp</dimen>
+    <dimen name="btnWH">40dp</dimen>
 
 
 </resources>
