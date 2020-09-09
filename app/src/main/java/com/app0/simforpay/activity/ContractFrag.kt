@@ -36,7 +36,8 @@ import java.util.*
 class ContractFrag : Fragment() {
 
     private val Retrofit = RetrofitHelper.getRetrofit()
-    val calendar = Calendar.getInstance()
+    private val calendar = Calendar.getInstance()
+    private val userInfo = mutableMapOf<String, Int>()
     private lateinit var callback: OnBackPressedCallback
 
     override fun onAttach(context: Context) {
@@ -64,7 +65,7 @@ class ContractFrag : Fragment() {
             findNavController().navigate(R.id.action_fragContract_to_fragHome)
         }
 
-        val mentionAdapter : ArrayAdapter<Mention> = MentionArrayAdapter(this.requireContext())
+        val mentionAdapter: ArrayAdapter<Mention> = MentionArrayAdapter(this.requireContext())
 
         Retrofit.getUsers().enqueue(object : Callback<List<User>>{
             override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
@@ -72,26 +73,35 @@ class ContractFrag : Fragment() {
                 mentionAdapter.clear()
 
                 response.body()?.forEach {
+
+                    userInfo[it.name] = it.id
                     mentionAdapter.add(Mention(it.name))
                 }
             }
-            override fun onFailure(call: Call<List<User>>, t: Throwable) { }
+            override fun onFailure(call: Call<List<User>>, t: Throwable) {}
 
         })
 
-        Log.d("size", mentionAdapter.count.toString())
+        //Log.d("size", mentionAdapter.count.toString())
 
         lender.mentionAdapter = mentionAdapter
+        borrower1.mentionAdapter = mentionAdapter
+        borrower2.mentionAdapter = mentionAdapter
+        borrower3.mentionAdapter = mentionAdapter
+        borrower4.mentionAdapter = mentionAdapter
+        borrower5.mentionAdapter = mentionAdapter
 
         // bank dropdown
-        val items = listOf("NH농협", "KB국민", "신한", "우리", "하나", "IBK기업", "SC제일", "씨티", "KDB산업", "SBI저축",
-            "새마을", "대구", "광주", "우체국", "신협", "전북", "경남", "부산", "수협", "제주", "카카오뱅크")
+        val items = listOf(
+            "NH농협", "KB국민", "신한", "우리", "하나", "IBK기업", "SC제일", "씨티", "KDB산업", "SBI저축",
+            "새마을", "대구", "광주", "우체국", "신협", "전북", "경남", "부산", "수협", "제주", "카카오뱅크"
+        )
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
         bank.setAdapter(adapter)
 
         // Enable Switch
         swAlert.isEnabled = false
-        if(!swAlert.isEnabled){
+        if (!swAlert.isEnabled) {
             swAlert.setOnClickListener {
                 Toast.makeText(context, "완료일을 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
@@ -186,7 +196,7 @@ class ContractFrag : Fragment() {
             val borrow_date = tradeDay.text.toString()
             val payback_date = complDay.text.toString()
             val price = Integer.parseInt(price.text.toString())
-            val lender_id = Integer.parseInt(PreferenceUtil(this.requireContext()).getString(Key.LENDER_ID.toString(), ""))
+            val lender_id = userInfo[lender.text.toString().replace("@", "").trim()]
             val lender_name = lender.text.toString()
             val lender_bank = bank.text.toString()
             val lender_account = Integer.parseInt(accountNum.text.toString())
@@ -194,7 +204,7 @@ class ContractFrag : Fragment() {
             val penalty = penalty.text.toString()
             val alarm = if (swAlert.isChecked) 1 else 0
 
-            val contractInfo = Contract(user_id,title, borrow_date, payback_date, price, lender_id, lender_name,lender_bank,lender_account,borrowerList, penalty, alarm)
+            val contractInfo = Contract(user_id,title, borrow_date, payback_date, price, lender_id!!, lender_name,lender_bank,lender_account,borrowerList, penalty, alarm)
 
             Retrofit.ContractCall(contractInfo)
                 .enqueue(object : Callback<ContractSuccess> {
