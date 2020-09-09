@@ -1,6 +1,7 @@
 package com.app0.simforpay.activity
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,12 +13,11 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.app0.simforpay.R
-import com.app0.simforpay.global.TextInput
 import com.app0.simforpay.global.sharedpreferences.PreferenceUtil
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.Contract
@@ -35,9 +35,20 @@ import java.util.*
 
 class ContractFrag : Fragment() {
 
-    private val userRetrofit = RetrofitHelper.getUserRetrofit()
+    private val Retrofit = RetrofitHelper.getRetrofit()
     private val calendar = Calendar.getInstance()
     private val userInfo = mutableMapOf<String, Int>()
+    private lateinit var callback: OnBackPressedCallback
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                Log.e("back pressed", "back back")
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,7 +67,7 @@ class ContractFrag : Fragment() {
 
         val mentionAdapter: ArrayAdapter<Mention> = MentionArrayAdapter(this.requireContext())
 
-        userRetrofit.getUsers().enqueue(object : Callback<List<User>> {
+        Retrofit.getUsers().enqueue(object : Callback<List<User>>{
             override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
 
                 mentionAdapter.clear()
@@ -96,7 +107,7 @@ class ContractFrag : Fragment() {
             }
         }
 
-        TextInput.CheckFive(btnSave, contractName, tradeDay, price, lender, borrower1)
+//        TextInput.CheckFive(btnSave, contractName, tradeDay, price, lender, borrower1)
     }
 
     override fun onResume() {
@@ -180,23 +191,28 @@ class ContractFrag : Fragment() {
         }
 
         btnSave.setOnClickListener{
+            val user_id = Integer.parseInt(PreferenceUtil(this.requireContext()).getString(Key.LENDER_ID.toString(), ""))
             val title = contractName.text.toString()
             val borrow_date = tradeDay.text.toString()
             val payback_date = complDay.text.toString()
             val price = Integer.parseInt(price.text.toString())
             val lender_id = userInfo[lender.text.toString().replace("@", "").trim()]
             val lender_name = lender.text.toString()
-            val bank = bank.text.toString()
-            val accountNum = Integer.parseInt(accountNum.text.toString())
+            val lender_bank = bank.text.toString()
+            val lender_account = Integer.parseInt(accountNum.text.toString())
+            val borrowerList : ArrayList<String> = ArrayList()
             val penalty = penalty.text.toString()
             val alarm = if (swAlert.isChecked) 1 else 0
-            val contractInfo = Contract(title, borrow_date, payback_date, price, lender_id!!, lender_name, bank, accountNum, penalty, alarm)
 
-            userRetrofit.ContractCall(contractInfo)
+            val contractInfo = Contract(user_id,title, borrow_date, payback_date, price, lender_id!!, lender_name,lender_bank,lender_account,borrowerList, penalty, alarm)
+
+            Retrofit.ContractCall(contractInfo)
                 .enqueue(object : Callback<ContractSuccess> {
                     override fun onResponse(call: Call<ContractSuccess>, response: Response<ContractSuccess>) {
-                        if(response.body()?.result=="true")
-                            findNavController().navigate(R.id.action_fragContract_to_fragHome)
+                        if(response.body()?.result=="true"){
+                            val fragment: ContractShareFrag = ContractShareFrag()
+                            fragmentManager!!.beginTransaction().replace(R.id.fl_container, fragment).commit()
+                        }
                         else
                             Toast.makeText(context, "잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                     }
@@ -207,6 +223,11 @@ class ContractFrag : Fragment() {
                 })
 
         }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 
     fun ShowDatePickerDialog(editText: EditText, str: String) {
@@ -296,12 +317,14 @@ class ContractFrag : Fragment() {
     }
 
     fun TextBorrowerPrice(cnt: Int, borrowerPrices: List<TextView>){
-        var borrowerPrice = 0
+        if(price.text.toString() != ""){
+            var borrowerPrice = 0
+            
+            borrowerPrice = if(cbN1.isChecked) price.text.toString().toInt()/cnt else price.text.toString().toInt()
 
-        borrowerPrice = if(cbN1.isChecked) price.text.toString().toInt()/cnt else price.text.toString().toInt()
-
-        for(textView in borrowerPrices){
-            textView.text = NumberFormat.getInstance(Locale.KOREA).format(borrowerPrice) + "원"
+            for(textView in borrowerPrices){
+                textView.text = NumberFormat.getInstance(Locale.KOREA).format(borrowerPrice) + "원"
+            }
         }
     }
 }

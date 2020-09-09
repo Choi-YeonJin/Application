@@ -3,6 +3,8 @@ package com.app0.simforpay.retrofit.domain
 import com.google.gson.annotations.SerializedName
 
 data class Contract(
+    @SerializedName ("user_id")
+    val user_id: Int,
     @SerializedName ("title")
     val title: String,
     @SerializedName("borrow_date")
@@ -19,6 +21,8 @@ data class Contract(
     val lender_bank: String,
     @SerializedName("lender_account")
     val lender_account: Int,
+    @SerializedName("borrower")
+    val borrower: List<String>,
     @SerializedName("penalty")
     val penalty: String,
     @SerializedName("alarm")

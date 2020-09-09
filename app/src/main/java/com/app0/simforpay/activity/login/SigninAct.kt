@@ -19,7 +19,7 @@ import retrofit2.Response
 
 class SigninAct : AppCompatActivity() {
 
-    private val userRetrofit = RetrofitHelper.getUserRetrofit()
+    private val Retrofit = RetrofitHelper.getRetrofit()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +29,7 @@ class SigninAct : AppCompatActivity() {
 
             val userInfo = Signin(siId.text.toString(), siPw.text.toString())
 
-            userRetrofit.SigninCall(userInfo)
+            Retrofit.SigninCall(userInfo)
                 .enqueue(object : Callback<SigninSuccess>{
                     override fun onResponse(call: Call<SigninSuccess>, response: Response<SigninSuccess>) {
                         if (response.body()?.result=="true"){
