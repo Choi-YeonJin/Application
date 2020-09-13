@@ -20,12 +20,14 @@ import androidx.navigation.fragment.findNavController
 import com.app0.simforpay.R
 import com.app0.simforpay.global.sharedpreferences.PreferenceUtil
 import com.app0.simforpay.retrofit.RetrofitHelper
+import com.app0.simforpay.retrofit.domain.Borrower
 import com.app0.simforpay.retrofit.domain.Contract
 import com.app0.simforpay.retrofit.domain.ContractSuccess
 import com.app0.simforpay.retrofit.domain.User
 import com.google.android.material.textfield.TextInputLayout
 import com.hendraanggrian.appcompat.widget.Mention
 import com.hendraanggrian.appcompat.widget.MentionArrayAdapter
+import com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
 import kotlinx.android.synthetic.main.frag_contract.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -190,28 +192,48 @@ class ContractFrag : Fragment() {
             }
         }
 
+
+
         btnSave.setOnClickListener{
             val user_id = Integer.parseInt(PreferenceUtil(this.requireContext()).getString(Key.LENDER_ID.toString(), ""))
             val title = contractName.text.toString()
             val borrow_date = tradeDay.text.toString()
             val payback_date = complDay.text.toString()
             val price = Integer.parseInt(price.text.toString())
-            val lender_id = userInfo[lender.text.toString().replace("@", "").trim()]
-            val lender_name = lender.text.toString()
+            val lender_name = lender.text.toString().replace("@", "").trim()
+            val lender_id = userInfo[lender_name]
             val lender_bank = bank.text.toString()
             val lender_account = Integer.parseInt(accountNum.text.toString())
-            val borrowerList : ArrayList<String> = ArrayList()
+            val borrowerList = arrayListOf<Borrower>()
             val penalty = penalty.text.toString()
             val alarm = if (swAlert.isChecked) 1 else 0
 
-            val contractInfo = Contract(user_id,title, borrow_date, payback_date, price, lender_id!!, lender_name,lender_bank,lender_account,borrowerList, penalty, alarm)
+            val borrowerIdList = arrayOf(borrower1, borrower2, borrower3, borrower4, borrower5)
+            val priceIdList = arrayOf(borrowerPrice1, borrowerPrice2, borrowerPrice3, borrowerPrice4, borrowerPrice5)
+            val payback_state = 0
+
+            for(i in 0 until cnt){
+
+                val userName = borrowerIdList[i].text.toString().replace("@","").trim()
+                val borrower_id = userInfo[userName]
+                val borrower_price = Integer.parseInt(priceIdList[i].text.toString().replace("원", "").replace(",","").trim())
+
+                borrowerList.add(Borrower(borrower_id!!, userName, borrower_price, payback_state))
+            }
+
+            val contractInfo = Contract(user_id, title, borrow_date, payback_date, price, lender_id!!, lender_name, lender_bank, lender_account, borrowerList, penalty, alarm)
+
+            Log.d("test", contractInfo.toString())
 
             Retrofit.ContractCall(contractInfo)
                 .enqueue(object : Callback<ContractSuccess> {
                     override fun onResponse(call: Call<ContractSuccess>, response: Response<ContractSuccess>) {
                         if(response.body()?.result=="true"){
-                            val fragment: ContractShareFrag = ContractShareFrag()
-                            fragmentManager!!.beginTransaction().replace(R.id.fl_container, fragment).commit()
+
+                            findNavController().navigate(R.id.action_fragContract_to_fragHome)
+
+                            //val fragment: ContractShareFrag = ContractShareFrag()
+                            //fragmentManager!!.beginTransaction().replace(R.id.fl_container, fragment).commit()
                         }
                         else
                             Toast.makeText(context, "잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
@@ -221,7 +243,6 @@ class ContractFrag : Fragment() {
 
                     }
                 })
-
         }
     }
 
@@ -319,7 +340,6 @@ class ContractFrag : Fragment() {
     fun TextBorrowerPrice(cnt: Int, borrowerPrices: List<TextView>){
         if(price.text.toString() != ""){
             var borrowerPrice = 0
-            
             borrowerPrice = if(cbN1.isChecked) price.text.toString().toInt()/cnt else price.text.toString().toInt()
 
             for(textView in borrowerPrices){

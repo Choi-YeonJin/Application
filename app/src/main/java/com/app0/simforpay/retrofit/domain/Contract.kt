@@ -22,7 +22,7 @@ data class Contract(
     @SerializedName("lender_account")
     val lender_account: Int,
     @SerializedName("borrower")
-    val borrower: List<String>,
+    val borrower: List<Borrower>,
     @SerializedName("penalty")
     val penalty: String,
     @SerializedName("alarm")
