@@ -37,7 +37,8 @@ import java.util.*
 class ContractFrag : Fragment() {
 
     private val Retrofit = RetrofitHelper.getRetrofit()
-    val calendar = Calendar.getInstance()
+    private val calendar = Calendar.getInstance()
+    private val userInfo = mutableMapOf<String, Int>()
     private lateinit var callback: OnBackPressedCallback
 
     override fun onAttach(context: Context) {
@@ -71,6 +72,8 @@ class ContractFrag : Fragment() {
                 mentionAdapter.clear()
 
                 response.body()?.forEach {
+
+                    userInfo[it.name] = it.id
                     mentionAdapter.add(Mention(it.name))
                 }
             }
@@ -79,9 +82,14 @@ class ContractFrag : Fragment() {
 
         })
 
-        Log.d("size", mentionAdapter.count.toString())
+        //Log.d("size", mentionAdapter.count.toString())
 
         lender.mentionAdapter = mentionAdapter
+        borrower1.mentionAdapter = mentionAdapter
+        borrower2.mentionAdapter = mentionAdapter
+        borrower3.mentionAdapter = mentionAdapter
+        borrower4.mentionAdapter = mentionAdapter
+        borrower5.mentionAdapter = mentionAdapter
 
         // Bank dropdown
         val items = listOf(
@@ -93,7 +101,7 @@ class ContractFrag : Fragment() {
 
         // Enable Switch
         swAlert.isEnabled = false
-        if(!swAlert.isEnabled){
+        if (!swAlert.isEnabled) {
             swAlert.setOnClickListener {
                 Toast.makeText(context, "완료일을 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
@@ -203,12 +211,7 @@ class ContractFrag : Fragment() {
             val borrow_date = tradeDay.text.toString()
             val payback_date = complDay.text.toString()
             val price = Integer.parseInt(price.text.toString())
-            val lender_id = Integer.parseInt(
-                PreferenceUtil(this.requireContext()).getString(
-                    Key.LENDER_ID.toString(),
-                    ""
-                )
-            )
+            val lender_id = userInfo[lender.text.toString().replace("@", "").trim()]
             val lender_name = lender.text.toString()
             val lender_bank = bank.text.toString()
             val lender_account = Integer.parseInt(accountNum.text.toString())
@@ -216,20 +219,7 @@ class ContractFrag : Fragment() {
             val penalty = penalty.text.toString()
             val alarm = if (swAlert.isChecked) 1 else 0
 
-            val contractInfo = Contract(
-                user_id,
-                title,
-                borrow_date,
-                payback_date,
-                price,
-                lender_id,
-                lender_name,
-                lender_bank,
-                lender_account,
-                borrowerList,
-                penalty,
-                alarm
-            )
+            val contractInfo = Contract(user_id,title, borrow_date, payback_date, price, lender_id!!, lender_name,lender_bank,lender_account,borrowerList, penalty, alarm)
 
             Retrofit.ContractCall(contractInfo)
                 .enqueue(object : Callback<ContractSuccess> {
