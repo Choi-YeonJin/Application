@@ -6,8 +6,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
 import com.app0.simforpay.R
-import com.app0.simforpay.global.RegularExpression
-import com.app0.simforpay.global.TextInput
+import com.app0.simforpay.util.RegularExpression
+import com.app0.simforpay.util.TextInput
 import kotlinx.android.synthetic.main.act_phone.*
 
 class PhoneAct : AppCompatActivity() {

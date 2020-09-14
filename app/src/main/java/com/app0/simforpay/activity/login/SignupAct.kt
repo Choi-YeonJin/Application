@@ -11,9 +11,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.app0.simforpay.R
-import com.app0.simforpay.global.ImgUrl
-import com.app0.simforpay.global.RegularExpression
-import com.app0.simforpay.global.TextInput
+import com.app0.simforpay.util.ImgUrl
+import com.app0.simforpay.util.RegularExpression
+import com.app0.simforpay.util.TextInput
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.Signup
 import com.app0.simforpay.retrofit.domain.SignupSuccess

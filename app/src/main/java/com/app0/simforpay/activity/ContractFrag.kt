@@ -18,8 +18,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.app0.simforpay.R
-import com.app0.simforpay.global.CustomDialog
-import com.app0.simforpay.global.sharedpreferences.PreferenceUtil
+import com.app0.simforpay.util.CustomDialog
+import com.app0.simforpay.util.sharedpreferences.PreferenceUtil
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.Borrower
 import com.app0.simforpay.retrofit.domain.Contract
@@ -28,7 +28,6 @@ import com.app0.simforpay.retrofit.domain.User
 import com.google.android.material.textfield.TextInputLayout
 import com.hendraanggrian.appcompat.widget.Mention
 import com.hendraanggrian.appcompat.widget.MentionArrayAdapter
-import com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
 import kotlinx.android.synthetic.main.frag_contract.*
 import retrofit2.Call
 import retrofit2.Callback

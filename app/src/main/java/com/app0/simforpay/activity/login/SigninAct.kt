@@ -7,8 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.app0.simforpay.R
 import com.app0.simforpay.activity.Key
 import com.app0.simforpay.activity.MainAct
-import com.app0.simforpay.global.TextInput
-import com.app0.simforpay.global.sharedpreferences.PreferenceUtil
+import com.app0.simforpay.util.TextInput
+import com.app0.simforpay.util.sharedpreferences.PreferenceUtil
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.Signin
 import com.app0.simforpay.retrofit.domain.SigninSuccess
