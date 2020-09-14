@@ -1,4 +1,4 @@
-package com.app0.simforpay.global
+package com.app0.simforpay.util
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
