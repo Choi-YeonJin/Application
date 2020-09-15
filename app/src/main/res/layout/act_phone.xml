@@ -49,8 +49,7 @@
             app:layout_constraintBottom_toTopOf="@id/layCertiNum"
             android:layout_marginTop="@dimen/size48"
             android:hint="전화번호"
-            app:startIconDrawable="@drawable/ic_phone"
-            app:helperText="전화번호를 입력하면 버튼이 활성화됩니다.">
+            app:startIconDrawable="@drawable/ic_phone">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/phoneNum"

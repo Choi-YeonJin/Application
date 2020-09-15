@@ -18,14 +18,14 @@
         android:fullBackupContent="true"
         android:allowBackup="true">
         <activity android:name=".activity.SplashAct">
-
-        </activity>
-        <activity android:name=".activity.MainAct">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".activity.MainAct">
+
         </activity>
         <activity android:name="com.app0.simforpay.activity.login.SigninAct" android:theme="@style/FadeActTheme" />
         <activity android:name="com.app0.simforpay.activity.login.PhoneAct" />

@@ -7,11 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.app0.simforpay.R
 import com.app0.simforpay.activity.Key
 import com.app0.simforpay.activity.MainAct
-import com.app0.simforpay.util.TextInput
-import com.app0.simforpay.util.sharedpreferences.PreferenceUtil
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.Signin
 import com.app0.simforpay.retrofit.domain.SigninSuccess
+import com.app0.simforpay.util.TextInput
+import com.app0.simforpay.util.sharedpreferences.PreferenceUtil
 import kotlinx.android.synthetic.main.act_signin.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -49,7 +49,8 @@ class SigninAct : AppCompatActivity() {
         }
 
         btnSignup.setOnClickListener{
-            startActivity(Intent(applicationContext, PhoneAct::class.java))
+//            startActivity(Intent(applicationContext, PhoneAct::class.java))
+            startActivity(Intent(applicationContext, SignupAct::class.java))
         }
 
         TextInput.CheckTwo(btnSignin, siId, siPw)
