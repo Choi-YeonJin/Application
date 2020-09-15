@@ -4,9 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.size
 import androidx.fragment.app.Fragment
+import androidx.viewpager.widget.ViewPager
 import com.app0.simforpay.R
-import com.app0.simforpay.activity.recyclerview.ContractData
+import com.app0.simforpay.adapter.ContractAdapter
+import com.app0.simforpay.adapter.ContractData
+import kotlinx.android.synthetic.main.frag_home.*
+
 
 class HomeFrag : Fragment() {
 
@@ -25,12 +30,35 @@ class HomeFrag : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val contractList = generateDummyList(3)
-//
-//        rvContract.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL ,false)
-//        rvContract.adapter = ContractAdapter(contractList)
-//
-//        rvContract.setHasFixedSize(true)
+        val contractList = generateDummyList(3) // viewpager에 들어갈 정보
+
+        vpContract.adapter = ContractAdapter(contractList, requireContext())
+
+        // display 비율에 맞춰 padding과 margin setting
+        val dpValue = 80
+        val displaySize = resources.displayMetrics.density
+        val margin = (dpValue * displaySize).toInt()
+        vpContract.setPadding(0, 0, margin, 0)
+        vpContract.pageMargin = margin/2
+
+        vpContract.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {
+
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+            }
+            override fun onPageSelected(position: Int) {
+                // 첫페이지와 끝페이지 padding, margin 값 조절
+                when (position) {
+                    0 -> vpContract.setPadding(margin/2, 0, margin+margin/2, 0)
+                    vpContract.size-1 -> vpContract.setPadding(margin+margin/2, 0, margin/2, 0)
+                    else -> vpContract.setPadding(margin, 0, margin, 0)
+                }
+
+            }
+        })
     }
 
     private fun generateDummyList(size: Int): List<ContractData> {

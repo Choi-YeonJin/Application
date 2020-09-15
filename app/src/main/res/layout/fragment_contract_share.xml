@@ -42,10 +42,11 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layContract"
         android:layout_width="0dp"
-        android:layout_height="384dp"
+        android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/subTitle"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnSaveImg"
         android:layout_marginLeft="@dimen/size40"
         android:layout_marginRight="@dimen/size40"
         android:layout_marginTop="@dimen/size48"
@@ -114,9 +115,11 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/layContract"
         app:layout_constraintLeft_toLeftOf="@id/layContract"
-        app:layout_constraintRight_toLeftOf="@id/btnShare"
+        app:layout_constraintRight_toRightOf="@id/layContract"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
+        android:layout_marginTop="@dimen/size40"
+        android:layout_marginBottom="@dimen/size40"
         android:text="이미지 저장"
         android:textColor="@color/dark1"
         android:textSize="@dimen/font16"
@@ -124,20 +127,20 @@
         app:iconGravity="textStart"
         android:drawableTint="@color/mainYellow" />
 
-    <Button
-        android:id="@+id/btnShare"
-        style="@style/CustomTxtBtnStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/layContract"
-        app:layout_constraintLeft_toRightOf="@id/btnSaveImg"
-        app:layout_constraintRight_toRightOf="@id/layContract"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:text="SNS 공유"
-        android:textColor="@color/dark1"
-        android:textSize="@dimen/font16"
-        app:icon="@drawable/ic_share"
-        app:iconGravity="textStart"
-        android:drawableTint="@color/mainYellow" />
+<!--    <Button-->
+<!--        android:id="@+id/btnShare"-->
+<!--        style="@style/CustomTxtBtnStyle"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/layContract"-->
+<!--        app:layout_constraintLeft_toRightOf="@id/btnSaveImg"-->
+<!--        app:layout_constraintRight_toRightOf="@id/layContract"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        android:text="SNS 공유"-->
+<!--        android:textColor="@color/dark1"-->
+<!--        android:textSize="@dimen/font16"-->
+<!--        app:icon="@drawable/ic_share"-->
+<!--        app:iconGravity="textStart"-->
+<!--        android:drawableTint="@color/mainYellow" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
