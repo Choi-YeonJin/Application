@@ -6,7 +6,8 @@
     style="@style/basicP"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:clickable="true">
 
     <ImageButton
         android:id="@+id/btnBack"

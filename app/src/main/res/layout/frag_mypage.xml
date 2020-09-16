@@ -1,14 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/basicP"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.home.MypageFrag">
+    android:background="@color/white"
+    android:clickable="true">
 
-    <!-- TODO: Update blank fragment layout -->
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="@dimen/icWH"
+        android:layout_height="@dimen/icWH"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        android:src="@drawable/ic_back" />
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/btnBack"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="@dimen/size24"
+        android:text="마이페이지"
+        android:textSize="@dimen/font24"
+        android:fontFamily="@font/nanumbarungothic_bold" />
 
-</FrameLayout>
+    <ImageView
+        android:id="@+id/imgProfile"
+        android:layout_width="@dimen/imgProfileWH"
+        android:layout_height="@dimen/imgProfileWH"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/layName"
+        android:layout_marginTop="@dimen/size32"
+        android:src="@drawable/img_profile" />
+
+    <ImageButton
+        android:id="@+id/btnAddImgProfile"
+        android:layout_width="@dimen/size24"
+        android:layout_height="@dimen/size24"
+        app:layout_constraintRight_toRightOf="@id/imgProfile"
+        app:layout_constraintBottom_toBottomOf="@id/imgProfile"
+        android:padding="@dimen/size4"
+        android:src="@drawable/ic_camera"
+        android:background="@drawable/btnaddimage_background" />
+
+    <TextView
+        android:id="@+id/myName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/imgProfile"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/myId"
+        android:layout_marginTop="@dimen/size8"
+        android:text="홍길동"
+        android:textSize="@dimen/size16"
+        android:fontFamily="@font/nanumbarungothic_bold" />
+
+    <TextView
+        android:id="@+id/myId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/myName"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/myPhone"
+        android:layout_marginTop="@dimen/size4"
+        android:text="\@honggildong"
+        android:textColor="@color/dark3"
+        android:textSize="@dimen/font12" />
+
+    <TextView
+        android:id="@+id/txt1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/myPhone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/myPhone"
+        android:text="전화번호"
+        android:fontFamily="@font/nanumbarungothic_bold" />
+    
+    <TextView
+        android:id="@+id/myPhone"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/txtBackH"
+        app:layout_constraintTop_toBottomOf="@id/myId"
+        app:layout_constraintLeft_toRightOf="@id/txt1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/myPw"
+        android:padding="@dimen/size8"
+        android:layout_marginTop="@dimen/size40"
+        android:layout_marginLeft="@dimen/size8"
+        android:text="010-0000-0000"
+        android:background="@drawable/txt_background"
+        android:gravity="center_vertical" /> <!-- 전화번호 -->
+
+    <TextView
+        android:id="@+id/txt2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/myPw"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/myPw"
+        android:text="비밀번호"
+        android:fontFamily="@font/nanumbarungothic_bold" />
+
+    <TextView
+        android:id="@+id/myPw"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/txtBackH"
+        app:layout_constraintTop_toBottomOf="@id/myPhone"
+        app:layout_constraintLeft_toRightOf="@id/txt1"
+        app:layout_constraintRight_toLeftOf="@id/btnPwChange"
+        app:layout_constraintBottom_toTopOf="@id/myAccount"
+        android:padding="@dimen/size8"
+        android:layout_margin="@dimen/size8"
+        android:layout_marginBottom="0dp"
+        android:text="****"
+        android:background="@drawable/txt_background"
+        android:gravity="center_vertical" />
+
+    <ImageButton
+        android:id="@+id/btnPwChange"
+        android:layout_width="@dimen/size24"
+        android:layout_height="@dimen/size24"
+        app:layout_constraintTop_toTopOf="@id/myPw"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/myPw"
+        android:src="@drawable/ic_edit" /> <!-- 비밀번호 -->
+
+    <TextView
+        android:id="@+id/txt3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/myAccount"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/myAccount"
+        android:text="계좌번호"
+        android:fontFamily="@font/nanumbarungothic_bold" />
+
+    <TextView
+        android:id="@+id/myAccount"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/txtBackH"
+        app:layout_constraintTop_toBottomOf="@id/myPw"
+        app:layout_constraintLeft_toRightOf="@id/txt1"
+        app:layout_constraintRight_toLeftOf="@id/btnAccountChange"
+        android:padding="@dimen/size8"
+        android:layout_margin="@dimen/size8"
+        android:layout_marginBottom="0dp"
+        android:text="카카오뱅크 3333123456789"
+        android:background="@drawable/txt_background"
+        android:gravity="center_vertical" />
+
+    <ImageButton
+        android:id="@+id/btnAccountChange"
+        android:layout_width="@dimen/size24"
+        android:layout_height="@dimen/size24"
+        app:layout_constraintTop_toTopOf="@id/myAccount"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/myAccount"
+        android:src="@drawable/ic_edit" /> <!-- 계좌번호 -->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

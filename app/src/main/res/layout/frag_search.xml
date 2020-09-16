@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/basicP"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.home.SearchFrag">
+    android:background="@color/white"
+    android:clickable="true">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/btnCancel"
+        app:iconifiedByDefault="false"
+        app:queryHint="검색어를 입력하세요."
+        app:queryBackground="@null"
+        android:background="@drawable/search_background" />
 
-</FrameLayout>
+    <Button
+        android:id="@+id/btnCancel"
+        style="@style/CustomTxtBtnStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/searchView"
+        app:layout_constraintLeft_toRightOf="@id/searchView"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/searchView"
+        android:text="취소"
+        android:textColor="@color/dark3"
+        android:textSize="@dimen/font16" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

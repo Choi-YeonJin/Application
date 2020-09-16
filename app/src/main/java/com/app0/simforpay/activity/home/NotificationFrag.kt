@@ -45,8 +45,6 @@ class NotificationFrag : Fragment() {
         btnBack.setOnClickListener {
             requireFragmentManager().beginTransaction().remove(this).commit()
         }
-
-
     }
 
     override fun onDestroy() {

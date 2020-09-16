@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowBackground">@color/white</item>
+        <item name="android:textSize">@dimen/font14</item>
         <item name="fontFamily">@font/nanumbarungothic</item>
         <item name="android:textColor">@color/dark1</item>
         <item name="colorAccent">@color/mainBlue</item>
