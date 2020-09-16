@@ -46,7 +46,7 @@
             app:layout_constraintTop_toBottomOf="@id/subTitle"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/layName"
-            android:layout_marginTop="@dimen/size40"
+            android:layout_marginTop="@dimen/size32"
             android:src="@drawable/img_profile" />
         
         <ImageButton
@@ -66,11 +66,10 @@
             app:layout_constraintTop_toBottomOf="@+id/imgProfile"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/layId"
-            android:layout_marginTop="@dimen/size40"
+            app:layout_constraintBottom_toTopOf="@id/layPhoneNum"
+            android:layout_marginTop="@dimen/size16"
             android:hint="이름"
-            app:startIconDrawable="@drawable/ic_textfield"
-            app:helperText=" ">
+            app:startIconDrawable="@drawable/ic_textfield">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name"
@@ -82,10 +81,29 @@
         </com.google.android.material.textfield.TextInputLayout> <!-- 이름 -->
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layPhoneNum"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/layName"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:hint="전화번호"
+            app:startIconDrawable="@drawable/ic_phone">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phoneNum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:maxLength="11" />
+
+        </com.google.android.material.textfield.TextInputLayout> <!-- 전화번호 -->
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layId"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/layName"
+            app:layout_constraintTop_toBottomOf="@+id/layPhoneNum"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/btnCheckId"
             app:layout_constraintBottom_toTopOf="@id/layPw"

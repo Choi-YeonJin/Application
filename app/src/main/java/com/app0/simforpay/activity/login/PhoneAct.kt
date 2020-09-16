@@ -12,7 +12,6 @@ import kotlinx.android.synthetic.main.act_phone.*
 
 class PhoneAct : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.act_phone)
 

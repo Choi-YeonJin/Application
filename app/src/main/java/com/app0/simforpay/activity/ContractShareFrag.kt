@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -68,9 +69,11 @@ class ContractShareFrag : Fragment() {
             fos.flush()
             fos.close()
 
-            Log.e("save image", "success")
+            Toast.makeText(requireContext(), "이미지 저장 완료", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             e.printStackTrace()
+
+            Toast.makeText(requireContext(), "저장공간 접근 권한이 비활성화되어 있습니다.", Toast.LENGTH_SHORT).show()
         }
     }
 }

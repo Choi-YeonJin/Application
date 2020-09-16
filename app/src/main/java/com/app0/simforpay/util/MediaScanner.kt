@@ -1,4 +1,4 @@
-package com.app0.simforpay.activity
+package com.app0.simforpay.util
 
 import android.content.Context
 import android.media.MediaScannerConnection
