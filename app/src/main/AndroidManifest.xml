@@ -24,9 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainAct">
-
-        </activity>
+        <activity android:name=".activity.MainAct"></activity>
         <activity android:name="com.app0.simforpay.activity.login.SigninAct" android:theme="@style/FadeActTheme" />
         <activity android:name="com.app0.simforpay.activity.login.PhoneAct" />
         <activity android:name="com.app0.simforpay.activity.login.SignupAct" />

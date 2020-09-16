@@ -4,11 +4,11 @@ import com.google.gson.annotations.SerializedName
 
 data class Borrower(
       @SerializedName("borrower_id")
-      val borrower_id: Int,
+      val borrower_id: Int?,
       @SerializedName("userName")
       val userName: String,
       @SerializedName("price")
-      val price: Int,
+      val price: Int?,
       @SerializedName("payback_state")
       val payback_state:Int
 )

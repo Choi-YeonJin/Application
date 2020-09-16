@@ -18,13 +18,14 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.app0.simforpay.R
-import com.app0.simforpay.util.CustomDialog
-import com.app0.simforpay.util.sharedpreferences.PreferenceUtil
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.Borrower
 import com.app0.simforpay.retrofit.domain.Contract
 import com.app0.simforpay.retrofit.domain.ContractSuccess
 import com.app0.simforpay.retrofit.domain.User
+import com.app0.simforpay.util.CustomDialog
+import com.app0.simforpay.util.TextInput
+import com.app0.simforpay.util.sharedpreferences.MyApplication
 import com.google.android.material.textfield.TextInputLayout
 import com.hendraanggrian.appcompat.widget.Mention
 import com.hendraanggrian.appcompat.widget.MentionArrayAdapter
@@ -108,7 +109,7 @@ class ContractFrag : Fragment() {
             }
         }
 
-//        TextInput.CheckFive(btnSave, contractName, tradeDay, price, lender, borrower1)
+        TextInput.CheckFive(btnSave, contractName, tradeDay, price, lender, borrower1)
     }
 
     override fun onResume() {
@@ -201,23 +202,16 @@ class ContractFrag : Fragment() {
             }
         }
 
-
-
         btnSave.setOnClickListener{
-            val user_id = Integer.parseInt(
-                PreferenceUtil(this.requireContext()).getString(
-                    Key.LENDER_ID.toString(),
-                    ""
-                )
-            )
+            val user_id = Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
             val title = contractName.text.toString()
             val borrow_date = tradeDay.text.toString()
             val payback_date = complDay.text.toString()
             val price = Integer.parseInt(price.text.toString())
             val lender_name = lender.text.toString().replace("@", "").trim()
-            val lender_id = userInfo[lender_name]
+            val lender_id: Int? = userInfo[lender_name]
             val lender_bank = bank.text.toString()
-            val lender_account = Integer.parseInt(accountNum.text.toString())
+            val lender_account: Int? = accountNum.text.toString().toIntOrNull()
             val borrowerList = arrayListOf<Borrower>()
             val penalty = penalty.text.toString()
             val alarm = if (swAlert.isChecked) 1 else 0
@@ -229,13 +223,13 @@ class ContractFrag : Fragment() {
             for(i in 0 until cnt){
 
                 val userName = borrowerIdList[i].text.toString().replace("@","").trim()
-                val borrower_id = userInfo[userName]
-                val borrower_price = Integer.parseInt(priceIdList[i].text.toString().replace("원", "").replace(",","").trim())
+                val borrower_id: Int? = userInfo[userName]
+                val borrower_price = priceIdList[i].text.toString().replace("원", "").replace(",","").trim().toIntOrNull()
 
-                borrowerList.add(Borrower(borrower_id!!, userName, borrower_price, payback_state))
+                borrowerList.add(Borrower(borrower_id, userName, borrower_price, payback_state))
             }
 
-            val contractInfo = Contract(user_id, title, borrow_date, payback_date, price, lender_id!!, lender_name, lender_bank, lender_account, borrowerList, penalty, alarm)
+            val contractInfo = Contract(user_id, title, borrow_date, payback_date, price, lender_id, lender_name, lender_bank, lender_account, borrowerList, penalty, alarm)
 
             Log.d("test", contractInfo.toString())
 
@@ -245,13 +239,9 @@ class ContractFrag : Fragment() {
                         call: Call<ContractSuccess>,
                         response: Response<ContractSuccess>
                     ) {
-                        if (response.body()?.result == "true") {
-                            val fragment: ContractShareFrag = ContractShareFrag()
-                            fragmentManager!!.beginTransaction().replace(
-                                R.id.fl_container,
-                                fragment
-                            ).commit()
-                        } else
+                        if (response.body()?.result == "true")
+                            fragmentManager!!.beginTransaction().replace(R.id.layFull, ContractShareFrag()).commit()
+                        else
                             Toast.makeText(context, "잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                     }
 
