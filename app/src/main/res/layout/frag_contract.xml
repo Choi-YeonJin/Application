@@ -301,7 +301,8 @@
                     android:id="@+id/bank"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:focusableInTouchMode="false" />
+                    android:focusableInTouchMode="false"
+                    android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -631,7 +632,6 @@
 
     <Button
         android:id="@+id/btnSave"
-        android:enabled="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"

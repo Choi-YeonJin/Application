@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/fragContract"
-        android:name="com.app0.simforpay.activity.ContractFrag"
+        android:name="com.app0.simforpay.activity.contract.ContractFrag"
         tools:layout="@layout/frag_contract" >
         <action
             android:id="@+id/action_fragContract_to_fragHome"
