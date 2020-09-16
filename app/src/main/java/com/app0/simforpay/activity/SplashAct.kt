@@ -17,7 +17,7 @@ class SplashAct : AppCompatActivity() {
 
         Handler().postDelayed({
 
-            if(MyApplication.prefs.getString("id", "") == ""){
+            if(MyApplication.prefs.getString(Key.LENDER_ID.toString(), "") == ""){
                 startActivity(Intent(this, SigninAct::class.java))
             }else{
                 startActivity(Intent(this, MainAct::class.java))

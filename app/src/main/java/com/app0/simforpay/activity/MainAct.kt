@@ -21,7 +21,6 @@ class MainAct : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-
     }
 
     private fun initNavigation() {
@@ -41,4 +40,9 @@ class MainAct : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.act_main)
         binding.lifecycleOwner = this
     }
+
+    fun HideBottomNavi(state: Boolean){
+        if(state) binding.navi.visibility = View.GONE else binding.navi.visibility = View.VISIBLE
+    }
+
 }

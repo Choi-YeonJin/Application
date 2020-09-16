@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/fragHome"
-        android:name="com.app0.simforpay.activity.HomeFrag"
+        android:name="com.app0.simforpay.activity.home.HomeFrag"
         tools:layout="@layout/frag_home" />
 
     <fragment
