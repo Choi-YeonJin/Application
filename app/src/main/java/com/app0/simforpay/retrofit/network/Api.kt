@@ -30,4 +30,7 @@ interface Api {
     @PUT("user-pw/{id}")
     fun UpdateUser(@Path("id") id: Int,@Body updateUserInfo: UpdateUser) : Call<UpdateUserSuccess>
 
+    @PUT("bank-registration/{id}")
+    fun UpdateUserAccount(@Path("id") id: Int,@Body updateUserInfo: UpdateAccount) : Call<UpdateAccountSuccess>
+
 }

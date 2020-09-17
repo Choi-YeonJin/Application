@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -21,17 +22,17 @@ import com.app0.simforpay.R
 import com.app0.simforpay.activity.Key
 import com.app0.simforpay.activity.MainAct
 import com.app0.simforpay.retrofit.RetrofitHelper
-import com.app0.simforpay.retrofit.domain.UpdateUserSuccess
-import com.app0.simforpay.retrofit.domain.User
-import com.app0.simforpay.retrofit.domain.UpdateUser
+import com.app0.simforpay.retrofit.domain.*
 import com.app0.simforpay.util.ImgUrl
 import com.app0.simforpay.util.RegularExpression
 import com.app0.simforpay.util.sharedpreferences.MyApplication
+import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.editaccount_dialog.view.*
 import kotlinx.android.synthetic.main.editaccount_dialog.view.btnClose
 import kotlinx.android.synthetic.main.editaccount_dialog.view.btnCompl
 import kotlinx.android.synthetic.main.editpw_dialog.view.*
+import kotlinx.android.synthetic.main.frag_contract.*
 import kotlinx.android.synthetic.main.frag_mypage.*
 import kotlinx.android.synthetic.main.frag_mypage.imgProfile
 import retrofit2.Call
@@ -169,6 +170,24 @@ class MypageFrag : Fragment() {
                 }
             })
 
+            editDialogView.btnClose.setOnClickListener {
+                editDialog.dismiss()
+            }
+            editDialogView.btnCompl.setOnClickListener {
+                // 완료 버튼 눌리면
+                if(!oldPwCheck)
+                    editDialogView.layOldPw.error = "현재 비밀번호가 일치하지 않습니다."
+                if(!pwCheck)
+                    editDialogView.layNewPw.error = "8~20자 이내, 영문/숫자/특수문자 필수 사용해주세요."
+                if(!pwAgainCheck)
+                    editDialogView.layPwAgain.error = "비밀번호가 일치하지 않습니다."
+                if(oldPwCheck && pwCheck && pwAgainCheck) {
+                    val newPw = editDialogView.newPw.text.toString()
+                    updateUserPw(newPw)
+                    editDialog.dismiss() // dialog 닫기
+                }
+            }
+
         }
         else{ // 계좌번호 변경
             val items = listOf(
@@ -177,25 +196,38 @@ class MypageFrag : Fragment() {
             )
             val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
             editDialogView.bank.setAdapter(adapter)
-        }
 
-        editDialogView.btnClose.setOnClickListener {
-            editDialog.dismiss()
-        }
-        editDialogView.btnCompl.setOnClickListener {
-            // 완료 버튼 눌리면
-            if(!oldPwCheck)
-                editDialogView.layOldPw.error = "현재 비밀번호가 일치하지 않습니다."
-            if(!pwCheck)
-                editDialogView.layNewPw.error = "8~20자 이내, 영문/숫자/특수문자 필수 사용해주세요."
-            if(!pwAgainCheck)
-                editDialogView.layPwAgain.error = "비밀번호가 일치하지 않습니다."
-            if(oldPwCheck && pwCheck && pwAgainCheck) {
-                val newPw = editDialogView.newPw.text.toString()
-                updateUserPw(newPw)
-                editDialog.dismiss() // dialog 닫기
+            editDialogView.btnClose.setOnClickListener {
+                editDialog.dismiss()
+            }
+            editDialogView.btnCompl.setOnClickListener {
+                // 완료 버튼 눌리면
+                updateUserAccount(editDialogView.bank,editDialogView.accountNum)
+                editDialog.dismiss() // dialog 닫기}
+                requireFragmentManager().beginTransaction().add(R.id.layFull, MypageFrag()).commit()
             }
         }
+
+
+    }
+
+    private fun updateUserAccount(bank: AutoCompleteTextView?, accountNum: TextInputEditText?) {
+        var id = Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
+
+        val bank =bank!!.text.toString()
+        val account = Integer.parseInt(accountNum!!.text.toString())
+        val updateUserInfo = UpdateAccount(bank,account)
+
+        Retrofit.UpdateUserAccount(id,updateUserInfo).enqueue(object : Callback<UpdateAccountSuccess> {
+            override fun onResponse(call: Call<UpdateAccountSuccess>, response: Response<UpdateAccountSuccess>) {
+                if (response.body()?.result == "true"){
+                    Toast.makeText(context, "계좌정보가 정상적으로 업데이트 되었습니다.", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<UpdateAccountSuccess>, t: Throwable) {}
+
+        })
     }
 
     private fun checkOldPw(oldpw: String, layOldPw: TextInputLayout?) {
