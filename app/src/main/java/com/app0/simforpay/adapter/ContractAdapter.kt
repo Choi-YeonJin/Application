@@ -9,8 +9,6 @@ import com.app0.simforpay.R
 import kotlinx.android.synthetic.main.contract_item.view.*
 
 class ContractAdapter(private val models: List<Data>, context: Context) : PagerAdapter() {
-
-    private val layoutInflater: LayoutInflater? = null
     private var context: Context? = null
 
     override fun getCount(): Int {
@@ -29,7 +27,7 @@ class ContractAdapter(private val models: List<Data>, context: Context) : PagerA
         view.contractContent.text = models[position].sub
 
         view.btnContractSetting.setOnClickListener{
-            // button click
+
         }
 
         container.addView(view, 0)
