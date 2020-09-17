@@ -1,5 +1,6 @@
 package com.app0.simforpay.activity.contract
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Environment
@@ -12,9 +13,10 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.app0.simforpay.R
+import com.app0.simforpay.util.MediaScanner
 import kotlinx.android.synthetic.main.frag_contract_share.*
-import java.io.File
 import java.io.FileOutputStream
+
 
 private const val ARG_PARAM1 = "name"
 private const val ARG_PARAM2 = "content"
@@ -24,6 +26,18 @@ class ContractShareFrag : Fragment() {
     private lateinit var callback: OnBackPressedCallback
     private var name: String? = null
     private var content: String? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        // Press Back Button
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.action_fragContract_to_fragHome)
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,9 +77,6 @@ class ContractShareFrag : Fragment() {
         btnSaveImg.setOnClickListener {
             Capture(captureLayout) //지정한 Layout 영역 사진첩 저장 요청
         }
-
-        Log.e("bundle", title.toString())
-        Log.e("bundle", content.toString())
     }
 
     fun Capture(view: View?) {
@@ -80,20 +91,29 @@ class ContractShareFrag : Fragment() {
         val bitmap = view.drawingCache
 
         // 저장할 폴더
-        val uploadFolder: File =  Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+//        val uploadFolder: File =  Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
+        val uploadFolder = Environment.getExternalStoragePublicDirectory("/DCIM/SimforPay/")
         if (!uploadFolder.exists())
             uploadFolder.mkdir() //폴더 생성
 
         // 저장할 주소
-        val path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+//        val path = Environment.getExternalStorageDirectory().absolutePath + Environment.DIRECTORY_DCIM
+        val path = Environment.getExternalStorageDirectory().absolutePath + "/DCIM/SimforPay/" //저장 경로 (String Type 변수)
 
         try {
-            val fos = FileOutputStream("$path.${System.currentTimeMillis()}.jpeg") // 경로 + 제목 + .jpg로 FileOutputStream Setting
+            val fos = FileOutputStream("$path${System.currentTimeMillis()}.jpeg") // 경로 + 제목 + .jpg로 FileOutputStream Setting
             bitmap.compress(Bitmap.CompressFormat.JPEG, 80, fos)
             fos.flush()
             fos.close()
 
             Toast.makeText(requireContext(), "이미지 저장 완료", Toast.LENGTH_SHORT).show()
+            
+            // 갤러리 로딩
+            try {
+                MediaScanner.newInstance(requireContext()).mediaScanning("$path${System.currentTimeMillis()}.jpeg", requireContext()) // 경로 + 제목 + .jpg
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
         } catch (e: Exception) {
             e.printStackTrace()
 

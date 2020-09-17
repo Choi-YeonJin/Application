@@ -268,7 +268,8 @@
                 <com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
                     android:id="@+id/lender"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="@dimen/editH"
+                    android:paddingLeft="@dimen/editP"
                     android:inputType="text"/>
 
             </com.google.android.material.textfield.TextInputLayout> <!-- 빌려주는 사람 -->
@@ -372,7 +373,8 @@
                 <com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
                     android:id="@+id/borrower1"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="@dimen/editH"
+                    android:paddingLeft="@dimen/editP"
                     android:inputType="text"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -402,7 +404,8 @@
                 <com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
                     android:id="@+id/borrower2"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="@dimen/editH"
+                    android:paddingLeft="@dimen/editP"
                     android:inputType="text"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -444,7 +447,8 @@
                 <com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
                     android:id="@+id/borrower3"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="@dimen/editH"
+                    android:paddingLeft="@dimen/editP"
                     android:inputType="text"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -475,7 +479,8 @@
                 <com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
                     android:id="@+id/borrower4"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="@dimen/editH"
+                    android:paddingLeft="@dimen/editP"
                     android:inputType="text"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -506,7 +511,8 @@
                 <com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
                     android:id="@+id/borrower5"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="@dimen/editH"
+                    android:paddingLeft="@dimen/editP"
                     android:inputType="text"/>
 
             </com.google.android.material.textfield.TextInputLayout>

@@ -29,6 +29,8 @@
     <dimen name="icWH">24dp</dimen>
     <dimen name="imgProfileWH">80dp</dimen>
     <dimen name="txtBackH">48dp</dimen>
+    <dimen name="editH">56dp</dimen>
+    <dimen name="editP">8dp</dimen>
 
     <dimen name="splLogoW">72dp</dimen>
     <dimen name="siLogoW">40dp</dimen>
