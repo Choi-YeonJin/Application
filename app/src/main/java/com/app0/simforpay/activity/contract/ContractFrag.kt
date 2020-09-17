@@ -85,7 +85,7 @@ class ContractFrag : Fragment() {
 
         })
 
-        //Log.d("size", mentionAdapter.count.toString())
+//        Log.d("size", mentionAdapter.count.toString())
 
         lender.mentionAdapter = mentionAdapter
         borrower1.mentionAdapter = mentionAdapter
@@ -245,10 +245,8 @@ class ContractFrag : Fragment() {
 
             Retrofit.ContractCall(contractInfo)
                 .enqueue(object : Callback<ContractSuccess> {
-                    override fun onResponse(
-                        call: Call<ContractSuccess>,
-                        response: Response<ContractSuccess>
-                    ) {
+                    override fun onResponse( call: Call<ContractSuccess>, response: Response<ContractSuccess>)
+                    {
                         if (response.body()?.result == "true"){
 
 

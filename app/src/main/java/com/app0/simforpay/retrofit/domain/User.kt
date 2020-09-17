@@ -11,10 +11,14 @@ data class User(
     val password: String,
     @SerializedName("name")
     val name : String,
-    @SerializedName("image_url")
+    @SerializedName("imageUrl")
     val image_url : String = "default",
-    @SerializedName("phone_num")
+    @SerializedName("phoneNum")
     val phone_num : String,
+    @SerializedName("bank")
+    val bank : String,
+    @SerializedName("account")
+    val account : String,
     @SerializedName("createdAt")
     val createdAt: String,
     @SerializedName("updatedAt")

@@ -143,15 +143,29 @@
 
     <TextView
         android:id="@+id/myAccount"
-        android:layout_width="0dp"
+        android:layout_width="80sp"
         android:layout_height="@dimen/txtBackH"
         app:layout_constraintTop_toBottomOf="@id/myPw"
         app:layout_constraintLeft_toRightOf="@id/txt1"
+        app:layout_constraintRight_toLeftOf="@id/myAccountNum"
+        android:padding="@dimen/size8"
+        android:layout_margin="@dimen/size8"
+        android:layout_marginBottom="0dp"
+        android:text="카카오뱅크"
+        android:background="@drawable/txt_background"
+        android:gravity="center_vertical" />
+
+    <TextView
+        android:id="@+id/myAccountNum"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/txtBackH"
+        app:layout_constraintTop_toBottomOf="@id/myPw"
+        app:layout_constraintLeft_toRightOf="@id/myAccount"
         app:layout_constraintRight_toLeftOf="@id/btnAccountChange"
         android:padding="@dimen/size8"
         android:layout_margin="@dimen/size8"
         android:layout_marginBottom="0dp"
-        android:text="카카오뱅크 3333123456789"
+        android:text="3333123456789"
         android:background="@drawable/txt_background"
         android:gravity="center_vertical" />
 

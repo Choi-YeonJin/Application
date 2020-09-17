@@ -1,6 +1,7 @@
 package com.app0.simforpay.activity.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,13 +10,25 @@ import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.app0.simforpay.R
+import com.app0.simforpay.activity.Key
 import com.app0.simforpay.adapter.ContractAdapter
 import com.app0.simforpay.adapter.Data
 import com.app0.simforpay.util.CustomBottomSheetDialog
+import com.app0.simforpay.retrofit.RetrofitHelper
 import kotlinx.android.synthetic.main.frag_home.*
+import com.app0.simforpay.retrofit.domain.ContractContentSuccess
+import com.app0.simforpay.util.sharedpreferences.MyApplication
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class HomeFrag : Fragment() {
+
+    private val Retrofit = RetrofitHelper.getRetrofit()
+    private val Title = mutableListOf<String>()
+    private val Content = mutableListOf<String>()
+    var cnt=0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,10 +44,26 @@ class HomeFrag : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var id=Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
 
-        val contractList = generateDummyList(3) // viewpager에 들어갈 정보
+        Retrofit.getContracts(id).enqueue(object : Callback<List<ContractContentSuccess>> {
+            override fun onResponse(call: Call<List<ContractContentSuccess>>, response: Response<List<ContractContentSuccess>>) {
+                response.body()?.forEach {
+                    Title.add(it.title)
+                    Content.add(it.content)
+                    cnt++
+                }
+                val list = ArrayList<Data>()
+                for(i in 0 until cnt){
+                    val item = Data(Title[i], Content[i])
+                    list += item
+                }
+                vpContract.adapter = ContractAdapter(list, requireContext())
+            }
 
-        vpContract.adapter = ContractAdapter(contractList, requireContext())
+            override fun onFailure(call: Call<List<ContractContentSuccess>>, t: Throwable) {}
+
+        })
 
         // display 비율에 맞춰 padding과 margin setting
         val dpValue = 80
@@ -91,16 +120,5 @@ class HomeFrag : Fragment() {
         btnMypage.setOnClickListener {
             requireFragmentManager().beginTransaction().add(R.id.layFull, MypageFrag()).commit()
         }
-    }
-
-    private fun generateDummyList(size: Int): List<Data> {
-        val list = ArrayList<Data>()
-
-        for(i in 0 until size){
-            val item = Data("a", "b")
-            list += item
-        }
-
-        return list
     }
 }
