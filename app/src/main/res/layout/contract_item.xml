@@ -60,7 +60,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:text="계약서 내용"
-            android:singleLine="true"
+            android:singleLine="false"
             android:maxLines="8" />
 
         <ImageView
