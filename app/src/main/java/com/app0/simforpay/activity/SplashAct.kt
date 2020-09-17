@@ -6,6 +6,7 @@ import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.app0.simforpay.R
 import com.app0.simforpay.activity.login.SigninAct
+import com.app0.simforpay.util.sharedpreferences.Key
 import com.app0.simforpay.util.sharedpreferences.MyApplication
 
 private val SPLASH_TIME_OUT:Long = 2000

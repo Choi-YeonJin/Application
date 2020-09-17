@@ -6,25 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import androidx.core.view.size
 import androidx.fragment.app.Fragment
-import androidx.viewpager.widget.ViewPager
 import com.app0.simforpay.R
-import com.app0.simforpay.activity.Key
+import com.app0.simforpay.util.sharedpreferences.Key
 import com.app0.simforpay.activity.MainAct
 import kotlinx.android.synthetic.main.editaccount_dialog.view.*
 import kotlinx.android.synthetic.main.frag_mypage.*
-import com.app0.simforpay.adapter.ContractAdapter
 import com.app0.simforpay.retrofit.RetrofitHelper
-import com.app0.simforpay.retrofit.domain.ContractContentSuccess
 import com.app0.simforpay.retrofit.domain.User
 import com.app0.simforpay.util.sharedpreferences.MyApplication
-import kotlinx.android.synthetic.main.frag_home.*
-import kotlinx.android.synthetic.main.frag_mypage.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
 
 class MypageFrag : Fragment() {
     private val Retrofit = RetrofitHelper.getRetrofit()

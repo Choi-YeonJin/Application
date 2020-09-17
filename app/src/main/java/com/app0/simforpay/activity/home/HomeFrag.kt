@@ -1,7 +1,6 @@
 package com.app0.simforpay.activity.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,18 +9,17 @@ import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.app0.simforpay.R
-import com.app0.simforpay.activity.Key
 import com.app0.simforpay.adapter.ContractAdapter
 import com.app0.simforpay.adapter.Data
-import com.app0.simforpay.util.CustomBottomSheetDialog
 import com.app0.simforpay.retrofit.RetrofitHelper
-import kotlinx.android.synthetic.main.frag_home.*
 import com.app0.simforpay.retrofit.domain.ContractContentSuccess
+import com.app0.simforpay.util.CustomBottomSheetDialog
+import com.app0.simforpay.util.sharedpreferences.Key
 import com.app0.simforpay.util.sharedpreferences.MyApplication
+import kotlinx.android.synthetic.main.frag_home.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
 
 class HomeFrag : Fragment() {
 
