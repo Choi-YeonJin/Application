@@ -27,4 +27,7 @@ interface Api {
     @POST("contract")
     fun ContractCall(@Body contractInfo: Contract) : Call<ContractSuccess>
 
+    @PUT("user-pw/{id}")
+    fun UpdateUser(@Path("id") id: Int,@Body updateUserInfo: UpdateUser) : Call<UpdateUserSuccess>
+
 }
