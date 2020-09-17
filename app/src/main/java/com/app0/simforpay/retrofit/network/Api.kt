@@ -9,6 +9,9 @@ interface Api {
     @GET("users")
     fun getUsers() : Call<List<User>>
 
+    @GET("user/{id}")
+    fun getUser(@Path("id") id: Int): Call<User>
+
     @GET("contract-contents/{id}")
     fun getContracts(@Path("id") id: Int): Call<List<ContractContentSuccess>>
 
