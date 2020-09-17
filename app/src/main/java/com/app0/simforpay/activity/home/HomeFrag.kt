@@ -64,8 +64,16 @@ class HomeFrag : Fragment() {
     override fun onResume() {
         super.onResume()
 
+        btnSearch.setOnClickListener {
+            requireFragmentManager().beginTransaction().add(R.id.layFull, SearchFrag()).commit()
+        }
+
         btnNotification.setOnClickListener {
             requireFragmentManager().beginTransaction().add(R.id.layFull, NotificationFrag()).commit()
+        }
+
+        btnMypage.setOnClickListener {
+            requireFragmentManager().beginTransaction().add(R.id.layFull, MypageFrag()).commit()
         }
     }
 

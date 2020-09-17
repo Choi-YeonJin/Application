@@ -25,6 +25,8 @@ data class Contract(
     val borrower: List<Borrower>,
     @SerializedName("penalty")
     val penalty: String?,
+    @SerializedName("content")
+    val content: String?,
     @SerializedName("alarm")
     val alarm: Int
 )

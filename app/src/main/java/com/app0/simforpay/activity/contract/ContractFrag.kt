@@ -1,4 +1,4 @@
-package com.app0.simforpay.activity
+package com.app0.simforpay.activity.contract
 
 import android.app.DatePickerDialog
 import android.content.Context
@@ -18,6 +18,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.app0.simforpay.R
+import com.app0.simforpay.activity.Key
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.Borrower
 import com.app0.simforpay.retrofit.domain.Contract
@@ -220,6 +221,8 @@ class ContractFrag : Fragment() {
             val priceIdList = arrayOf(borrowerPrice1, borrowerPrice2, borrowerPrice3, borrowerPrice4, borrowerPrice5)
             val payback_state = 0
 
+            var borrowerName = borrowerIdList[0].text.toString().replace("@","").trim()
+
             for(i in 0 until cnt){
 
                 val userName = borrowerIdList[i].text.toString().replace("@","").trim()
@@ -227,9 +230,16 @@ class ContractFrag : Fragment() {
                 val borrower_price = priceIdList[i].text.toString().replace("원", "").replace(",","").trim().toIntOrNull()
 
                 borrowerList.add(Borrower(borrower_id, userName, borrower_price, payback_state))
+                if(i >= 1) borrowerName = "$userName,$borrowerName"
+
             }
 
-            val contractInfo = Contract(user_id, title, borrow_date, payback_date, price, lender_id, lender_name, lender_bank, lender_account, borrowerList, penalty, alarm)
+            var content = "${borrowerName}은(는) ${lender_name}에게 "
+            if(payback_date != "") content = content + payback_date +"까지 "
+            content = content + priceIdList[0].text.toString().replace("원", "").replace(",","").trim() + "원을 갚을 것을 약속합니다."
+            if(penalty != "") content = content + " 만약 이행하지 못할시에는" + penalty +"를 할 것 입니다."
+
+            val contractInfo = Contract(user_id, title, borrow_date, payback_date, price, lender_id, lender_name, lender_bank, lender_account, borrowerList, penalty, content,alarm)
 
             Log.d("test", contractInfo.toString())
 
@@ -239,8 +249,14 @@ class ContractFrag : Fragment() {
                         call: Call<ContractSuccess>,
                         response: Response<ContractSuccess>
                     ) {
-                        if (response.body()?.result == "true")
-                            fragmentManager!!.beginTransaction().replace(R.id.layFull, ContractShareFrag()).commit()
+                        if (response.body()?.result == "true"){
+
+
+                            fragmentManager!!.beginTransaction().replace(R.id.layFull,
+                                ContractShareFrag.newInstance(contractName.text.toString(), content)
+                            ).commit()
+
+                        }
                         else
                             Toast.makeText(context, "잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                     }
