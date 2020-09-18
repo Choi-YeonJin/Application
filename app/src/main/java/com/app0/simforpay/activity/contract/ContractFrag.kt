@@ -77,7 +77,7 @@ class ContractFrag : Fragment() {
                 response.body()?.forEach {
 
                     userInfo[it.name] = it.id
-                    mentionAdapter.add(Mention(it.name))
+                    mentionAdapter.add(Mention(it.name,it.myId))
                 }
             }
 
