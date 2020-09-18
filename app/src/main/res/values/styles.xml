@@ -11,11 +11,11 @@
         <item name="imageButtonStyle">@style/imgBtnStyle</item>
         <item name="textInputStyle">@style/CustomTxtInputStyle</item>
         <item name="checkboxStyle">@style/CustomCheckBoxStyle</item>
-        <item name="android:windowAnimationStyle">@style/CustomSlideAnim</item>
+        <item name="android:windowAnimationStyle">@style/CustomFadeAnim</item>
     </style>
 
-    <style name="FadeActTheme" parent="AppTheme">
-        <item name="android:windowAnimationStyle">@style/CustomActFadeAnim</item>
+    <style name="SlideActTheme" parent="AppTheme">
+        <item name="android:windowAnimationStyle">@style/CustomSlideAnim</item>
     </style>
 
     <style name="basicP">
@@ -31,7 +31,7 @@
         <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
     </style>
 
-    <style name="CustomActFadeAnim" parent="android:style/Animation.Activity">
+    <style name="CustomFadeAnim" parent="android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@android:anim/fade_in</item>
         <item name="android:activityOpenExitAnimation">@anim/hold</item>
         <item name="android:activityCloseEnterAnimation">@android:anim/fade_out</item>

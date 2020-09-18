@@ -19,7 +19,6 @@ import kotlinx.android.synthetic.main.frag_contract_share.*
 import java.io.File
 import java.io.FileOutputStream
 
-
 private const val ARG_PARAM1 = "name"
 private const val ARG_PARAM2 = "content"
 

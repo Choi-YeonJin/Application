@@ -30,7 +30,7 @@ class SearchFrag : Fragment() {
         super.onResume()
 
         btnCancel.setOnClickListener {
-            requireFragmentManager().beginTransaction().remove(this).commit()
+            fragmentManager?.popBackStackImmediate()
         }
     }
 
