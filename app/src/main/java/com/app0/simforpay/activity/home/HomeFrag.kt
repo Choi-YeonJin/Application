@@ -162,6 +162,8 @@ class HomeFrag : Fragment() {
 //                Log.e("User ${i} : ", User[i].toString())
 //            }
 
+            val list = ArrayList<Data>()
+            vpContract.adapter = ContractAdapter(list, requireContext())
             requireFragmentManager().beginTransaction().replace(R.id.layFull,
                 MypageFrag.newInstance(User[0]!!, User[1]!!, User[2]!!, User[3]!!, User[4]!!, User[5]!!)
             ).addToBackStack(null).commit()
