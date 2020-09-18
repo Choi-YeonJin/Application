@@ -20,7 +20,7 @@ object RegularExpression {
             pattern = phone
         else if(editText.id == R.id.suId)
             pattern = numEng + idLength
-        else if(editText.id == R.id.suPw)
+        else if(editText.id == R.id.suPw || editText.id == R.id.newPw)
             pattern = num + eng + special + pwLength
 
 //        Log.e("pattern : ", pattern)

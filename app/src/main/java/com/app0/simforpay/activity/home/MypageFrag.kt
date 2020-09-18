@@ -1,32 +1,62 @@
 package com.app0.simforpay.activity.home
 
 import android.app.AlertDialog
+import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.app0.simforpay.R
 import com.app0.simforpay.util.sharedpreferences.Key
 import com.app0.simforpay.activity.MainAct
-import kotlinx.android.synthetic.main.editaccount_dialog.view.*
-import kotlinx.android.synthetic.main.frag_mypage.*
 import com.app0.simforpay.retrofit.RetrofitHelper
-import com.app0.simforpay.retrofit.domain.User
+import com.app0.simforpay.retrofit.domain.*
+import com.app0.simforpay.util.ImgUrl
+import com.app0.simforpay.util.RegularExpression
 import com.app0.simforpay.util.sharedpreferences.MyApplication
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
+import kotlinx.android.synthetic.main.editaccount_dialog.view.*
+import kotlinx.android.synthetic.main.editaccount_dialog.view.btnClose
+import kotlinx.android.synthetic.main.editaccount_dialog.view.btnCompl
+import kotlinx.android.synthetic.main.editpw_dialog.view.*
+import kotlinx.android.synthetic.main.frag_contract.*
+import kotlinx.android.synthetic.main.frag_mypage.*
+import kotlinx.android.synthetic.main.frag_mypage.imgProfile
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
 class MypageFrag : Fragment() {
     private val Retrofit = RetrofitHelper.getRetrofit()
+
+    var oldPwCheck = false // 현재 비밀번호 일치 여부(bool)
+    var pwCheck = false // pw 정규식 만족 여부(bool)
+    var pwAgainCheck = false // pw와 pwAgain 일치 여부(bool)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val mainAct = activity as MainAct
         mainAct.HideBottomNavi(true)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
     }
 
     override fun onCreateView(
@@ -61,6 +91,12 @@ class MypageFrag : Fragment() {
                 myPhone.setText(response.body()?.phone_num)
                 myAccount.setText(response.body()?.bank)
                 myAccountNum.setText(response.body()?.account)
+                if(response.body()?.image_url != "Default")
+                {
+                    val Image = ImgUrl.StringToBitmap(response.body()?.image_url.toString())
+                    imgProfile.setImageBitmap(Image)
+                }
+
             }
 
             override fun onFailure(call: Call<User>, t: Throwable) {}
@@ -81,6 +117,76 @@ class MypageFrag : Fragment() {
         val editDialog = editBuilder.show()
 
         if(dialog == R.layout.editpw_dialog){ // 비밀번호 변경
+            editDialogView.oldPw.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    editDialogView.layOldPw.error = null // 비밀번호 인증 실패 후 edittext 바뀌면 error 제거
+                    val oldpw = editDialogView.oldPw.text.toString()
+                    checkOldPw(oldpw,editDialogView.layOldPw) //현재 비밀번호 확인
+                }
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+                }
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                }
+            })
+
+            editDialogView.newPw.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    editDialogView.layNewPw.error = null // 일치 실패 후 edittext 바뀌면 error 제거
+                    pwCheck = RegularExpression.Vaild(editDialogView.newPw)
+                    Log.d("test",pwCheck.toString())
+                    if(pwCheck) ChangeIcon(editDialogView.layNewPw) else DefaultIcon(editDialogView.layNewPw)
+
+                    // pw와 pwAgain 일치 여부 검사가 완료되었는데 pw가 바뀌면 pwAgain 일치 여부도 다시 검사해야 함
+                    if(pwAgainCheck)
+                        DefaultIcon(editDialogView.layPwAgain)
+                }
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+                }
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                }
+            })
+
+            editDialogView.newPwAgain.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    editDialogView.layPwAgain.error = null // 일치 실패 후 edittext 바뀌면 error 제거
+
+                    val newPwAgain = editDialogView.newPwAgain.text.toString()
+                    val newPw = editDialogView.newPw.text.toString()
+                    if(newPwAgain == newPw){
+                        pwAgainCheck = true
+                        ChangeIcon(editDialogView.layPwAgain)
+                    }
+                    else DefaultIcon(editDialogView.layPwAgain)
+                }
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+                }
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                }
+            })
+
+            editDialogView.btnClose.setOnClickListener {
+                editDialog.dismiss()
+            }
+            editDialogView.btnCompl.setOnClickListener {
+                // 완료 버튼 눌리면
+                if(!oldPwCheck)
+                    editDialogView.layOldPw.error = "현재 비밀번호가 일치하지 않습니다."
+                if(!pwCheck)
+                    editDialogView.layNewPw.error = "8~20자 이내, 영문/숫자/특수문자 필수 사용해주세요."
+                if(!pwAgainCheck)
+                    editDialogView.layPwAgain.error = "비밀번호가 일치하지 않습니다."
+                if(oldPwCheck && pwCheck && pwAgainCheck) {
+                    val newPw = editDialogView.newPw.text.toString()
+                    updateUserPw(newPw)
+                    editDialog.dismiss() // dialog 닫기
+                }
+            }
 
         }
         else{ // 계좌번호 변경
@@ -90,21 +196,84 @@ class MypageFrag : Fragment() {
             )
             val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
             editDialogView.bank.setAdapter(adapter)
+
+            editDialogView.btnClose.setOnClickListener {
+                editDialog.dismiss()
+            }
+            editDialogView.btnCompl.setOnClickListener {
+                // 완료 버튼 눌리면
+                updateUserAccount(editDialogView.bank,editDialogView.accountNum)
+                editDialog.dismiss() // dialog 닫기}
+                requireFragmentManager().beginTransaction().add(R.id.layFull, MypageFrag()).commit()
+            }
         }
 
-        /*
-         --지우면 되는 주석--
-        접근할 때 : editDialogView.id
-        */
 
-        editDialogView.btnClose.setOnClickListener {
-            editDialog.dismiss()
-        }
-        editDialogView.btnCompl.setOnClickListener { 
-            // 완료 버튼 눌리면
+    }
 
-            editDialog.dismiss() // dialog 닫기
-        }
+    private fun updateUserAccount(bank: AutoCompleteTextView?, accountNum: TextInputEditText?) {
+        var id = Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
+
+        val bank =bank!!.text.toString()
+        val account = Integer.parseInt(accountNum!!.text.toString())
+        val updateUserInfo = UpdateAccount(bank,account)
+
+        Retrofit.UpdateUserAccount(id,updateUserInfo).enqueue(object : Callback<UpdateAccountSuccess> {
+            override fun onResponse(call: Call<UpdateAccountSuccess>, response: Response<UpdateAccountSuccess>) {
+                if (response.body()?.result == "true"){
+                    Toast.makeText(context, "계좌정보가 정상적으로 업데이트 되었습니다.", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<UpdateAccountSuccess>, t: Throwable) {}
+
+        })
+    }
+
+    private fun checkOldPw(oldpw: String, layOldPw: TextInputLayout?) {
+        var id = Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
+
+        Retrofit.getUser(id).enqueue(object : Callback<User> {
+            override fun onResponse(call: Call<User>, response: Response<User>) {
+                val pw = response.body()?.password
+                if(pw == oldpw){
+                    oldPwCheck = true
+                    ChangeIcon(layOldPw!!)
+                } else
+                    DefaultIcon(layOldPw!!)
+            }
+
+            override fun onFailure(call: Call<User>, t: Throwable) {}
+
+        })
+    }
+
+    private fun updateUserPw(newPw: String) {
+        var id = Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
+        val imageUrl = imgProfile.toString()
+        val updateUserInfo = UpdateUser(imageUrl,newPw)
+
+        Retrofit.UpdateUser(id,updateUserInfo).enqueue(object : Callback<UpdateUserSuccess> {
+            override fun onResponse(call: Call<UpdateUserSuccess>, response: Response<UpdateUserSuccess>) {
+                if (response.body()?.result == "true"){
+                    Toast.makeText(context, "비밀번호가 정상적으로 업데이트 되었습니다.", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<UpdateUserSuccess>, t: Throwable) {}
+
+        })
+    }
+
+    fun DefaultIcon(textInputLayout: TextInputLayout){
+        textInputLayout.setStartIconDrawable(R.drawable.ic_lock)
+
+        textInputLayout.setStartIconTintList(ColorStateList.valueOf(resources.getColor(R.color.icon)))
+    }
+
+    fun ChangeIcon(textInputLayout: TextInputLayout){
+        textInputLayout.setStartIconDrawable(R.drawable.ic_check_circle)
+        textInputLayout.setStartIconTintList(ContextCompat.getColorStateList(requireContext(), R.color.green))
     }
 
 }
