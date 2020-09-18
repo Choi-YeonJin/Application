@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.replace
 import com.app0.simforpay.R
 import com.app0.simforpay.activity.MainAct
 import com.app0.simforpay.retrofit.RetrofitHelper
@@ -231,7 +232,9 @@ class MypageFrag : Fragment() {
                 // 완료 버튼 눌리면
                 updateUserAccount(editDialogView.bank, editDialogView.accountNum)
                 editDialog.dismiss() // dialog 닫기}
-                requireFragmentManager().beginTransaction().replace(R.id.layFull, MypageFrag()).commit()
+                requireFragmentManager().beginTransaction().replace(R.id.layFull,
+                    HomeFrag.newInstance(0)
+                ).commit()
             }
         }
 
