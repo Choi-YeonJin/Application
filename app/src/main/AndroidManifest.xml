@@ -17,7 +17,7 @@
         android:launchMode = "singleTop"
         android:fullBackupContent="true"
         android:allowBackup="true">
-        <activity android:name=".activity.SplashAct">
+        <activity android:name=".activity.login.SplashAct">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,9 +25,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.MainAct"></activity>
-        <activity android:name="com.app0.simforpay.activity.login.SigninAct" android:theme="@style/FadeActTheme" />
-        <activity android:name="com.app0.simforpay.activity.login.PhoneAct" />
-        <activity android:name="com.app0.simforpay.activity.login.SignupAct" />
+        <activity android:name="com.app0.simforpay.activity.login.SigninAct" />
+        <activity android:name="com.app0.simforpay.activity.login.PhoneAct" android:theme="@style/SlideActTheme" />
+        <activity android:name="com.app0.simforpay.activity.login.SignupAct" android:theme="@style/SlideActTheme" />
     </application>
 
 </manifest>
