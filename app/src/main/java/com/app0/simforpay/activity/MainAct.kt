@@ -8,6 +8,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.app0.simforpay.R
 import com.app0.simforpay.databinding.ActMainBinding
+import kotlinx.android.synthetic.main.frag_home.*
 
 class MainAct : AppCompatActivity() {
     private lateinit var binding: ActMainBinding

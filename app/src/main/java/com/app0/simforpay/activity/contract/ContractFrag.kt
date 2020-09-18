@@ -248,8 +248,6 @@ class ContractFrag : Fragment() {
                     override fun onResponse( call: Call<ContractSuccess>, response: Response<ContractSuccess>)
                     {
                         if (response.body()?.result == "true"){
-
-
                             fragmentManager!!.beginTransaction().replace(R.id.layFull,
                                 ContractShareFrag.newInstance(contractName.text.toString(), content)
                             ).commit()
