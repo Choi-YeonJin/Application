@@ -1,14 +1,15 @@
 package com.app0.simforpay.activity.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.app0.simforpay.R
+import com.app0.simforpay.activity.MainAct
 import com.app0.simforpay.adapter.ContractAdapter
 import com.app0.simforpay.adapter.Data
 import com.app0.simforpay.retrofit.RetrofitHelper
@@ -22,13 +23,15 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+private const val ARG_PARAM3 = "position"
+
 class HomeFrag : Fragment() {
 
     private val Retrofit = RetrofitHelper.getRetrofit()
     private val Title = mutableListOf<String>()
     private val Content = mutableListOf<String>()
-    private var User = arrayOf<String?>()
-    var cnt = 0
+    var cnt=0
+    private var position: Int? = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +53,12 @@ class HomeFrag : Fragment() {
             override fun onFailure(call: Call<User>, t: Throwable) {}
 
         })
+        arguments?.let {
+            position = it.getInt(ARG_PARAM3)
+        }
+
+        Log.d("posi",position.toString())
+
     }
 
     override fun onCreateView(
@@ -72,12 +81,19 @@ class HomeFrag : Fragment() {
                     Content.add(it.content)
                     cnt++
                 }
+
                 val list = ArrayList<Data>()
+
                 for(i in 0 until cnt){
                     val item = Data(Title[i], Content[i])
                     list += item
                 }
-                vpContract.adapter = ContractAdapter(list, requireContext())
+
+                if(position != null) {
+                    vpContract.adapter = ContractAdapter(list, requireContext())
+                    vpContract.setCurrentItem(position!!)
+                }
+
             }
 
             override fun onFailure(call: Call<List<ContractContentSuccess>>, t: Throwable) {}
@@ -99,8 +115,10 @@ class HomeFrag : Fragment() {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
 
             }
+
             override fun onPageSelected(position: Int) {
                 // 첫페이지와 끝페이지 padding, margin 값 조절
+                Log.d("page",position.toString())
                 when (position) {
                     0 -> vpContract.setPadding(margin/2, 0, margin+margin/2, 0)
                     vpContract.size-1 -> vpContract.setPadding(margin+margin/2, 0, margin/2, 0)
@@ -115,21 +133,23 @@ class HomeFrag : Fragment() {
         super.onResume()
 
         btnSearch.setOnClickListener {
-//            requireFragmentManager().beginTransaction().replace(R.id.layFull, SearchFrag()).addToBackStack(null).commit()
+            val list = ArrayList<Data>()
+            vpContract.adapter = ContractAdapter(list, requireContext())
+            requireFragmentManager().beginTransaction().replace(R.id.layFull, SearchFrag()).commit()
 
-            val dialog = CustomBottomSheetDialog.CustomBottomSheetDialogBuilder()
-                .setBtnClickListener(object : CustomBottomSheetDialog.CustomBottomSheetDialogListener {
-                    override fun onClickMenu1Btn() {
-                        Toast.makeText(context, "First Button Clicked", Toast.LENGTH_SHORT).show()
-                    }
-                    override fun onClickMenu2Btn() {
-                        Toast.makeText(context, "Second Button Clicked", Toast.LENGTH_SHORT).show()
-                    }
-                    override fun onClickMenu3Btn() {
-                        Toast.makeText(context, "Third Button Clicked", Toast.LENGTH_SHORT).show()
-                    }
-                }).create()
-            dialog.show(parentFragmentManager, dialog.tag)
+//            val dialog = CustomBottomSheetDialog.CustomBottomSheetDialogBuilder()
+//                .setBtnClickListener(object : CustomBottomSheetDialog.CustomBottomSheetDialogListener {
+//                    override fun onClickMenu1Btn() {
+//                        Toast.makeText(context, "First Button Clicked", Toast.LENGTH_SHORT).show()
+//                    }
+//                    override fun onClickMenu2Btn() {
+//                        Toast.makeText(context, "Second Button Clicked", Toast.LENGTH_SHORT).show()
+//                    }
+//                    override fun onClickMenu3Btn() {
+//                        Toast.makeText(context, "Third Button Clicked", Toast.LENGTH_SHORT).show()
+//                  }
+//                }).create()
+//            dialog.show(parentFragmentManager, dialog.tag)
         }
 
         btnNotification.setOnClickListener {
@@ -145,5 +165,15 @@ class HomeFrag : Fragment() {
                 MypageFrag.newInstance(User[0]!!, User[1]!!, User[2]!!, User[3]!!, User[4]!!, User[5]!!)
             ).addToBackStack(null).commit()
         }
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance(position: Int) =
+            HomeFrag().apply {
+                arguments = Bundle().apply {
+                    putInt(ARG_PARAM3, position)
+                }
+            }
     }
 }

@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.app0.simforpay.R
 import com.app0.simforpay.activity.MainAct
@@ -51,6 +52,8 @@ class MypageFrag : Fragment() {
     private var bank: String? = null
     private var account: String? = null
     private var imgUrl: String? = null
+    var user = emptyArray<String?>()
+    var saveuser = mutableListOf<String?>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -121,16 +124,23 @@ class MypageFrag : Fragment() {
         val editBuilder = AlertDialog.Builder(requireContext()).setView(editDialogView)
         val editDialog = editBuilder.show()
 
-        if(dialog == R.layout.editpw_dialog){ // 비밀번호 변경
+        if (dialog == R.layout.editpw_dialog) { // 비밀번호 변경
             editDialogView.oldPw.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
                     editDialogView.layOldPw.error = null // 비밀번호 인증 실패 후 edittext 바뀌면 error 제거
                     val oldpw = editDialogView.oldPw.text.toString()
-                    checkOldPw(oldpw,editDialogView.layOldPw) //현재 비밀번호 확인
+                    checkOldPw(oldpw, editDialogView.layOldPw) //현재 비밀번호 확인
                 }
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
 
                 }
+
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
                 }
@@ -140,16 +150,23 @@ class MypageFrag : Fragment() {
                 override fun afterTextChanged(s: Editable?) {
                     editDialogView.layNewPw.error = null // 일치 실패 후 edittext 바뀌면 error 제거
                     pwCheck = RegularExpression.Vaild(editDialogView.newPw)
-                    Log.d("test",pwCheck.toString())
-                    if(pwCheck) ChangeIcon(editDialogView.layNewPw) else DefaultIcon(editDialogView.layNewPw)
+                    Log.d("test", pwCheck.toString())
+                    if (pwCheck) ChangeIcon(editDialogView.layNewPw) else DefaultIcon(editDialogView.layNewPw)
 
                     // pw와 pwAgain 일치 여부 검사가 완료되었는데 pw가 바뀌면 pwAgain 일치 여부도 다시 검사해야 함
-                    if(pwAgainCheck)
+                    if (pwAgainCheck)
                         DefaultIcon(editDialogView.layPwAgain)
                 }
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
 
                 }
+
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
                 }
@@ -161,15 +178,21 @@ class MypageFrag : Fragment() {
 
                     val newPwAgain = editDialogView.newPwAgain.text.toString()
                     val newPw = editDialogView.newPw.text.toString()
-                    if(newPwAgain == newPw){
+                    if (newPwAgain == newPw) {
                         pwAgainCheck = true
                         ChangeIcon(editDialogView.layPwAgain)
-                    }
-                    else DefaultIcon(editDialogView.layPwAgain)
+                    } else DefaultIcon(editDialogView.layPwAgain)
                 }
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
 
                 }
+
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
                 }
@@ -180,21 +203,20 @@ class MypageFrag : Fragment() {
             }
             editDialogView.btnCompl.setOnClickListener {
                 // 완료 버튼 눌리면
-                if(!oldPwCheck)
+                if (!oldPwCheck)
                     editDialogView.layOldPw.error = "현재 비밀번호가 일치하지 않습니다."
-                if(!pwCheck)
+                if (!pwCheck)
                     editDialogView.layNewPw.error = "8~20자 이내, 영문/숫자/특수문자 필수 사용해주세요."
-                if(!pwAgainCheck)
+                if (!pwAgainCheck)
                     editDialogView.layPwAgain.error = "비밀번호가 일치하지 않습니다."
-                if(oldPwCheck && pwCheck && pwAgainCheck) {
+                if (oldPwCheck && pwCheck && pwAgainCheck) {
                     val newPw = editDialogView.newPw.text.toString()
                     updateUserPw(newPw)
                     editDialog.dismiss() // dialog 닫기
                 }
             }
 
-        }
-        else{ // 계좌번호 변경
+        } else { // 계좌번호 변경
             val items = listOf(
                 "NH농협", "KB국민", "신한", "우리", "하나", "IBK기업", "SC제일", "씨티", "KDB산업", "SBI저축",
                 "새마을", "대구", "광주", "우체국", "신협", "전북", "경남", "부산", "수협", "제주", "카카오뱅크"
@@ -207,7 +229,7 @@ class MypageFrag : Fragment() {
             }
             editDialogView.btnCompl.setOnClickListener {
                 // 완료 버튼 눌리면
-                updateUserAccount(editDialogView.bank,editDialogView.accountNum)
+                updateUserAccount(editDialogView.bank, editDialogView.accountNum)
                 editDialog.dismiss() // dialog 닫기}
                 requireFragmentManager().beginTransaction().replace(R.id.layFull, MypageFrag()).commit()
             }
@@ -219,20 +241,25 @@ class MypageFrag : Fragment() {
     private fun updateUserAccount(bank: AutoCompleteTextView?, accountNum: TextInputEditText?) {
         var id = Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
 
-        val bank =bank!!.text.toString()
+        val bank = bank!!.text.toString()
         val account = Integer.parseInt(accountNum!!.text.toString())
-        val updateUserInfo = UpdateAccount(bank,account)
+        val updateUserInfo = UpdateAccount(bank, account)
 
-        Retrofit.UpdateUserAccount(id,updateUserInfo).enqueue(object : Callback<UpdateAccountSuccess> {
-            override fun onResponse(call: Call<UpdateAccountSuccess>, response: Response<UpdateAccountSuccess>) {
-                if (response.body()?.result == "true"){
-                    Toast.makeText(context, "계좌정보가 정상적으로 업데이트 되었습니다.", Toast.LENGTH_SHORT).show()
+        Retrofit.UpdateUserAccount(id, updateUserInfo)
+            .enqueue(object : Callback<UpdateAccountSuccess> {
+                override fun onResponse(
+                    call: Call<UpdateAccountSuccess>,
+                    response: Response<UpdateAccountSuccess>
+                ) {
+                    if (response.body()?.result == "true") {
+                        Toast.makeText(context, "계좌정보가 정상적으로 업데이트 되었습니다.", Toast.LENGTH_SHORT)
+                            .show()
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<UpdateAccountSuccess>, t: Throwable) {}
+                override fun onFailure(call: Call<UpdateAccountSuccess>, t: Throwable) {}
 
-        })
+            })
     }
 
     private fun checkOldPw(oldpw: String, layOldPw: TextInputLayout?) {
@@ -241,7 +268,7 @@ class MypageFrag : Fragment() {
         Retrofit.getUser(id).enqueue(object : Callback<User> {
             override fun onResponse(call: Call<User>, response: Response<User>) {
                 val pw = response.body()?.password
-                if(pw == oldpw){
+                if (pw == oldpw) {
                     oldPwCheck = true
                     ChangeIcon(layOldPw!!)
                 } else
@@ -256,11 +283,14 @@ class MypageFrag : Fragment() {
     private fun updateUserPw(newPw: String) {
         var id = Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
         val imageUrl = imgProfile.toString()
-        val updateUserInfo = UpdateUser(imageUrl,newPw)
+        val updateUserInfo = UpdateUser(imageUrl, newPw)
 
-        Retrofit.UpdateUser(id,updateUserInfo).enqueue(object : Callback<UpdateUserSuccess> {
-            override fun onResponse(call: Call<UpdateUserSuccess>, response: Response<UpdateUserSuccess>) {
-                if (response.body()?.result == "true"){
+        Retrofit.UpdateUser(id, updateUserInfo).enqueue(object : Callback<UpdateUserSuccess> {
+            override fun onResponse(
+                call: Call<UpdateUserSuccess>,
+                response: Response<UpdateUserSuccess>
+            ) {
+                if (response.body()?.result == "true") {
                     Toast.makeText(context, "비밀번호가 정상적으로 업데이트 되었습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -270,15 +300,20 @@ class MypageFrag : Fragment() {
         })
     }
 
-    fun DefaultIcon(textInputLayout: TextInputLayout){
+    fun DefaultIcon(textInputLayout: TextInputLayout) {
         textInputLayout.setStartIconDrawable(R.drawable.ic_lock)
 
         textInputLayout.setStartIconTintList(ColorStateList.valueOf(resources.getColor(R.color.icon)))
     }
 
-    fun ChangeIcon(textInputLayout: TextInputLayout){
+    fun ChangeIcon(textInputLayout: TextInputLayout) {
         textInputLayout.setStartIconDrawable(R.drawable.ic_check_circle)
-        textInputLayout.setStartIconTintList(ContextCompat.getColorStateList(requireContext(), R.color.green))
+        textInputLayout.setStartIconTintList(
+            ContextCompat.getColorStateList(
+                requireContext(),
+                R.color.green
+            )
+        )
     }
 
     companion object {

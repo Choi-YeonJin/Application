@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/basicP"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -32,6 +33,16 @@
         android:text="취소"
         android:textColor="@color/dark3"
         android:textSize="@dimen/font16" />
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchView"
+        app:layout_constraintRight_toRightOf="parent"
+        android:divider="@color/mainBlue"
+        android:dividerHeight="1dp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
