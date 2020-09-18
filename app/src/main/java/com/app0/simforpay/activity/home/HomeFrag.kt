@@ -31,6 +31,7 @@ class HomeFrag : Fragment() {
     private val Title = mutableListOf<String>()
     private val Content = mutableListOf<String>()
     var cnt=0
+    private var User = arrayOf<String?>()
     private var position: Int? = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
