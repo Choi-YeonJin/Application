@@ -43,7 +43,7 @@ class NotificationFrag : Fragment() {
         super.onResume()
 
         btnBack.setOnClickListener {
-            requireFragmentManager().beginTransaction().remove(this).commit()
+            fragmentManager?.popBackStackImmediate()
         }
     }
 

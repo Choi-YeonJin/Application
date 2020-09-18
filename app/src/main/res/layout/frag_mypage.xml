@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layFull"
     style="@style/basicP"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -56,7 +57,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toTopOf="@id/myId"
         android:layout_marginTop="@dimen/size8"
-        android:text="홍길동"
         android:textSize="@dimen/size16"
         android:fontFamily="@font/nanumbarungothic_bold" />
 
@@ -68,7 +68,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toTopOf="@id/myPhone"
         android:layout_marginTop="@dimen/size4"
-        android:text="\@honggildong"
         android:textColor="@color/dark3"
         android:textSize="@dimen/font12" />
 
@@ -93,7 +92,6 @@
         android:padding="@dimen/size8"
         android:layout_marginTop="@dimen/size40"
         android:layout_marginLeft="@dimen/size8"
-        android:text="010-0000-0000"
         android:background="@drawable/txt_background"
         android:gravity="center_vertical" /> <!-- 전화번호 -->
 
@@ -114,7 +112,7 @@
         app:layout_constraintTop_toBottomOf="@id/myPhone"
         app:layout_constraintLeft_toRightOf="@id/txt1"
         app:layout_constraintRight_toLeftOf="@id/btnPwChange"
-        app:layout_constraintBottom_toTopOf="@id/myAccount"
+        app:layout_constraintBottom_toTopOf="@id/myBank"
         android:padding="@dimen/size8"
         android:layout_margin="@dimen/size8"
         android:layout_marginBottom="0dp"
@@ -135,14 +133,14 @@
         android:id="@+id/txt3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/myAccount"
+        app:layout_constraintTop_toTopOf="@id/myBank"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/myAccount"
+        app:layout_constraintBottom_toBottomOf="@+id/myBank"
         android:text="계좌번호"
         android:fontFamily="@font/nanumbarungothic_bold" />
 
     <TextView
-        android:id="@+id/myAccount"
+        android:id="@+id/myBank"
         android:layout_width="80sp"
         android:layout_height="@dimen/txtBackH"
         app:layout_constraintTop_toBottomOf="@id/myPw"
@@ -151,7 +149,6 @@
         android:padding="@dimen/size8"
         android:layout_margin="@dimen/size8"
         android:layout_marginBottom="0dp"
-        android:text="카카오뱅크"
         android:background="@drawable/txt_background"
         android:gravity="center_vertical" />
 
@@ -160,12 +157,11 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/txtBackH"
         app:layout_constraintTop_toBottomOf="@id/myPw"
-        app:layout_constraintLeft_toRightOf="@id/myAccount"
+        app:layout_constraintLeft_toRightOf="@id/myBank"
         app:layout_constraintRight_toLeftOf="@id/btnAccountChange"
         android:padding="@dimen/size8"
         android:layout_margin="@dimen/size8"
         android:layout_marginBottom="0dp"
-        android:text="3333123456789"
         android:background="@drawable/txt_background"
         android:gravity="center_vertical" />
 
@@ -173,9 +169,9 @@
         android:id="@+id/btnAccountChange"
         android:layout_width="@dimen/size24"
         android:layout_height="@dimen/size24"
-        app:layout_constraintTop_toTopOf="@id/myAccount"
+        app:layout_constraintTop_toTopOf="@id/myBank"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/myAccount"
+        app:layout_constraintBottom_toBottomOf="@id/myBank"
         android:src="@drawable/ic_edit" /> <!-- 계좌번호 -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

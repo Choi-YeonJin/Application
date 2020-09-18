@@ -1,12 +1,8 @@
 package com.app0.simforpay.activity.home
 
 import android.app.AlertDialog
-import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -19,12 +15,11 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.app0.simforpay.R
-import com.app0.simforpay.util.sharedpreferences.Key
 import com.app0.simforpay.activity.MainAct
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.*
-import com.app0.simforpay.util.ImgUrl
 import com.app0.simforpay.util.RegularExpression
+import com.app0.simforpay.util.sharedpreferences.Key
 import com.app0.simforpay.util.sharedpreferences.MyApplication
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -32,31 +27,45 @@ import kotlinx.android.synthetic.main.editaccount_dialog.view.*
 import kotlinx.android.synthetic.main.editaccount_dialog.view.btnClose
 import kotlinx.android.synthetic.main.editaccount_dialog.view.btnCompl
 import kotlinx.android.synthetic.main.editpw_dialog.view.*
-import kotlinx.android.synthetic.main.frag_contract.*
 import kotlinx.android.synthetic.main.frag_mypage.*
-import kotlinx.android.synthetic.main.frag_mypage.imgProfile
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+private const val ARG_PARAM1 = "name"
+private const val ARG_PARAM2 = "id"
+private const val ARG_PARAM3 = "phone"
+private const val ARG_PARAM4 = "bank"
+private const val ARG_PARAM5 = "account"
+private const val ARG_PARAM6 = "imgUrl"
 
 class MypageFrag : Fragment() {
-    private val Retrofit = RetrofitHelper.getRetrofit()
 
+    private val Retrofit = RetrofitHelper.getRetrofit()
     var oldPwCheck = false // 현재 비밀번호 일치 여부(bool)
     var pwCheck = false // pw 정규식 만족 여부(bool)
     var pwAgainCheck = false // pw와 pwAgain 일치 여부(bool)
+    private var name: String? = null
+    private var id: String? = null
+    private var phone: String? = null
+    private var bank: String? = null
+    private var account: String? = null
+    private var imgUrl: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val mainAct = activity as MainAct
         mainAct.HideBottomNavi(true)
-    }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
+        arguments?.let {
+            name = it.getString(ARG_PARAM1)
+            id = it.getString(ARG_PARAM2)
+            phone = it.getString(ARG_PARAM3)
+            bank = it.getString(ARG_PARAM4)
+            account = it.getString(ARG_PARAM5)
+            imgUrl = it.getString(ARG_PARAM6)
+        }
     }
 
     override fun onCreateView(
@@ -67,8 +76,29 @@ class MypageFrag : Fragment() {
         return inflater.inflate(R.layout.frag_mypage, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+    }
+
     override fun onResume() {
         super.onResume()
+
+        myName.text = name
+        myId.text = id
+        myPhone.text = phone
+        myBank.text = bank
+        myAccountNum.text = account
+//        if(imgUrl != "Default")
+//        {
+//            val Image = ImgUrl.StringToBitmap(imgUrl.toString())
+//            imgProfile.setImageBitmap(Image)
+//        }
+
+        btnBack.setOnClickListener{
+            fragmentManager?.popBackStackImmediate()
+        }
 
         btnPwChange.setOnClickListener {
             ShowEditDialog(R.layout.editpw_dialog)
@@ -77,31 +107,6 @@ class MypageFrag : Fragment() {
         btnAccountChange.setOnClickListener {
             ShowEditDialog(R.layout.editaccount_dialog)
         }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        var id = Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
-
-        Retrofit.getUser(id).enqueue(object : Callback<User> {
-            override fun onResponse(call: Call<User>, response: Response<User>) {
-                myName.setText(response.body()?.name)
-                myId.setText("@" + response.body()?.myId)
-                myPhone.setText(response.body()?.phone_num)
-                myAccount.setText(response.body()?.bank)
-                myAccountNum.setText(response.body()?.account)
-                if(response.body()?.image_url != "Default")
-                {
-                    val Image = ImgUrl.StringToBitmap(response.body()?.image_url.toString())
-                    imgProfile.setImageBitmap(Image)
-                }
-
-            }
-
-            override fun onFailure(call: Call<User>, t: Throwable) {}
-
-        })
     }
 
     override fun onDestroy() {
@@ -204,7 +209,7 @@ class MypageFrag : Fragment() {
                 // 완료 버튼 눌리면
                 updateUserAccount(editDialogView.bank,editDialogView.accountNum)
                 editDialog.dismiss() // dialog 닫기}
-                requireFragmentManager().beginTransaction().add(R.id.layFull, MypageFrag()).commit()
+                requireFragmentManager().beginTransaction().replace(R.id.layFull, MypageFrag()).commit()
             }
         }
 
@@ -274,6 +279,21 @@ class MypageFrag : Fragment() {
     fun ChangeIcon(textInputLayout: TextInputLayout){
         textInputLayout.setStartIconDrawable(R.drawable.ic_check_circle)
         textInputLayout.setStartIconTintList(ContextCompat.getColorStateList(requireContext(), R.color.green))
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance(name: String, id: String, phone: String, bank: String, account: String, imgUrl: String) =
+            MypageFrag().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, name)
+                    putString(ARG_PARAM2, id)
+                    putString(ARG_PARAM3, phone)
+                    putString(ARG_PARAM4, bank)
+                    putString(ARG_PARAM5, account)
+                    putString(ARG_PARAM6, imgUrl)
+                }
+            }
     }
 
 }

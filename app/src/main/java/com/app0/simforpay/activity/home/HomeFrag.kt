@@ -13,6 +13,7 @@ import com.app0.simforpay.adapter.ContractAdapter
 import com.app0.simforpay.adapter.Data
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.ContractContentSuccess
+import com.app0.simforpay.retrofit.domain.User
 import com.app0.simforpay.util.CustomBottomSheetDialog
 import com.app0.simforpay.util.sharedpreferences.Key
 import com.app0.simforpay.util.sharedpreferences.MyApplication
@@ -26,10 +27,29 @@ class HomeFrag : Fragment() {
     private val Retrofit = RetrofitHelper.getRetrofit()
     private val Title = mutableListOf<String>()
     private val Content = mutableListOf<String>()
-    var cnt=0
+    private var User = arrayOf<String?>()
+    var cnt = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        var id=Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
+
+        Retrofit.getUser(id).enqueue(object : Callback<User> {
+            override fun onResponse(call: Call<User>, response: Response<User>) {
+                User = arrayOf(
+                    response.body()?.name,
+                    "@" + response.body()?.myId,
+                    response.body()?.phone_num,
+                    response.body()?.bank,
+                    response.body()?.account,
+                    response.body()?.image_url
+                )
+            }
+
+            override fun onFailure(call: Call<User>, t: Throwable) {}
+
+        })
     }
 
     override fun onCreateView(
@@ -42,6 +62,7 @@ class HomeFrag : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         var id=Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
 
         Retrofit.getContracts(id).enqueue(object : Callback<List<ContractContentSuccess>> {
@@ -94,7 +115,7 @@ class HomeFrag : Fragment() {
         super.onResume()
 
         btnSearch.setOnClickListener {
-//            requireFragmentManager().beginTransaction().add(R.id.layFull, SearchFrag()).commit()
+//            requireFragmentManager().beginTransaction().replace(R.id.layFull, SearchFrag()).addToBackStack(null).commit()
 
             val dialog = CustomBottomSheetDialog.CustomBottomSheetDialogBuilder()
                 .setBtnClickListener(object : CustomBottomSheetDialog.CustomBottomSheetDialogListener {
@@ -112,11 +133,17 @@ class HomeFrag : Fragment() {
         }
 
         btnNotification.setOnClickListener {
-            requireFragmentManager().beginTransaction().add(R.id.layFull, NotificationFrag()).commit()
+            requireFragmentManager().beginTransaction().replace(R.id.layFull, NotificationFrag()).addToBackStack(null).commit()
         }
 
         btnMypage.setOnClickListener {
-            requireFragmentManager().beginTransaction().add(R.id.layFull, MypageFrag()).commit()
+//            for(i in 0..5){
+//                Log.e("User ${i} : ", User[i].toString())
+//            }
+
+            requireFragmentManager().beginTransaction().replace(R.id.layFull,
+                MypageFrag.newInstance(User[0]!!, User[1]!!, User[2]!!, User[3]!!, User[4]!!, User[5]!!)
+            ).addToBackStack(null).commit()
         }
     }
 }
