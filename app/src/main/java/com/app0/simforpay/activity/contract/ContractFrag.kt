@@ -19,10 +19,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.app0.simforpay.R
 import com.app0.simforpay.retrofit.RetrofitHelper
-import com.app0.simforpay.retrofit.domain.Borrower
-import com.app0.simforpay.retrofit.domain.Contract
-import com.app0.simforpay.retrofit.domain.ContractSuccess
-import com.app0.simforpay.retrofit.domain.User
+import com.app0.simforpay.retrofit.domain.*
 import com.app0.simforpay.util.CustomDialog
 import com.app0.simforpay.util.TextInput
 import com.app0.simforpay.util.sharedpreferences.Key
@@ -36,6 +33,23 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.text.NumberFormat
 import java.util.*
+import kotlin.collections.ArrayList
+
+private const val ARG_PARAM1 = "id"
+private const val ARG_PARAM2 = "title"
+private const val ARG_PARAM3 = "borrowDate"
+private const val ARG_PARAM4 = "paybackDate"
+private const val ARG_PARAM5 = "price"
+private const val ARG_PARAM6 = "lenderName"
+private const val ARG_PARAM7 = "lenderBank"
+private const val ARG_PARAM8 = "lenderAccount"
+private const val ARG_PARAM9 = "borrower"
+private const val ARG_PARAM10 = "penalty"
+private const val ARG_PARAM11 = "content"
+private const val ARG_PARAM12 = "alarm"
+private const val ARG_PARAM13 = "state"
+
+
 
 class ContractFrag : Fragment() {
 
@@ -77,7 +91,7 @@ class ContractFrag : Fragment() {
                 response.body()?.forEach {
 
                     userInfo[it.name] = it.id
-                    mentionAdapter.add(Mention(it.name))
+                    mentionAdapter.add(Mention(it.name,it.myId))
                 }
             }
 
@@ -379,5 +393,28 @@ class ContractFrag : Fragment() {
                 textView.text = NumberFormat.getInstance(Locale.KOREA).format(borrowerPrice) + "원"
             }
         }
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance(id: Int, title: String, borroweDate: String, paybackDate: String, price: Int, lenderName: String, lenderBank: String, lenderAccount: Int, borrower: ArrayList<String>, penalty: String, content: String, alarm: Int, state: Int) =
+            ContractFrag().apply {
+                arguments = Bundle().apply {
+                    putInt(ARG_PARAM1, id)
+                    putString(ARG_PARAM2, title)
+                    putString(ARG_PARAM3, borroweDate)
+                    putString(ARG_PARAM4, paybackDate)
+                    putInt(ARG_PARAM5, price)
+                    putString(ARG_PARAM6, lenderName)
+                    putString(ARG_PARAM7, lenderBank)
+                    putInt(ARG_PARAM8, lenderAccount)
+                    putStringArrayList(ARG_PARAM9, borrower)
+                    putString(ARG_PARAM10, penalty)
+                    putString(ARG_PARAM11, content)
+                    putInt(ARG_PARAM12, alarm)
+                    putInt(ARG_PARAM13, state)
+
+                }
+            }
     }
 }
