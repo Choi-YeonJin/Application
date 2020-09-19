@@ -166,11 +166,6 @@ class HomeFrag : Fragment() {
             }
             else Toast.makeText(requireContext(), "잠시후 재시도 해주세요.", Toast.LENGTH_SHORT).show()
         }
-
-        btnRefresh.setOnClickListener{
-            requireFragmentManager().beginTransaction().replace(R.id.layFull, HomeFrag())
-                .addToBackStack(null).commit()
-        }
     }
 
     companion object {

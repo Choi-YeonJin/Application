@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.app0.simforpay.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.contract_bottomsheet.*
+import kotlinx.android.synthetic.main.contract_bottomsheet.view.*
 
 class CustomBottomSheetDialog : BottomSheetDialogFragment() {
 
     var listener: CustomBottomSheetDialogListener? = null
-    val layout: Int? = null
 
     interface CustomBottomSheetDialogListener {
         fun onClickMenu1Btn() {}
@@ -23,7 +23,7 @@ class CustomBottomSheetDialog : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(layout!!, container, false)
+        return inflater.inflate(R.layout.contract_bottomsheet, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
