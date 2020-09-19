@@ -63,6 +63,10 @@ dependencies {
     // auto fit textview
     implementation 'me.grantland:autofittextview:0.2.+'
 
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
     // RxJava
     implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
 

@@ -33,9 +33,8 @@ class NotificationFrag : Fragment() {
 
         val notiList = generateDummyList(3)
 
-        rvNotification.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL ,false)
+        rvNotification.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL,false)
         rvNotification.adapter = NotificationAdapter(notiList)
-
         rvNotification.setHasFixedSize(true)
     }
 
