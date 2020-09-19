@@ -13,6 +13,9 @@ interface Api {
     fun getUser(@Path("id") id: Int): Call<User>
 
     @GET("contract-contents/{id}")
+    fun getContractContents(@Path("id") id: Int): Call<List<ContractContentSuccess>>
+
+    @GET("contracts/{id}")
     fun getContracts(@Path("id") id: Int): Call<List<ContractContentSuccess>>
 
     @POST("sign-in")
@@ -32,5 +35,11 @@ interface Api {
 
     @PUT("bank-registration/{id}")
     fun UpdateUserAccount(@Path("id") id: Int,@Body updateUserInfo: UpdateAccount) : Call<UpdateAccountSuccess>
+
+    @PUT("contract-complete/{id}")
+    fun ContractCompl(@Path("id") id: Int) : Call<UpdateSuccess>
+
+    @DELETE("contract/{id}")
+    fun DeleteContract(@Path("id") id: Int) : Call<UpdateSuccess>
 
 }

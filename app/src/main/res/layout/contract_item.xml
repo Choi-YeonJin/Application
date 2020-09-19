@@ -16,7 +16,17 @@
         android:paddingLeft="@dimen/size16"
         android:paddingRight="@dimen/size16"
         android:background="@drawable/contractlay_background">
-        
+
+    <ImageView
+        android:id="@+id/contractComplState"
+        android:layout_width="@dimen/size24"
+        android:layout_height="@dimen/size24"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="@dimen/size8"
+        android:visibility="visible"
+        android:src="@drawable/ic_check_circle"/>
+
         <ImageButton
             android:id="@+id/btnContractSetting"
             android:layout_width="@dimen/size24"
