@@ -9,7 +9,7 @@ data class ContractContentSuccess (
     val lenderName : String,
     val lenderBank : String,
     val lenderAccount : Int,
-    val borrower : List<BorrowerSuccess>,
+    val borrower : ArrayList<BorrowerSuccess>,
     val penalty : String,
     val content : String,
     val alarm : Int,
