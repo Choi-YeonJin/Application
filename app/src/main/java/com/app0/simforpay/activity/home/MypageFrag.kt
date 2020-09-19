@@ -2,6 +2,7 @@ package com.app0.simforpay.activity.home
 
 import android.app.AlertDialog
 import android.content.res.ColorStateList
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -13,9 +14,7 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.replace
 import com.app0.simforpay.R
 import com.app0.simforpay.activity.MainAct
 import com.app0.simforpay.retrofit.RetrofitHelper
@@ -24,6 +23,7 @@ import com.app0.simforpay.util.ImgUrl
 import com.app0.simforpay.util.RegularExpression
 import com.app0.simforpay.util.sharedpreferences.Key
 import com.app0.simforpay.util.sharedpreferences.MyApplication
+import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.editaccount_dialog.view.*
@@ -54,6 +54,7 @@ class MypageFrag : Fragment() {
     private var bank: String? = null
     private var account: String? = null
     private var imgUrl: String? = null
+    private var imageUri: Bitmap?= null
     var user = emptyArray<String?>()
     var saveuser = mutableListOf<String?>()
 
@@ -98,11 +99,23 @@ class MypageFrag : Fragment() {
         if(imgUrl != "Default")
         {
             val Image = ImgUrl.StringToBitmap(imgUrl.toString())
-            imgProfile.setImageBitmap(Image)
+            Glide.with(requireContext()).load(Image).circleCrop().into(imgProfile)
         }
 
         btnBack.setOnClickListener{
             fragmentManager?.popBackStackImmediate()
+        }
+
+        btnAddImgProfile.setOnClickListener {
+            // java.lang.RuntimeException: android.os.TransactionTooLargeException: data parcel size 11474292 bytes error
+
+//            TedImagePicker.with(requireContext())
+//                .start { uri ->
+////                    Log.d("test", uri.toString())
+//                    val bitmap = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, uri)
+//                    imageUri = bitmap
+//                    Glide.with(this).load(uri).circleCrop().into(imgProfile)
+//                }
         }
 
         btnPwChange.setOnClickListener {

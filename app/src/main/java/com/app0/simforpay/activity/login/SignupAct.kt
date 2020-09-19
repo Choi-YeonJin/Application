@@ -19,13 +19,13 @@ import com.app0.simforpay.retrofit.domain.validUserSuccess
 import com.app0.simforpay.util.ImgUrl
 import com.app0.simforpay.util.RegularExpression
 import com.app0.simforpay.util.TextInput
+import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputLayout
 import gun0912.tedimagepicker.builder.TedImagePicker
 import kotlinx.android.synthetic.main.act_signup.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
 
 class SignupAct : AppCompatActivity() {
 
@@ -54,7 +54,7 @@ class SignupAct : AppCompatActivity() {
 //                    Log.d("test", uri.toString())
                     val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
                     imageUri = bitmap
-                    imgProfile.setImageURI(uri)
+                    Glide.with(this).load(uri).circleCrop().into(imgProfile)
                 }
         }
 
