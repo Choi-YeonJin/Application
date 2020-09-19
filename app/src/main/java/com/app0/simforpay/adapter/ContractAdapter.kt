@@ -12,6 +12,7 @@ import com.app0.simforpay.R
 import com.app0.simforpay.activity.contract.ContractFrag
 import com.app0.simforpay.activity.home.HomeFrag
 import com.app0.simforpay.retrofit.RetrofitHelper
+import com.app0.simforpay.retrofit.domain.Borrower
 import com.app0.simforpay.retrofit.domain.ContractContentSuccess
 import com.app0.simforpay.retrofit.domain.UpdateSuccess
 import com.app0.simforpay.util.CustomBottomSheetDialog
@@ -20,13 +21,13 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ContractAdapter( models: List<Data>, context: Context, fragmentManager: FragmentManager, getContractContent: List<ContractContentSuccess>) : PagerAdapter() {
+
+class ContractAdapter( models: List<Data>, context: Context, fragmentManager: FragmentManager, getContractContent: List<ContractContentSuccess> ): PagerAdapter() {
     private val Retrofit = RetrofitHelper.getRetrofit()
     private var context: Context? = null
     private val fragmentManager = fragmentManager
     private val getContractContent = getContractContent
     private var models:List<Data> = emptyList()
-    var borrowerList = arrayListOf<String>()
 
     override fun getCount(): Int {
         return models.size
@@ -38,7 +39,11 @@ class ContractAdapter( models: List<Data>, context: Context, fragmentManager: Fr
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
 
-        val view: View = LayoutInflater.from(context).inflate(R.layout.contract_item, container, false)
+        val view: View = LayoutInflater.from(context).inflate(
+            R.layout.contract_item,
+            container,
+            false
+        )
 
         view.contractName.text = models[position].main
         view.contractContent.text = models[position].sub
@@ -47,45 +52,56 @@ class ContractAdapter( models: List<Data>, context: Context, fragmentManager: Fr
 
         view.btnContractSetting.setOnClickListener{
             val dialog = CustomBottomSheetDialog.CustomBottomSheetDialogBuilder()
-                .setBtnClickListener(object : CustomBottomSheetDialog.CustomBottomSheetDialogListener {
+                .setBtnClickListener(object :
+                    CustomBottomSheetDialog.CustomBottomSheetDialogListener {
                     override fun onClickMenu1Btn() {
-//                        fragmentManager.beginTransaction().replace(
-//                            R.id.layFull,
-//                            ContractFrag.newInstance(
-//                                getContractContent[position].id,
-//                                getContractContent[position].title,
-//                                getContractContent[position].borrowDate,
-//                                getContractContent[position].paybackDate,
-//                                getContractContent[position].price,
-//                                getContractContent[position].lenderName,
-//                                getContractContent[position].lenderBank,
-//                                getContractContent[position].lenderAccount,
-//                                getContractContent[position].borrower,
-//                                getContractContent[position].penalty,
-//                                getContractContent[position].content,
-//                                getContractContent[position].alarm,
-//                                getContractContent[position].state
-//                            )
-//                        ).addToBackStack(null).commit()
+
+                        fragmentManager.beginTransaction().remove(HomeFrag.newInstance(0)).commit()
+                        fragmentManager.beginTransaction().replace(R.id.layFull,ContractFrag.newInstance(
+                            getContractContent[position].id,
+                            getContractContent[position].title,
+                            getContractContent[position].borrowDate,
+                            getContractContent[position].paybackDate,
+                            getContractContent[position].price,
+                            getContractContent[position].lenderName,
+                            getContractContent[position].lenderBank,
+                            getContractContent[position].lenderAccount,
+                            getContractContent[position].borrower,
+                            getContractContent[position].penalty,
+                            getContractContent[position].content,
+                            getContractContent[position].alarm,
+                            getContractContent[position].state)
+                        ).commit()
+
                         Toast.makeText(context, "First Button Clicked", Toast.LENGTH_SHORT).show()
                     }
+
                     override fun onClickMenu2Btn() {
-                        Retrofit.DeleteContract(getContractContent[position].id).enqueue(object : Callback<UpdateSuccess> {
-                            override fun onResponse(call: Call<UpdateSuccess>, response: Response<UpdateSuccess>) {
-                                if (response.body()?.result == "true"){
-                                    HomeFrag.newInstance(0)
+                        Retrofit.DeleteContract(getContractContent[position].id).enqueue(object :
+                            Callback<UpdateSuccess> {
+                            override fun onResponse(
+                                call: Call<UpdateSuccess>,
+                                response: Response<UpdateSuccess>
+                            ) {
+                                if (response.body()?.result == "true") {
+                                    fragmentManager.beginTransaction().replace(R.id.layFull, HomeFrag.newInstance(0))
+                                        .addToBackStack(null).commit()
                                 }
                             }
 
                             override fun onFailure(call: Call<UpdateSuccess>, t: Throwable) {}
 
                         })
-                        Toast.makeText(context, "새로고침을 해주세요.", Toast.LENGTH_SHORT).show()
                     }
+
                     override fun onClickMenu3Btn() {
-                        Retrofit.ContractCompl(getContractContent[position].id).enqueue(object : Callback<UpdateSuccess> {
-                            override fun onResponse(call: Call<UpdateSuccess>, response: Response<UpdateSuccess>) {
-                                if (response.body()?.result == "true"){
+                        Retrofit.ContractCompl(getContractContent[position].id).enqueue(object :
+                            Callback<UpdateSuccess> {
+                            override fun onResponse(
+                                call: Call<UpdateSuccess>,
+                                response: Response<UpdateSuccess>
+                            ) {
+                                if (response.body()?.result == "true") {
                                     view.contractComplState.visibility = view.visibility
                                     HomeFrag.newInstance(0)
                                 }
@@ -97,7 +113,7 @@ class ContractAdapter( models: List<Data>, context: Context, fragmentManager: Fr
                     }
                 }).create()
             dialog.show(fragmentManager, dialog.tag)
-            Log.d("Content",getContractContent[position].borrower[0].toString())
+            Log.d("Content", getContractContent[position].borrower[0].toString())
 //            Toast.makeText(context, position.toString() + "View Clicked", Toast.LENGTH_SHORT).show()
         }
 

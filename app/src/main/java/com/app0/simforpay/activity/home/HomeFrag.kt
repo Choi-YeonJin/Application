@@ -57,8 +57,6 @@ class HomeFrag : Fragment() {
             position = it.getInt(ARG_PARAM3)
         }
 
-        Log.d("posi", position.toString())
-
     }
 
     override fun onCreateView(
@@ -71,8 +69,6 @@ class HomeFrag : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
 
         var id = Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
 
@@ -141,15 +137,11 @@ class HomeFrag : Fragment() {
         super.onResume()
 
         btnSearch.setOnClickListener {
-            val list = ArrayList<Data>()
-            vpContract.adapter = ContractAdapter(list, requireContext(), parentFragmentManager, getContractContent)
             requireFragmentManager().beginTransaction().replace(R.id.layFull, SearchFrag())
                 .addToBackStack(null).commit()
         }
 
         btnNotification.setOnClickListener {
-            val list = ArrayList<Data>()
-            vpContract.adapter = ContractAdapter(list, requireContext(), parentFragmentManager, getContractContent)
             requireFragmentManager().beginTransaction().replace(R.id.layFull, NotificationFrag())
                 .addToBackStack(null).commit()
         }
@@ -158,9 +150,6 @@ class HomeFrag : Fragment() {
 //            for(i in 0..5){
 //                Log.e("User ${i} : ", User[i].toString())
 //            }
-
-            val list = ArrayList<Data>()
-            vpContract.adapter = ContractAdapter(list, requireContext(), parentFragmentManager, getContractContent)
             requireFragmentManager().beginTransaction().replace(
                 R.id.layFull,
                 MypageFrag.newInstance(
@@ -175,8 +164,6 @@ class HomeFrag : Fragment() {
         }
 
         btnRefresh.setOnClickListener{
-            val list = ArrayList<Data>()
-            vpContract.adapter = ContractAdapter(list, requireContext(), parentFragmentManager, getContractContent)
             requireFragmentManager().beginTransaction().replace(R.id.layFull, HomeFrag())
                 .addToBackStack(null).commit()
         }
