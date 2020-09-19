@@ -10,9 +10,10 @@ object ImgUrl {
     fun BitmapToString(bitmap: Bitmap): String {
 
         val byteArrayOutputStream = ByteArrayOutputStream()
-        val byteArray = byteArrayOutputStream.toByteArray()
 
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+
+        val byteArray = byteArrayOutputStream.toByteArray()
 
         return Base64.encodeToString(byteArray, Base64.DEFAULT)
     }
