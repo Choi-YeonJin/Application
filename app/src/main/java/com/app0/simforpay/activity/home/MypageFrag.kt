@@ -18,6 +18,7 @@ import com.app0.simforpay.R
 import com.app0.simforpay.activity.MainAct
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.*
+import com.app0.simforpay.util.ImgUrl
 import com.app0.simforpay.util.RegularExpression
 import com.app0.simforpay.util.sharedpreferences.Key
 import com.app0.simforpay.util.sharedpreferences.MyApplication
@@ -90,11 +91,11 @@ class MypageFrag : Fragment() {
         myPhone.text = phone
         myBank.text = bank
         myAccountNum.text = account
-//        if(imgUrl != "Default")
-//        {
-//            val Image = ImgUrl.StringToBitmap(imgUrl.toString())
-//            imgProfile.setImageBitmap(Image)
-//        }
+        if(imgUrl != "Default")
+        {
+            val Image = ImgUrl.StringToBitmap(imgUrl.toString())
+            imgProfile.setImageBitmap(Image)
+        }
 
         btnBack.setOnClickListener{
             fragmentManager?.popBackStackImmediate()
