@@ -15,7 +15,6 @@ import com.app0.simforpay.adapter.Data
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.ContractContentSuccess
 import com.app0.simforpay.retrofit.domain.User
-import com.app0.simforpay.util.CustomBottomSheetDialog
 import com.app0.simforpay.util.sharedpreferences.Key
 import com.app0.simforpay.util.sharedpreferences.MyApplication
 import kotlinx.android.synthetic.main.frag_home.*
@@ -91,10 +90,9 @@ class HomeFrag : Fragment() {
                 }
 
                 if(position != null) {
-                    vpContract.adapter = ContractAdapter(list, requireContext())
+                    vpContract.adapter = ContractAdapter(list, requireContext(), parentFragmentManager)
                     vpContract.setCurrentItem(position!!)
                 }
-
             }
 
             override fun onFailure(call: Call<List<ContractContentSuccess>>, t: Throwable) {}
@@ -136,21 +134,7 @@ class HomeFrag : Fragment() {
         btnSearch.setOnClickListener {
             val list = ArrayList<Data>()
             vpContract.adapter = ContractAdapter(list, requireContext())
-            requireFragmentManager().beginTransaction().replace(R.id.layFull, SearchFrag()).commit()
-
-//            val dialog = CustomBottomSheetDialog.CustomBottomSheetDialogBuilder()
-//                .setBtnClickListener(object : CustomBottomSheetDialog.CustomBottomSheetDialogListener {
-//                    override fun onClickMenu1Btn() {
-//                        Toast.makeText(context, "First Button Clicked", Toast.LENGTH_SHORT).show()
-//                    }
-//                    override fun onClickMenu2Btn() {
-//                        Toast.makeText(context, "Second Button Clicked", Toast.LENGTH_SHORT).show()
-//                    }
-//                    override fun onClickMenu3Btn() {
-//                        Toast.makeText(context, "Third Button Clicked", Toast.LENGTH_SHORT).show()
-//                  }
-//                }).create()
-//            dialog.show(parentFragmentManager, dialog.tag)
+            requireFragmentManager().beginTransaction().replace(R.id.layFull, SearchFrag()).addToBackStack(null).commit()
         }
 
         btnNotification.setOnClickListener {
