@@ -47,24 +47,24 @@ class ContractAdapter( models: List<Data>, context: Context, fragmentManager: Fr
             val dialog = CustomBottomSheetDialog.CustomBottomSheetDialogBuilder()
                 .setBtnClickListener(object : CustomBottomSheetDialog.CustomBottomSheetDialogListener {
                     override fun onClickMenu1Btn() {
-                        fragmentManager.beginTransaction().replace(
-                            R.id.layFull,
-                            ContractFrag.newInstance(
-                                getContractContent[position].id,
-                                getContractContent[position].title,
-                                getContractContent[position].borrowDate,
-                                getContractContent[position].paybackDate,
-                                getContractContent[position].price,
-                                getContractContent[position].lenderName,
-                                getContractContent[position].lenderBank,
-                                getContractContent[position].lenderAccount,
-                                getContractContent[position].borrower,
-                                getContractContent[position].penalty,
-                                getContractContent[position].content,
-                                getContractContent[position].alarm,
-                                getContractContent[position].state
-                            )
-                        ).addToBackStack(null).commit()
+//                        fragmentManager.beginTransaction().replace(
+//                            R.id.layFull,
+//                            ContractFrag.newInstance(
+//                                getContractContent[position].id,
+//                                getContractContent[position].title,
+//                                getContractContent[position].borrowDate,
+//                                getContractContent[position].paybackDate,
+//                                getContractContent[position].price,
+//                                getContractContent[position].lenderName,
+//                                getContractContent[position].lenderBank,
+//                                getContractContent[position].lenderAccount,
+//                                getContractContent[position].borrower,
+//                                getContractContent[position].penalty,
+//                                getContractContent[position].content,
+//                                getContractContent[position].alarm,
+//                                getContractContent[position].state
+//                            )
+//                        ).addToBackStack(null).commit()
                         Toast.makeText(context, "First Button Clicked", Toast.LENGTH_SHORT).show()
                     }
                     override fun onClickMenu2Btn() {
