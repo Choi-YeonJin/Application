@@ -30,7 +30,7 @@
         android:textSize="@dimen/font18"
         android:singleLine="true"
         android:maxLines="1" />
-    
+
     <ImageView
         android:id="@+id/contractComplState"
         android:layout_width="@dimen/size40"

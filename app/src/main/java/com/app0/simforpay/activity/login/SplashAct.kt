@@ -26,6 +26,8 @@ class SplashAct : AppCompatActivity() {
                 startActivity(Intent(this, MainAct::class.java))
             }
 
+//            startActivity(Intent(this, SigninAct::class.java))
+
             finish()
         }, SPLASH_TIME_OUT)
     }
