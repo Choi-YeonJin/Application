@@ -9,7 +9,6 @@ import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.app0.simforpay.R
-import com.app0.simforpay.activity.MainAct
 import com.app0.simforpay.adapter.ContractAdapter
 import com.app0.simforpay.adapter.Data
 import com.app0.simforpay.retrofit.RetrofitHelper
@@ -133,7 +132,7 @@ class HomeFrag : Fragment() {
 
         btnSearch.setOnClickListener {
             val list = ArrayList<Data>()
-            vpContract.adapter = ContractAdapter(list, requireContext())
+            vpContract.adapter = ContractAdapter(list, requireContext(), parentFragmentManager)
             requireFragmentManager().beginTransaction().replace(R.id.layFull, SearchFrag()).addToBackStack(null).commit()
         }
 
