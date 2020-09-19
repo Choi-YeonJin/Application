@@ -24,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="@dimen/size8"
-        android:visibility="visible"
+        android:visibility="invisible"
         android:src="@drawable/ic_check_circle"/>
 
         <ImageButton
