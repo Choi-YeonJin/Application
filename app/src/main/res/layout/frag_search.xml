@@ -41,7 +41,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/searchView"
         app:layout_constraintRight_toRightOf="parent"
-        android:divider="@color/mainBlue"
+        android:divider="@color/dark4"
         android:dividerHeight="1dp"/>
 
 

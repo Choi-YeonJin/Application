@@ -27,18 +27,6 @@
             android:fontFamily="@font/nanumbarungothic_bold" />
 
         <ImageButton
-            android:id="@+id/btnRefresh"
-            android:layout_width="@dimen/size24"
-            android:layout_height="@dimen/size24"
-            app:layout_constraintTop_toTopOf="@id/title"
-            app:layout_constraintRight_toLeftOf="@+id/btnSearch"
-            app:layout_constraintBottom_toBottomOf="@id/title"
-            android:padding="@dimen/size2"
-            android:layout_marginRight="@dimen/size8"
-            android:src="@drawable/ic_check_circle"
-            android:background="@drawable/btngray_background" />
-
-        <ImageButton
             android:id="@+id/btnSearch"
             android:layout_width="@dimen/size24"
             android:layout_height="@dimen/size24"

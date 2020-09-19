@@ -24,8 +24,7 @@ class FriendsAdapter(private val freindsList: List<Data>, context: Context) : Re
     override fun onBindViewHolder(holder: FriendsViewHolder, position: Int) {
         val currentItem = freindsList[position]
 
-        Glide.with(context).load(R.drawable.img_profile).circleCrop().into(holder.img)
-
+        Glide.with(context).load(R.drawable.img_profile).circleCrop().into(holder.img) // image circle crop
         holder.name.text = currentItem.main
         holder.id.text = currentItem.sub
         holder.btn.setOnClickListener {
