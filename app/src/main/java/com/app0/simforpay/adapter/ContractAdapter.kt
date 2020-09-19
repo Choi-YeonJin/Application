@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.PagerAdapter
 import com.app0.simforpay.R
-import com.app0.simforpay.activity.contract.ContractFrag
 import com.app0.simforpay.activity.home.HomeFrag
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.ContractContentSuccess
@@ -78,7 +77,7 @@ class ContractAdapter( models: List<Data>, context: Context, fragmentManager: Fr
                             override fun onFailure(call: Call<UpdateSuccess>, t: Throwable) {}
 
                         })
-                        Toast.makeText(context, "새로고침을 해주세요.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "새로고침 해주세요.", Toast.LENGTH_SHORT).show()
                     }
                     override fun onClickMenu3Btn() {
                         Retrofit.ContractCompl(getContractContent[position].id).enqueue(object : Callback<UpdateSuccess> {
