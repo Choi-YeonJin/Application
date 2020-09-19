@@ -42,6 +42,8 @@ class ContractAdapter( models: List<Data>, context: Context, fragmentManager: Fr
 
         view.contractName.text = models[position].main
         view.contractContent.text = models[position].sub
+        if(getContractContent[position].state == 1)
+            view.contractComplState.visibility = view.visibility
 
         view.btnContractSetting.setOnClickListener{
             val dialog = CustomBottomSheetDialog.CustomBottomSheetDialogBuilder()
