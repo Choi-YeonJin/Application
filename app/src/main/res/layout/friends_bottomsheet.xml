@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/basicP"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/bottomsheet_background">
+    android:layout_height="wrap_content">
 
     <View
         android:id="@+id/lineView"
@@ -66,7 +65,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/txt2"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/menu3"
+        app:layout_constraintBottom_toTopOf="@id/menu1"
         android:layout_marginTop="@dimen/size16"
         android:text="계좌번호" />
 
@@ -80,7 +79,7 @@
         android:text="카카오뱅크 3333123456789" />
 
     <LinearLayout
-        android:id="@+id/menu3"
+        android:id="@+id/menu1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottomsheetH"
         app:layout_constraintTop_toBottomOf="@id/txt2"

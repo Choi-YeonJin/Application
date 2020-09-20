@@ -14,7 +14,7 @@ import com.app0.simforpay.activity.home.HomeFrag
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.ContractContentSuccess
 import com.app0.simforpay.retrofit.domain.UpdateSuccess
-import com.app0.simforpay.util.CustomBottomSheetDialog
+import com.app0.simforpay.util.dialog.CustomContractBottomSheetDialog
 import kotlinx.android.synthetic.main.contract_item.view.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -39,11 +39,7 @@ class ContractAdapter( models: List<Data>, context: Context, fragmentManager: Fr
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
 
-        val view: View = LayoutInflater.from(context).inflate(
-            R.layout.contract_item,
-            container,
-            false
-        )
+        val view: View = LayoutInflater.from(context).inflate(R.layout.contract_item, container, false)
 
         view.contractName.text = models[position].main
         view.contractContent.text = models[position].sub
@@ -51,9 +47,9 @@ class ContractAdapter( models: List<Data>, context: Context, fragmentManager: Fr
             view.contractComplState.visibility = view.visibility
 
         view.btnContractSetting.setOnClickListener{
-            val dialog = CustomBottomSheetDialog.CustomBottomSheetDialogBuilder()
+            val dialog = CustomContractBottomSheetDialog.CustomBottomSheetDialogBuilder()
                 .setBtnClickListener(object :
-                    CustomBottomSheetDialog.CustomBottomSheetDialogListener {
+                    CustomContractBottomSheetDialog.CustomBottomSheetDialogListener {
                     override fun onClickMenu1Btn() {
                         for(i in 0 until getContractContent[position].borrower.size)
                         {

@@ -12,6 +12,7 @@
         <item name="textInputStyle">@style/CustomTxtInputStyle</item>
         <item name="checkboxStyle">@style/CustomCheckBoxStyle</item>
         <item name="android:windowAnimationStyle">@style/CustomFadeAnim</item>
+        <item name="bottomSheetDialogTheme">@style/CustomBottomSheetDialog</item>
     </style>
 
     <style name="SlideActTheme" parent="AppTheme">
@@ -46,11 +47,6 @@
         <item name="endIconMode">clear_text</item>
     </style>
 
-    <style name="idEditTxtStyle">
-        <item name="android:maxLength">20</item>
-        <item name="android:inputType">text</item>
-    </style>
-
     <style name="CustomTxtBtnStyle" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textSize">@dimen/font12</item>
         <item name="android:minWidth">0dp</item>
@@ -62,6 +58,22 @@
     <style name="CustomCheckBoxStyle" parent="Widget.AppCompat.CompoundButton.CheckBox">
         <item name="android:minWidth">0dp</item>
         <item name="android:minHeight">0dp</item>
+    </style>
+
+    <style name="CustomBottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomBottomSheet</item>
+    </style>
+
+    <style name="CustomBottomSheet" parent="Widget.MaterialComponents.BottomSheet">
+        <item name="shapeAppearanceOverlay">@style/CustomShapeAppearanceBottomSheetDialog</item>
+    </style>
+
+    <style name="CustomShapeAppearanceBottomSheetDialog" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">@dimen/size16</item>
+        <item name="cornerSizeTopLeft">@dimen/size16</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
 </resources>
