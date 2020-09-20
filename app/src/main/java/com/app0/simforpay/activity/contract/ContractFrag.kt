@@ -20,7 +20,7 @@ import androidx.navigation.fragment.findNavController
 import com.app0.simforpay.R
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.*
-import com.app0.simforpay.util.CustomDialog
+import com.app0.simforpay.util.dialog.CustomDialog
 import com.app0.simforpay.util.TextInput
 import com.app0.simforpay.util.sharedpreferences.Key
 import com.app0.simforpay.util.sharedpreferences.MyApplication

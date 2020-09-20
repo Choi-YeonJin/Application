@@ -6,14 +6,17 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app0.simforpay.R
+import com.app0.simforpay.util.dialog.CustomFriendsBottomSheetDialog
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.friends_item.view.*
 
-class FriendsAdapter(private val freindsList: List<Data>, context: Context) : RecyclerView.Adapter<FriendsAdapter.FriendsViewHolder>() {
+class FriendsAdapter(private val freindsList: List<Data>, context: Context, fragmentManager: FragmentManager) : RecyclerView.Adapter<FriendsAdapter.FriendsViewHolder>() {
 
     private val context = context
+    private val fragmentManager = fragmentManager
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : FriendsViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.friends_item, parent, false)
@@ -28,7 +31,14 @@ class FriendsAdapter(private val freindsList: List<Data>, context: Context) : Re
         holder.name.text = currentItem.main
         holder.id.text = currentItem.sub
         holder.btn.setOnClickListener {
-            // setting 버튼 클릭
+            val dialog = CustomFriendsBottomSheetDialog.CustomBottomSheetDialogBuilder()
+                .setBtnClickListener(object :
+                    CustomFriendsBottomSheetDialog.CustomBottomSheetDialogListener {
+                    override fun onClickMenu3Btn() {
+
+                    }
+                }).create()
+            dialog.show(fragmentManager, dialog.tag)
         }
     }
 

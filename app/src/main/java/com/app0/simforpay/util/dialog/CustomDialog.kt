@@ -1,4 +1,4 @@
-package com.app0.simforpay.util
+package com.app0.simforpay.util.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater

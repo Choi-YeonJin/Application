@@ -32,7 +32,7 @@ class FriendsFrag : Fragment() {
         val frList = generateDummyList(3)
 
         rvFriends.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL ,false)
-        rvFriends.adapter = FriendsAdapter(frList, requireContext())
+        rvFriends.adapter = FriendsAdapter(frList, requireContext(), parentFragmentManager)
         rvFriends.setHasFixedSize(true)
     }
 
