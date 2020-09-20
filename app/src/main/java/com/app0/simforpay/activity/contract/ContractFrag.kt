@@ -176,6 +176,7 @@ class ContractFrag : Fragment() {
     override fun onResume() {
         super.onResume()
 
+        //updateContract SetText
         setContract()
 
         var cnt = 1 // borrower cnt
@@ -413,6 +414,7 @@ class ContractFrag : Fragment() {
             if (borrowerPrice[0] != getprice.toString()) {
                 cbN1.isChecked = true
             }
+            //Borrower SetText
             setBorrower(BorrowerCnt, borrowerName, borrowerPrice)
         }
     }
