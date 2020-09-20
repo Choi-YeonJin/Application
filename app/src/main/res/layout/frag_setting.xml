@@ -3,12 +3,249 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.SettingFrag">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activity.SettingFrag"
+    android:paddingRight="@dimen/size16"
+    android:paddingLeft="@dimen/size16">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/setting_parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="설정" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/setting_txt1"
+            android:layout_marginTop="@dimen/size32"
+            android:text="설정"
+            android:textSize="@dimen/font28"
+            android:fontFamily="@font/nanumbarungothic_bold" />
+
+        <TextView
+            android:id="@+id/setting_txt1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/setting"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/setting_txt2"
+            android:text="알림 설정"
+            android:textSize="@dimen/font22"
+            android:layout_marginTop="@dimen/size24"
+            android:fontFamily="@font/nanumbarungothic_bold"/>
+
+        <TextView
+            android:id="@+id/setting_txt2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/setting_txt1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/view1"
+            android:text="계약 완료 알림"
+            android:textSize="@dimen/font18"
+            android:layout_marginTop="@dimen/size14"
+            android:fontFamily="@font/nanumbarungothic"/>
+
+        <ImageButton
+            android:id="@+id/btnContractNotice"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_next"
+            app:layout_constraintTop_toTopOf="@id/setting_txt2"
+            app:layout_constraintBottom_toBottomOf="@id/setting_txt2"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="#F7F7FA"
+            app:layout_constraintTop_toBottomOf="@id/setting_txt2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/setting_txt3"
+            android:layout_marginTop="@dimen/size16" />
+
+        <TextView
+            android:id="@+id/setting_txt3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/view1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="약관 및 정책"
+            android:textSize="@dimen/font22"
+            android:layout_marginTop="@dimen/size16"
+            android:fontFamily="@font/nanumbarungothic_bold"/>
+
+        <TextView
+            android:id="@+id/setting_txt4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/setting_txt3"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/setting_txt5"
+            android:text="약관 및 이용 동의"
+            android:textSize="@dimen/font18"
+            android:layout_marginTop="@dimen/size14"
+            android:fontFamily="@font/nanumbarungothic"/>
+
+        <ImageButton
+            android:id="@+id/btnAgreement"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_next"
+            app:layout_constraintTop_toTopOf="@id/setting_txt4"
+            app:layout_constraintBottom_toBottomOf="@id/setting_txt4"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:id="@+id/setting_txt5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/setting_txt4"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/setting_txt6"
+            android:text="개인정보보호정책"
+            android:textSize="@dimen/font18"
+            android:layout_marginTop="@dimen/size12"
+            android:fontFamily="@font/nanumbarungothic"/>
+
+        <ImageButton
+            android:id="@+id/btnPrivacyPolicy"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_next"
+            app:layout_constraintTop_toTopOf="@id/setting_txt5"
+            app:layout_constraintBottom_toBottomOf="@id/setting_txt5"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:id="@+id/setting_txt6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/setting_txt5"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/view2"
+            android:text="오픈소스 라이선스"
+            android:textSize="@dimen/font18"
+            android:layout_marginTop="@dimen/size12"
+            android:fontFamily="@font/nanumbarungothic"/>
+
+        <ImageButton
+            android:id="@+id/btnOpensource"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_next"
+            app:layout_constraintTop_toTopOf="@id/setting_txt6"
+            app:layout_constraintBottom_toBottomOf="@id/setting_txt6"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="#F7F7FA"
+            app:layout_constraintTop_toBottomOf="@id/setting_txt6"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="@dimen/size16" />
+
+        <TextView
+            android:id="@+id/setting_txt7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/view2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/setting_txt8"
+            android:text="앱 정보"
+            android:textSize="@dimen/font22"
+            android:layout_marginTop="@dimen/size16"
+            android:fontFamily="@font/nanumbarungothic_bold"/>
+
+        <TextView
+            android:id="@+id/setting_txt8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/setting_txt7"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/view3"
+            android:text="버전 정보"
+            android:textSize="@dimen/font18"
+            android:layout_marginTop="@dimen/size14"
+            android:fontFamily="@font/nanumbarungothic"/>
+
+        <TextView
+            android:id="@+id/setting_txt9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/setting_txt8"
+            app:layout_constraintBottom_toBottomOf="@id/setting_txt8"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textColor="#C8C9CE"
+            android:text="1.0.0"
+            android:textSize="@dimen/font12"
+            android:fontFamily="@font/nanumbarungothic"/>
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="#F7F7FA"
+            app:layout_constraintTop_toBottomOf="@id/setting_txt8"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="@dimen/size16" />
+
+        <TextView
+            android:id="@+id/setting_txt10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/view3"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="회원"
+            android:textSize="@dimen/font22"
+            android:layout_marginTop="@dimen/size16"
+            android:fontFamily="@font/nanumbarungothic_bold"/>
+
+        <TextView
+            android:id="@+id/setting_txt11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/setting_txt10"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="로그아웃"
+            android:textSize="@dimen/font18"
+            android:layout_marginTop="@dimen/size14"
+            android:fontFamily="@font/nanumbarungothic"/>
+
+        <ImageButton
+            android:id="@+id/btnLogout"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_next"
+            app:layout_constraintTop_toTopOf="@id/setting_txt11"
+            app:layout_constraintBottom_toBottomOf="@id/setting_txt11"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:id="@+id/setting_txt12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/setting_txt11"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="회원 탈퇴"
+            android:textSize="@dimen/font18"
+            android:layout_marginTop="@dimen/size12"
+            android:fontFamily="@font/nanumbarungothic"/>
+        <ImageButton
+            android:id="@+id/btnWithdrawal"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_next"
+            app:layout_constraintTop_toTopOf="@id/setting_txt12"
+            app:layout_constraintBottom_toBottomOf="@id/setting_txt12"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

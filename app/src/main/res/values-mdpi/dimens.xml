@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <dimen name="font8">8sp</dimen>
     <dimen name="font10">10sp</dimen>
     <dimen name="font12">12sp</dimen>
@@ -7,13 +8,18 @@
     <dimen name="font16">16sp</dimen>
     <dimen name="font18">18sp</dimen>
     <dimen name="font20">20sp</dimen>
+    <dimen name="font22">22sp</dimen>
     <dimen name="font24">24sp</dimen>
+    <dimen name="font28">28dp</dimen>
 
     <dimen name="size2">2dp</dimen>
     <dimen name="size4">4dp</dimen>
     <dimen name="size8">8dp</dimen>
     <dimen name="size10">10dp</dimen>
+    <dimen name="size12">12dp</dimen>
+    <dimen name="size14">14dp</dimen>
     <dimen name="size16">16dp</dimen>
+    <dimen name="size20">20dp</dimen>
     <dimen name="size24">24dp</dimen>
     <dimen name="size32">32dp</dimen>
     <dimen name="size40">40dp</dimen>
@@ -36,7 +42,6 @@
     <dimen name="splLogoW">72dp</dimen>
     <dimen name="siLogoW">40dp</dimen>
 
-    <!-- no change -->
     <dimen name="editH">56dp</dimen>
     <dimen name="editP">8dp</dimen>
     <dimen name="bottomsheetH">48dp</dimen>
