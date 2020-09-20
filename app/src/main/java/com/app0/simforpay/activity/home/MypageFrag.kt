@@ -91,7 +91,7 @@ class MypageFrag : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        myName.text = name
+        myName.text = name.toString()
         myId.text = id
         myPhone.text = phone
         myBank.text = bank

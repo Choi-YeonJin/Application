@@ -53,10 +53,10 @@ class SearchFrag : Fragment() {
 
 //        contentTitle = ArrayList()
 
-        Retrofit.getContracts(id).enqueue(object : Callback<List<ContractContentSuccess>> {
+        Retrofit.getContracts(id).enqueue(object : Callback<ArrayList<ContractContentSuccess>> {
             override fun onResponse(
-                call: Call<List<ContractContentSuccess>>,
-                response: Response<List<ContractContentSuccess>>
+                call: Call<ArrayList<ContractContentSuccess>>,
+                response: Response<ArrayList<ContractContentSuccess>>
             ) {
                 Title = ArrayList()
                 response.body()?.forEach {
@@ -67,7 +67,7 @@ class SearchFrag : Fragment() {
 
             }
 
-            override fun onFailure(call: Call<List<ContractContentSuccess>>, t: Throwable) {}
+            override fun onFailure(call: Call<ArrayList<ContractContentSuccess>>, t: Throwable) {}
 
         })
 

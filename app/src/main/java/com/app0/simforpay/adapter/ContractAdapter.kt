@@ -9,9 +9,9 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.PagerAdapter
 import com.app0.simforpay.R
+import com.app0.simforpay.activity.contract.ContractFrag
 import com.app0.simforpay.activity.home.HomeFrag
 import com.app0.simforpay.retrofit.RetrofitHelper
-import com.app0.simforpay.retrofit.domain.Borrower
 import com.app0.simforpay.retrofit.domain.ContractContentSuccess
 import com.app0.simforpay.retrofit.domain.UpdateSuccess
 import com.app0.simforpay.util.CustomBottomSheetDialog
@@ -21,12 +21,13 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class ContractAdapter( models: List<Data>, context: Context, fragmentManager: FragmentManager, getContractContent: List<ContractContentSuccess> ): PagerAdapter() {
+class ContractAdapter( models: List<Data>, context: Context, fragmentManager: FragmentManager, getContractContent: ArrayList<ContractContentSuccess> ): PagerAdapter() {
     private val Retrofit = RetrofitHelper.getRetrofit()
     private var context: Context? = null
     private val fragmentManager = fragmentManager
     private val getContractContent = getContractContent
     private var models:List<Data> = emptyList()
+    private var BorrowerString: String = ""
 
     override fun getCount(): Int {
         return models.size
@@ -54,6 +55,15 @@ class ContractAdapter( models: List<Data>, context: Context, fragmentManager: Fr
                 .setBtnClickListener(object :
                     CustomBottomSheetDialog.CustomBottomSheetDialogListener {
                     override fun onClickMenu1Btn() {
+                        for(i in 0 until getContractContent[position].borrower.size)
+                        {
+                            BorrowerString += getContractContent[position].borrower[i].id.toString() + ","
+                            BorrowerString += getContractContent[position].borrower[i].contractId.toString() + ","
+                            BorrowerString += getContractContent[position].borrower[i].borrowerId.toString() + ","
+                            BorrowerString += getContractContent[position].borrower[i].userName + ","
+                            BorrowerString += getContractContent[position].borrower[i].price.toString() + ","
+                            BorrowerString += getContractContent[position].borrower[i].paybackState.toString() + "!"
+                        }
 
                         fragmentManager.beginTransaction().remove(HomeFrag.newInstance(0)).commit()
                         fragmentManager.beginTransaction().replace(R.id.layFull,ContractFrag.newInstance(
@@ -65,14 +75,14 @@ class ContractAdapter( models: List<Data>, context: Context, fragmentManager: Fr
                             getContractContent[position].lenderName,
                             getContractContent[position].lenderBank,
                             getContractContent[position].lenderAccount,
-                            getContractContent[position].borrower,
+                            BorrowerString,
                             getContractContent[position].penalty,
                             getContractContent[position].content,
                             getContractContent[position].alarm,
                             getContractContent[position].state)
                         ).commit()
 
-                        Toast.makeText(context, "First Button Clicked", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Loading....", Toast.LENGTH_SHORT).show()
                     }
 
                     override fun onClickMenu2Btn() {
@@ -112,8 +122,6 @@ class ContractAdapter( models: List<Data>, context: Context, fragmentManager: Fr
                     }
                 }).create()
             dialog.show(fragmentManager, dialog.tag)
-            Log.d("Content", getContractContent[position].borrower[0].toString())
-//            Toast.makeText(context, position.toString() + "View Clicked", Toast.LENGTH_SHORT).show()
         }
 
         container.addView(view, 0)

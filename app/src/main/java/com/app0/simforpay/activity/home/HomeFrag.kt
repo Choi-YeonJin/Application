@@ -32,7 +32,7 @@ class HomeFrag : Fragment() {
     var cnt = 0
     private var User = arrayOf<String?>()
     private var position: Int? = 0
-    private var getContractContent = listOf<ContractContentSuccess>()
+    private var getContractContent = arrayListOf<ContractContentSuccess>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,9 +73,10 @@ class HomeFrag : Fragment() {
 
         var id = Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
 
-        Retrofit.getContracts(id).enqueue(object : Callback<List<ContractContentSuccess>> {
-            override fun onResponse( call: Call<List<ContractContentSuccess>>, response: Response<List<ContractContentSuccess>> ) {
+        Retrofit.getContracts(id).enqueue(object : Callback<ArrayList<ContractContentSuccess>> {
+            override fun onResponse( call: Call<ArrayList<ContractContentSuccess>>, response: Response<ArrayList<ContractContentSuccess>> ) {
                 getContractContent = response.body()!!
+
                 response.body()?.forEach {
                     Title.add(it.title)
                     Content.add(it.content)
@@ -92,7 +93,7 @@ class HomeFrag : Fragment() {
                 vpContract.setCurrentItem(position!!)
             }
 
-            override fun onFailure(call: Call<List<ContractContentSuccess>>, t: Throwable) {}
+            override fun onFailure(call: Call<ArrayList<ContractContentSuccess>>, t: Throwable) {}
 
         })
 
