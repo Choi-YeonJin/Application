@@ -47,11 +47,6 @@
         <item name="endIconMode">clear_text</item>
     </style>
 
-    <style name="idEditTxtStyle">
-        <item name="android:maxLength">20</item>
-        <item name="android:inputType">text</item>
-    </style>
-
     <style name="CustomTxtBtnStyle" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textSize">@dimen/font12</item>
         <item name="android:minWidth">0dp</item>

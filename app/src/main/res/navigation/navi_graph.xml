@@ -34,7 +34,7 @@
 
     <fragment
         android:id="@+id/fragFriends"
-        android:name="com.app0.simforpay.activity.FriendsFrag"
+        android:name="com.app0.simforpay.activity.friends.FriendsFrag"
         tools:layout="@layout/frag_friends" />
 
     <fragment

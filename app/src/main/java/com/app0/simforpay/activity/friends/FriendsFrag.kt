@@ -1,4 +1,4 @@
-package com.app0.simforpay.activity
+package com.app0.simforpay.activity.friends
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -34,6 +34,15 @@ class FriendsFrag : Fragment() {
         rvFriends.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL ,false)
         rvFriends.adapter = FriendsAdapter(frList, requireContext())
         rvFriends.setHasFixedSize(true)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        btnAddFriends.setOnClickListener {
+            requireFragmentManager().beginTransaction().replace(R.id.layFull, RequestFrag())
+                .addToBackStack(null).commit()
+        }
     }
 
     private fun generateDummyList(size: Int): List<Data> {
