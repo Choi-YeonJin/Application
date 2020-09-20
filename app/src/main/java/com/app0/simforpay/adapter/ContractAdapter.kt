@@ -11,7 +11,6 @@ import androidx.viewpager.widget.PagerAdapter
 import com.app0.simforpay.R
 import com.app0.simforpay.activity.home.HomeFrag
 import com.app0.simforpay.retrofit.RetrofitHelper
-import com.app0.simforpay.retrofit.domain.Borrower
 import com.app0.simforpay.retrofit.domain.ContractContentSuccess
 import com.app0.simforpay.retrofit.domain.UpdateSuccess
 import com.app0.simforpay.util.CustomBottomSheetDialog
@@ -55,22 +54,22 @@ class ContractAdapter( models: List<Data>, context: Context, fragmentManager: Fr
                     CustomBottomSheetDialog.CustomBottomSheetDialogListener {
                     override fun onClickMenu1Btn() {
 
-                        fragmentManager.beginTransaction().remove(HomeFrag.newInstance(0)).commit()
-                        fragmentManager.beginTransaction().replace(R.id.layFull,ContractFrag.newInstance(
-                            getContractContent[position].id,
-                            getContractContent[position].title,
-                            getContractContent[position].borrowDate,
-                            getContractContent[position].paybackDate,
-                            getContractContent[position].price,
-                            getContractContent[position].lenderName,
-                            getContractContent[position].lenderBank,
-                            getContractContent[position].lenderAccount,
-                            getContractContent[position].borrower,
-                            getContractContent[position].penalty,
-                            getContractContent[position].content,
-                            getContractContent[position].alarm,
-                            getContractContent[position].state)
-                        ).commit()
+//                        fragmentManager.beginTransaction().remove(HomeFrag.newInstance(0)).commit()
+//                        fragmentManager.beginTransaction().replace(R.id.layFull, ContractFrag.newInstance(
+//                            getContractContent[position].id,
+//                            getContractContent[position].title,
+//                            getContractContent[position].borrowDate,
+//                            getContractContent[position].paybackDate,
+//                            getContractContent[position].price,
+//                            getContractContent[position].lenderName,
+//                            getContractContent[position].lenderBank,
+//                            getContractContent[position].lenderAccount,
+//                            getContractContent[position].borrower,
+//                            getContractContent[position].penalty,
+//                            getContractContent[position].content,
+//                            getContractContent[position].alarm,
+//                            getContractContent[position].state)
+//                        ).commit()
 
                         Toast.makeText(context, "First Button Clicked", Toast.LENGTH_SHORT).show()
                     }
