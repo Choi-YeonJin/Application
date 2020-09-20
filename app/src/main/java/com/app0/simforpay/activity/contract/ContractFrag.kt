@@ -385,7 +385,6 @@ class ContractFrag : Fragment() {
         lender.setText(getlenderName)
         bank.setText(getlenderBank)
         if (getlenderAccount.toString() != "0" && getlenderAccount.toString() != "null") {
-            Toast.makeText(context, "text", Toast.LENGTH_SHORT).show()
             accountNum.setText(getlenderAccount.toString())
         }
         penalty.setText(getPenalty)
