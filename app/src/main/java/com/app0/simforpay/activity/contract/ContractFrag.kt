@@ -327,7 +327,7 @@ class ContractFrag : Fragment() {
                 alarm
             )
 
-            if(getid.toString() == "null"){
+            if (getid.toString() == "null") {
                 Retrofit.ContractCall(contractInfo)
                     .enqueue(object : Callback<ContractSuccess> {
                         override fun onResponse(
@@ -337,19 +337,23 @@ class ContractFrag : Fragment() {
                             if (response.body()?.result == "true") {
                                 fragmentManager!!.beginTransaction().replace(
                                     R.id.layFull,
-                                    ContractShareFrag.newInstance(contractName.text.toString(), content)
+                                    ContractShareFrag.newInstance(
+                                        contractName.text.toString(),
+                                        content
+                                    )
                                 ).commit()
 
                             } else
-                                Toast.makeText(context, "잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT)
+                                    .show()
                         }
 
                         override fun onFailure(call: Call<ContractSuccess>, t: Throwable) {
 
                         }
                     })
-            }else {
-                Retrofit.UpdateContract(getid,contractInfo)
+            } else {
+                Retrofit.UpdateContract(getid, contractInfo)
                     .enqueue(object : Callback<UpdateSuccess> {
                         override fun onResponse(
                             call: Call<UpdateSuccess>,
@@ -358,11 +362,15 @@ class ContractFrag : Fragment() {
                             if (response.body()?.result == "true") {
                                 fragmentManager!!.beginTransaction().replace(
                                     R.id.layFull,
-                                    ContractShareFrag.newInstance(contractName.text.toString(), content)
+                                    ContractShareFrag.newInstance(
+                                        contractName.text.toString(),
+                                        content
+                                    )
                                 ).commit()
 
                             } else
-                                Toast.makeText(context, "잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT)
+                                    .show()
                         }
 
                         override fun onFailure(call: Call<UpdateSuccess>, t: Throwable) {
@@ -370,8 +378,6 @@ class ContractFrag : Fragment() {
                         }
                     })
             }
-
-
         }
     }
 
@@ -392,7 +398,7 @@ class ContractFrag : Fragment() {
             swAlert.isEnabled = true
             swAlert.isChecked = true
         }
-        if(getborrower.toString() != "null") {
+        if (getborrower.toString() != "null") {
             AllBorrower = getborrower!!.split("!")
             for (i in 0 until AllBorrower.size - 1) {
                 OneBorrower = AllBorrower[i].split(",")
@@ -400,18 +406,18 @@ class ContractFrag : Fragment() {
                 borrowerPrice += OneBorrower[4]
                 BorrowerCnt++
             }
-            if(BorrowerCnt != 1){
+            if (BorrowerCnt != 1) {
                 VisibilBorrower(BorrowerCnt, 0)
                 LayBorrower(BorrowerCnt)
             }
-            if(borrowerPrice[0] != getprice.toString()){
+            if (borrowerPrice[0] != getprice.toString()) {
                 cbN1.isChecked = true
             }
             setBorrower(BorrowerCnt, borrowerName, borrowerPrice)
         }
     }
 
-    fun setBorrower( borrowerCnt: Int, borrowerName: List<String>, borrowerPrice: List<String> ){
+    fun setBorrower(borrowerCnt: Int, borrowerName: List<String>, borrowerPrice: List<String>) {
         when (borrowerCnt) {
             1 -> {
                 borrower1.setText(borrowerName[0])
@@ -459,158 +465,158 @@ class ContractFrag : Fragment() {
         }
     }
 
-        override fun onDetach() {
-            super.onDetach()
-            callback.remove()
-        }
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
+    }
 
-        fun ShowAlertDialog() {
-            val dialog = CustomDialog.CustomDialogBuilder()
-                .setTitle("뒤로가시겠습니까?")
-                .setMessage("뒤로가시면 지금까지 작성했던 내용이 삭제됩니다.")
-                .setNegativeBtnText("취소")
-                .setPositiveBtnText("확인")
-                .setBtnClickListener(object : CustomDialog.CustomDialogListener {
-                    override fun onClickPositiveBtn() {
-                        findNavController().navigate(R.id.action_fragContract_to_fragHome)
-                    }
-                }).create()
-            dialog.show(parentFragmentManager, dialog.tag)
-        }
-
-        fun ShowDatePickerDialog(editText: EditText, str: String) {
-            val listener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-                editText.setText("${year}년 ${month + 1}월 ${dayOfMonth}일")
-
-                if (str == "trade") {
-                    calendar.set(Calendar.YEAR, year)
-                    calendar.set(Calendar.MONTH, month)
-                    calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+    fun ShowAlertDialog() {
+        val dialog = CustomDialog.CustomDialogBuilder()
+            .setTitle("뒤로가시겠습니까?")
+            .setMessage("뒤로가시면 지금까지 작성했던 내용이 삭제됩니다.")
+            .setNegativeBtnText("취소")
+            .setPositiveBtnText("확인")
+            .setBtnClickListener(object : CustomDialog.CustomDialogListener {
+                override fun onClickPositiveBtn() {
+                    findNavController().navigate(R.id.action_fragContract_to_fragHome)
                 }
-            }
+            }).create()
+        dialog.show(parentFragmentManager, dialog.tag)
+    }
 
-            DatePickerDialog(
-                this.requireContext(),
-                listener,
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH)
-            ).apply {
-                if (str == "trade")
-                    datePicker.maxDate = System.currentTimeMillis()
+    fun ShowDatePickerDialog(editText: EditText, str: String) {
+        val listener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+            editText.setText("${year}년 ${month + 1}월 ${dayOfMonth}일")
+
+            if (str == "trade") {
+                calendar.set(Calendar.YEAR, year)
+                calendar.set(Calendar.MONTH, month)
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            }
+        }
+
+        DatePickerDialog(
+            this.requireContext(),
+            listener,
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        ).apply {
+            if (str == "trade")
+                datePicker.maxDate = System.currentTimeMillis()
+            else
+                datePicker.minDate = calendar.time.time
+        }.show()
+    }
+
+    fun VisibilBorrower(cnt: Int, btnState: Int) {
+        var layBorrower = layBorrower2 as TextInputLayout
+        var borrowerPrice = borrowerPrice2 as TextView
+
+        when (cnt) {
+            2 -> {
+                if (btnState == 0)
+                    btnDelBorrower.visibility = View.VISIBLE
                 else
-                    datePicker.minDate = calendar.time.time
-            }.show()
-        }
+                    btnDelBorrower.visibility = View.INVISIBLE
 
-        fun VisibilBorrower(cnt: Int, btnState: Int) {
-            var layBorrower = layBorrower2 as TextInputLayout
-            var borrowerPrice = borrowerPrice2 as TextView
-
-            when (cnt) {
-                2 -> {
-                    if (btnState == 0)
-                        btnDelBorrower.visibility = View.VISIBLE
-                    else
-                        btnDelBorrower.visibility = View.INVISIBLE
-
-                    layBorrower = layBorrower2
-                    borrowerPrice = borrowerPrice2
-                }
-
-                3 -> {
-                    layBorrower = layBorrower3
-                    borrowerPrice = borrowerPrice3
-                }
-
-                4 -> {
-                    layBorrower = layBorrower4
-                    borrowerPrice = borrowerPrice4
-
-                    btnAddBorrower.isEnabled = true
-                }
-
-                5 -> {
-                    layBorrower = layBorrower5
-                    borrowerPrice = borrowerPrice5
-
-                    btnAddBorrower.isEnabled = false
-                }
+                layBorrower = layBorrower2
+                borrowerPrice = borrowerPrice2
             }
 
-            if (btnState == 0) {
-                layBorrower.visibility = View.VISIBLE
-                borrowerPrice.visibility = View.VISIBLE
-            } else {
-                layBorrower.visibility = View.GONE
-                borrowerPrice.visibility = View.GONE
+            3 -> {
+                layBorrower = layBorrower3
+                borrowerPrice = borrowerPrice3
+            }
+
+            4 -> {
+                layBorrower = layBorrower4
+                borrowerPrice = borrowerPrice4
+
+                btnAddBorrower.isEnabled = true
+            }
+
+            5 -> {
+                layBorrower = layBorrower5
+                borrowerPrice = borrowerPrice5
+
+                btnAddBorrower.isEnabled = false
             }
         }
 
-        fun LayBorrower(cnt: Int) {
-            val params = btnDelBorrower.layoutParams as ConstraintLayout.LayoutParams
-            var layBorrowerId = layBorrower2.id
-
-            when (cnt) {
-                2 -> layBorrowerId = layBorrower2.id
-                3 -> layBorrowerId = layBorrower3.id
-                4 -> layBorrowerId = layBorrower4.id
-                5 -> layBorrowerId = layBorrower5.id
-            }
-
-            params.topToTop = layBorrowerId
-            params.bottomToBottom = layBorrowerId
-            btnDelBorrower.requestLayout()
-        }
-
-        fun TextBorrowerPrice(cnt: Int, borrowerPrices: List<TextView>) {
-            if (price.text.toString() != "") {
-                var borrowerPrice = 0
-
-                borrowerPrice = if (cbN1.isChecked) price.text.toString()
-                    .toInt() / cnt else price.text.toString().toInt()
-
-                for (textView in borrowerPrices) {
-                    textView.text =
-                        NumberFormat.getInstance(Locale.KOREA).format(borrowerPrice) + "원"
-                }
-            }
-        }
-
-        companion object {
-            @JvmStatic
-            fun newInstance(
-                id: Int,
-                title: String,
-                borroweDate: String,
-                paybackDate: String,
-                price: Int,
-                lenderName: String,
-                lenderBank: String,
-                lenderAccount: Int,
-                borrower: String,
-                penalty: String,
-                content: String,
-                alarm: Int,
-                state: Int
-            ) =
-                ContractFrag().apply {
-                    arguments = Bundle().apply {
-                        putInt(ARG_PARAM1, id)
-                        putString(ARG_PARAM2, title)
-                        putString(ARG_PARAM3, borroweDate)
-                        putString(ARG_PARAM4, paybackDate)
-                        putInt(ARG_PARAM5, price)
-                        putString(ARG_PARAM6, lenderName)
-                        putString(ARG_PARAM7, lenderBank)
-                        putInt(ARG_PARAM8, lenderAccount)
-                        putString(ARG_PARAM9, borrower)
-                        putString(ARG_PARAM10, penalty)
-                        putString(ARG_PARAM11, content)
-                        putInt(ARG_PARAM12, alarm)
-                        putInt(ARG_PARAM13, state)
-
-                    }
-                }
+        if (btnState == 0) {
+            layBorrower.visibility = View.VISIBLE
+            borrowerPrice.visibility = View.VISIBLE
+        } else {
+            layBorrower.visibility = View.GONE
+            borrowerPrice.visibility = View.GONE
         }
     }
+
+    fun LayBorrower(cnt: Int) {
+        val params = btnDelBorrower.layoutParams as ConstraintLayout.LayoutParams
+        var layBorrowerId = layBorrower2.id
+
+        when (cnt) {
+            2 -> layBorrowerId = layBorrower2.id
+            3 -> layBorrowerId = layBorrower3.id
+            4 -> layBorrowerId = layBorrower4.id
+            5 -> layBorrowerId = layBorrower5.id
+        }
+
+        params.topToTop = layBorrowerId
+        params.bottomToBottom = layBorrowerId
+        btnDelBorrower.requestLayout()
+    }
+
+    fun TextBorrowerPrice(cnt: Int, borrowerPrices: List<TextView>) {
+        if (price.text.toString() != "") {
+            var borrowerPrice = 0
+
+            borrowerPrice = if (cbN1.isChecked) price.text.toString()
+                .toInt() / cnt else price.text.toString().toInt()
+
+            for (textView in borrowerPrices) {
+                textView.text =
+                    NumberFormat.getInstance(Locale.KOREA).format(borrowerPrice) + "원"
+            }
+        }
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance(
+            id: Int,
+            title: String,
+            borroweDate: String,
+            paybackDate: String,
+            price: Int,
+            lenderName: String,
+            lenderBank: String,
+            lenderAccount: Int,
+            borrower: String,
+            penalty: String,
+            content: String,
+            alarm: Int,
+            state: Int
+        ) =
+            ContractFrag().apply {
+                arguments = Bundle().apply {
+                    putInt(ARG_PARAM1, id)
+                    putString(ARG_PARAM2, title)
+                    putString(ARG_PARAM3, borroweDate)
+                    putString(ARG_PARAM4, paybackDate)
+                    putInt(ARG_PARAM5, price)
+                    putString(ARG_PARAM6, lenderName)
+                    putString(ARG_PARAM7, lenderBank)
+                    putInt(ARG_PARAM8, lenderAccount)
+                    putString(ARG_PARAM9, borrower)
+                    putString(ARG_PARAM10, penalty)
+                    putString(ARG_PARAM11, content)
+                    putInt(ARG_PARAM12, alarm)
+                    putInt(ARG_PARAM13, state)
+
+                }
+            }
+    }
+}
