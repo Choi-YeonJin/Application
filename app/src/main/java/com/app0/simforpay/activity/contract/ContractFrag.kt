@@ -5,7 +5,6 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,27 +18,21 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.app0.simforpay.R
 import com.app0.simforpay.activity.MainAct
-import com.app0.simforpay.adapter.Data
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.*
-import com.app0.simforpay.util.dialog.CustomDialog
 import com.app0.simforpay.util.TextInput
+import com.app0.simforpay.util.dialog.CustomDialog
 import com.app0.simforpay.util.sharedpreferences.Key
 import com.app0.simforpay.util.sharedpreferences.MyApplication
-import com.bumptech.glide.load.Encoder
 import com.google.android.material.textfield.TextInputLayout
 import com.hendraanggrian.appcompat.widget.Mention
 import com.hendraanggrian.appcompat.widget.MentionArrayAdapter
 import kotlinx.android.synthetic.main.frag_contract.*
-import kotlinx.android.synthetic.main.frag_contract.btnBack
-import kotlinx.android.synthetic.main.frag_mypage.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.Serializable
 import java.text.NumberFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 private const val ARG_PARAM1 = "id"
 private const val ARG_PARAM2 = "title"
@@ -135,9 +128,8 @@ class ContractFrag : Fragment() {
                 mentionAdapter.clear()
 
                 response.body()?.forEach {
-
                     userInfo[it.name] = it.id
-                    mentionAdapter.add(Mention(it.name, it.myId))
+                    mentionAdapter.add(Mention(it.name, it.myId, R.drawable.img_profile))
                 }
             }
 
@@ -382,6 +374,13 @@ class ContractFrag : Fragment() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+        val mainAct = activity as MainAct
+        mainAct.HideBottomNavi(false)
+    }
+
     private fun setContract() {
         contractName.setText(gettitle)
         tradeDay.setText(getborrowDate)
@@ -480,7 +479,12 @@ class ContractFrag : Fragment() {
             .setPositiveBtnText("확인")
             .setBtnClickListener(object : CustomDialog.CustomDialogListener {
                 override fun onClickPositiveBtn() {
-                    findNavController().navigate(R.id.action_fragContract_to_fragHome)
+                    if(getid.toString() == "null"){
+                        findNavController().navigate(R.id.action_fragContract_to_fragHome)
+                    }
+                    else{
+                        fragmentManager?.popBackStackImmediate()
+                    }
                 }
             }).create()
         dialog.show(parentFragmentManager, dialog.tag)
