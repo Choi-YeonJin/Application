@@ -9,10 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -40,6 +37,7 @@ import java.io.Serializable
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 private const val ARG_PARAM1 = "id"
 private const val ARG_PARAM2 = "title"
@@ -59,7 +57,7 @@ class ContractFrag : Fragment() {
 
     private val Retrofit = RetrofitHelper.getRetrofit()
     private val calendar = Calendar.getInstance()
-    private val userInfo = mutableMapOf<String, Int>()
+    private val userInfo = mutableMapOf<String, Pair<Int, Pair<String, String>>>()
     private lateinit var callback: OnBackPressedCallback
     private var AllBorrower: List<String> = emptyList()
     private var OneBorrower: List<String> = emptyList()
@@ -136,8 +134,11 @@ class ContractFrag : Fragment() {
 
                 response.body()?.forEach {
 
-                    userInfo[it.name] = it.id
+                    val userList = Pair(it.bank, it.account)
+
+                    userInfo[it.name] = Pair(it.id, userList)
                     mentionAdapter.add(Mention(it.name, it.myId))
+
                 }
             }
 
@@ -153,6 +154,15 @@ class ContractFrag : Fragment() {
         borrower3.mentionAdapter = mentionAdapter
         borrower4.mentionAdapter = mentionAdapter
         borrower5.mentionAdapter = mentionAdapter
+
+        lender.setOnItemClickListener { adapterView, view, i, l ->
+            adapterView.adapter = mentionAdapter
+
+            val name = lender.text.toString().replace("@", "").trim()
+
+            bank.setText(userInfo[name]!!.second.first)
+            accountNum.setText(userInfo[name]!!.second.second)
+        }
 
         // Bank dropdown
         val items = listOf(
@@ -274,7 +284,7 @@ class ContractFrag : Fragment() {
             val payback_date = complDay.text.toString()
             val price = Integer.parseInt(price.text.toString())
             val lender_name = lender.text.toString().replace("@", "").trim()
-            val lender_id: Int? = userInfo[lender_name]
+            val lender_id: Int? = userInfo[lender_name]?.first
             val lender_bank = bank.text.toString()
             val lender_account: Int? = accountNum.text.toString().toIntOrNull()
             val borrowerList = arrayListOf<Borrower>()
@@ -296,7 +306,7 @@ class ContractFrag : Fragment() {
             for (i in 0 until cnt) {
 
                 val userName = borrowerIdList[i].text.toString().replace("@", "").trim()
-                val borrower_id: Int? = userInfo[userName]
+                val borrower_id: Int? = userInfo[userName]?.first
                 val borrower_price =
                     priceIdList[i].text.toString().replace("원", "").replace(",", "").trim()
                         .toIntOrNull()
