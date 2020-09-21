@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/fragCalendar"
-        android:name="com.app0.simforpay.activity.CalendarFrag"
+        android:name="com.app0.simforpay.activity.calendar.CalendarFrag"
         tools:layout="@layout/frag_calendar" />
 
     <fragment
@@ -39,6 +39,6 @@
 
     <fragment
         android:id="@+id/fragSetting"
-        android:name="com.app0.simforpay.activity.SettingFrag"
+        android:name="com.app0.simforpay.activity.setting.SettingFrag"
         tools:layout="@layout/frag_setting" />
 </navigation>

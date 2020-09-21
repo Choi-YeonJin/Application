@@ -1,7 +1,6 @@
 package com.app0.simforpay.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -61,7 +60,6 @@ class ContractAdapter( models: List<Data>, context: Context, fragmentManager: Fr
                             BorrowerString += getContractContent[position].borrower[i].paybackState.toString() + "!"
                         }
 
-                        fragmentManager.beginTransaction().remove(HomeFrag.newInstance(0)).commit()
                         fragmentManager.beginTransaction().replace(R.id.layFull,ContractFrag.newInstance(
                             getContractContent[position].id,
                             getContractContent[position].title,
@@ -76,7 +74,7 @@ class ContractAdapter( models: List<Data>, context: Context, fragmentManager: Fr
                             getContractContent[position].content,
                             getContractContent[position].alarm,
                             getContractContent[position].state)
-                        ).commit()
+                        ).addToBackStack(null).commit()
 
                         Toast.makeText(context, "Loading....", Toast.LENGTH_SHORT).show()
                     }

@@ -2,7 +2,6 @@ package com.app0.simforpay.activity.home
 
 import android.app.AlertDialog
 import android.content.res.ColorStateList
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -54,9 +53,6 @@ class MypageFrag : Fragment() {
     private var bank: String? = null
     private var account: String? = null
     private var imgUrl: String? = null
-    private var imageUri: Bitmap?= null
-    var user = emptyArray<String?>()
-    var saveuser = mutableListOf<String?>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,17 +102,16 @@ class MypageFrag : Fragment() {
             fragmentManager?.popBackStackImmediate()
         }
 
-        btnAddImgProfile.setOnClickListener {
-            // java.lang.RuntimeException: android.os.TransactionTooLargeException: data parcel size 11474292 bytes error
-
+//        btnAddImgProfile.setOnClickListener {
+//             /* java.lang.RuntimeException: android.os.TransactionTooLargeException: data parcel size 11474292 bytes error */
+//
 //            TedImagePicker.with(requireContext())
 //                .start { uri ->
-////                    Log.d("test", uri.toString())
 //                    val bitmap = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, uri)
 //                    imageUri = bitmap
 //                    Glide.with(this).load(uri).circleCrop().into(imgProfile)
 //                }
-        }
+//        }
 
         btnPwChange.setOnClickListener {
             ShowEditDialog(R.layout.editpw_dialog)

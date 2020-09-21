@@ -39,15 +39,15 @@
         android:layout_marginTop="@dimen/size32"
         android:src="@drawable/img_profile" />
 
-    <ImageButton
-        android:id="@+id/btnAddImgProfile"
-        android:layout_width="@dimen/size24"
-        android:layout_height="@dimen/size24"
-        app:layout_constraintRight_toRightOf="@id/imgProfile"
-        app:layout_constraintBottom_toBottomOf="@id/imgProfile"
-        android:padding="@dimen/size4"
-        android:src="@drawable/ic_camera"
-        android:background="@drawable/btnaddimage_background" />
+<!--    <ImageButton-->
+<!--        android:id="@+id/btnAddImgProfile"-->
+<!--        android:layout_width="@dimen/size24"-->
+<!--        android:layout_height="@dimen/size24"-->
+<!--        app:layout_constraintRight_toRightOf="@id/imgProfile"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/imgProfile"-->
+<!--        android:padding="@dimen/size4"-->
+<!--        android:src="@drawable/ic_camera"-->
+<!--        android:background="@drawable/btnaddimage_background" />-->
 
     <TextView
         android:id="@+id/myName"

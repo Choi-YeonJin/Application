@@ -1,4 +1,4 @@
-package com.app0.simforpay.activity
+package com.app0.simforpay.activity.setting
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
