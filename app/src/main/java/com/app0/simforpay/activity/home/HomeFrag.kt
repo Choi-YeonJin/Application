@@ -71,33 +71,11 @@ class HomeFrag : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var id = Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
-
-        Retrofit.getContracts(id).enqueue(object : Callback<ArrayList<ContractContentSuccess>> {
-            override fun onResponse( call: Call<ArrayList<ContractContentSuccess>>, response: Response<ArrayList<ContractContentSuccess>> ) {
-                getContractContent = response.body()!!
-
-                response.body()?.forEach {
-                    Title.add(it.title)
-                    Content.add(it.content)
-                    cnt++
-                }
-
-                val list = ArrayList<Data>()
-
-                for (i in 0 until cnt) {
-                    val item = Data(Title[i], Content[i])
-                    list += item
-                }
-                vpContract.adapter = ContractAdapter(list, requireContext(), parentFragmentManager, getContractContent)
-                vpContract.setCurrentItem(position!!)
-            }
-
-            override fun onFailure(call: Call<ArrayList<ContractContentSuccess>>, t: Throwable) {}
-
-        })
-
         // display 비율에 맞춰 padding과 margin setting
+//        val display = activity?.windowManager?.defaultDisplay
+//        val size = Point()
+//        display?.getSize(size)
+
         val dpValue = 80
         val displaySize = resources.displayMetrics.density
         val margin = (dpValue * displaySize).toInt()
@@ -137,6 +115,32 @@ class HomeFrag : Fragment() {
 
     override fun onResume() {
         super.onResume()
+
+        var id = Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
+
+        Retrofit.getContracts(id).enqueue(object : Callback<ArrayList<ContractContentSuccess>> {
+            override fun onResponse( call: Call<ArrayList<ContractContentSuccess>>, response: Response<ArrayList<ContractContentSuccess>> ) {
+                getContractContent = response.body()!!
+
+                response.body()?.forEach {
+                    Title.add(it.title)
+                    Content.add(it.content)
+                    cnt++
+                }
+
+                val list = ArrayList<Data>()
+
+                for (i in 0 until cnt) {
+                    val item = Data(Title[i], Content[i])
+                    list += item
+                }
+                vpContract.adapter = ContractAdapter(list, requireContext(), parentFragmentManager, getContractContent)
+                vpContract.setCurrentItem(position!!)
+            }
+
+            override fun onFailure(call: Call<ArrayList<ContractContentSuccess>>, t: Throwable) {}
+
+        })
 
         btnSearch.setOnClickListener {
             requireFragmentManager().beginTransaction().replace(R.id.layFull, SearchFrag())
