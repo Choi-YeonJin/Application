@@ -1,5 +1,5 @@
 package com.app0.simforpay.util.sharedpreferences
 
 enum class Key {
-    LENDER_ID
+    LENDER_ID, AutoLogin
 }

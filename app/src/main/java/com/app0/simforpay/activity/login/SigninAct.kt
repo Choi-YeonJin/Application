@@ -33,7 +33,9 @@ class SigninAct : AppCompatActivity() {
                 .enqueue(object : Callback<ResUesrSuccess>{
                     override fun onResponse(call: Call<ResUesrSuccess>, response: Response<ResUesrSuccess>) {
                         if (response.body()?.result=="true"){
+                            MyApplication.prefs.setBoolean(Key.AutoLogin.toString(), cbAutoLogin.isChecked) // 자동 로그인 체크 여부 확인
                             MyApplication.prefs.setString(Key.LENDER_ID.toString(), response.body()?.userId.toString())
+                            
                             startActivity(Intent(applicationContext, MainAct::class.java))
                             finish()
                         }
