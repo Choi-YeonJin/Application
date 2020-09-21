@@ -106,17 +106,16 @@ class MypageFrag : Fragment() {
             fragmentManager?.popBackStackImmediate()
         }
 
-        btnAddImgProfile.setOnClickListener {
-            // java.lang.RuntimeException: android.os.TransactionTooLargeException: data parcel size 11474292 bytes error
-
+//        btnAddImgProfile.setOnClickListener {
+//             /* java.lang.RuntimeException: android.os.TransactionTooLargeException: data parcel size 11474292 bytes error */
+//
 //            TedImagePicker.with(requireContext())
 //                .start { uri ->
-////                    Log.d("test", uri.toString())
 //                    val bitmap = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, uri)
 //                    imageUri = bitmap
 //                    Glide.with(this).load(uri).circleCrop().into(imgProfile)
 //                }
-        }
+//        }
 
         btnPwChange.setOnClickListener {
             ShowEditDialog(R.layout.editpw_dialog)
