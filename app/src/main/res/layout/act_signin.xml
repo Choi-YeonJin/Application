@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/layId"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btnSignin"
+        app:layout_constraintBottom_toTopOf="@id/cbAutoLogin"
         android:hint="Password"
         app:startIconDrawable="@drawable/ic_lock"
         app:endIconMode="password_toggle">
@@ -62,11 +62,22 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <CheckBox
+        android:id="@+id/cbAutoLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/layPw"
+        app:layout_constraintLeft_toLeftOf="@id/layPw"
+        android:paddingLeft="@dimen/size4"
+        android:layout_marginTop="@dimen/size4"
+        android:text="자동 로그인"
+        android:button="@drawable/roundcheckbox_selector" />
+
     <Button
         android:id="@+id/btnSignin"
         android:layout_width="0dp"
         android:layout_height="@dimen/btnWH"
-        app:layout_constraintTop_toBottomOf="@id/layPw"
+        app:layout_constraintTop_toBottomOf="@id/cbAutoLogin"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="@dimen/size40"

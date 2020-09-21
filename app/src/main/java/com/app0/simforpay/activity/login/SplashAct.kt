@@ -18,13 +18,10 @@ class SplashAct : AppCompatActivity() {
 
         Handler().postDelayed({
 
-//            startActivity(Intent(this, SigninAct::class.java))
-
-            if(MyApplication.prefs.getString(Key.LENDER_ID.toString(), "") == ""){
-                startActivity(Intent(this, SigninAct::class.java))
-            }else{
+            if(MyApplication.prefs.getBoolean(Key.AutoLogin.toString(), false))
                 startActivity(Intent(this, MainAct::class.java))
-            }
+            else
+                startActivity(Intent(this, SigninAct::class.java))
 
             finish()
         }, SPLASH_TIME_OUT)
