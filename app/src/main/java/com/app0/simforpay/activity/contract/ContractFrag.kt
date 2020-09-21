@@ -347,10 +347,10 @@ class ContractFrag : Fragment() {
                     })
             } else {
                 Retrofit.UpdateContract(getid, contractInfo)
-                    .enqueue(object : Callback<UpdateSuccess> {
+                    .enqueue(object : Callback<ResResultSuccess> {
                         override fun onResponse(
-                            call: Call<UpdateSuccess>,
-                            response: Response<UpdateSuccess>
+                            call: Call<ResResultSuccess>,
+                            response: Response<ResResultSuccess>
                         ) {
                             if (response.body()?.result == "true") {
                                 fragmentManager!!.beginTransaction().replace(
@@ -366,7 +366,7 @@ class ContractFrag : Fragment() {
                                     .show()
                         }
 
-                        override fun onFailure(call: Call<UpdateSuccess>, t: Throwable) {
+                        override fun onFailure(call: Call<ResResultSuccess>, t: Throwable) {
 
                         }
                     })

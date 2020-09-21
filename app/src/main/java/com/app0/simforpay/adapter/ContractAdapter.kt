@@ -12,7 +12,7 @@ import com.app0.simforpay.activity.contract.ContractFrag
 import com.app0.simforpay.activity.home.HomeFrag
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.ContractContentSuccess
-import com.app0.simforpay.retrofit.domain.UpdateSuccess
+import com.app0.simforpay.retrofit.domain.ResResultSuccess
 import com.app0.simforpay.util.dialog.CustomContractBottomSheetDialog
 import kotlinx.android.synthetic.main.contract_item.view.*
 import retrofit2.Call
@@ -76,15 +76,15 @@ class ContractAdapter( models: List<Data>, context: Context, fragmentManager: Fr
                             getContractContent[position].state)
                         ).addToBackStack(null).commit()
 
-                        Toast.makeText(context, "Loading....", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "로딩 중", Toast.LENGTH_SHORT).show()
                     }
 
                     override fun onClickMenu2Btn() {
                         Retrofit.DeleteContract(getContractContent[position].id).enqueue(object :
-                            Callback<UpdateSuccess> {
+                            Callback<ResResultSuccess> {
                             override fun onResponse(
-                                call: Call<UpdateSuccess>,
-                                response: Response<UpdateSuccess>
+                                call: Call<ResResultSuccess>,
+                                response: Response<ResResultSuccess>
                             ) {
                                 if (response.body()?.result == "true") {
                                     fragmentManager.beginTransaction().replace(R.id.layFull, HomeFrag.newInstance(0))
@@ -92,17 +92,17 @@ class ContractAdapter( models: List<Data>, context: Context, fragmentManager: Fr
                                 }
                             }
 
-                            override fun onFailure(call: Call<UpdateSuccess>, t: Throwable) {}
+                            override fun onFailure(call: Call<ResResultSuccess>, t: Throwable) {}
 
                         })
                     }
 
                     override fun onClickMenu3Btn() {
                         Retrofit.ContractCompl(getContractContent[position].id).enqueue(object :
-                            Callback<UpdateSuccess> {
+                            Callback<ResResultSuccess> {
                             override fun onResponse(
-                                call: Call<UpdateSuccess>,
-                                response: Response<UpdateSuccess>
+                                call: Call<ResResultSuccess>,
+                                response: Response<ResResultSuccess>
                             ) {
                                 if (response.body()?.result == "true") {
                                     view.contractComplState.visibility = view.visibility
@@ -110,7 +110,7 @@ class ContractAdapter( models: List<Data>, context: Context, fragmentManager: Fr
                                 }
                             }
 
-                            override fun onFailure(call: Call<UpdateSuccess>, t: Throwable) {}
+                            override fun onFailure(call: Call<ResResultSuccess>, t: Throwable) {}
 
                         })
                     }

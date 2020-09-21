@@ -17,7 +17,10 @@ import androidx.fragment.app.Fragment
 import com.app0.simforpay.R
 import com.app0.simforpay.activity.MainAct
 import com.app0.simforpay.retrofit.RetrofitHelper
-import com.app0.simforpay.retrofit.domain.*
+import com.app0.simforpay.retrofit.domain.ResResultSuccess
+import com.app0.simforpay.retrofit.domain.UpdateAccount
+import com.app0.simforpay.retrofit.domain.UpdateUser
+import com.app0.simforpay.retrofit.domain.User
 import com.app0.simforpay.util.ImgUrl
 import com.app0.simforpay.util.RegularExpression
 import com.app0.simforpay.util.sharedpreferences.Key
@@ -258,10 +261,10 @@ class MypageFrag : Fragment() {
         val updateUserInfo = UpdateAccount(bank, account)
 
         Retrofit.UpdateUserAccount(id, updateUserInfo)
-            .enqueue(object : Callback<UpdateAccountSuccess> {
+            .enqueue(object : Callback<ResResultSuccess> {
                 override fun onResponse(
-                    call: Call<UpdateAccountSuccess>,
-                    response: Response<UpdateAccountSuccess>
+                    call: Call<ResResultSuccess>,
+                    response: Response<ResResultSuccess>
                 ) {
                     if (response.body()?.result == "true") {
                         Toast.makeText(context, "계좌정보가 정상적으로 업데이트 되었습니다.", Toast.LENGTH_SHORT)
@@ -269,7 +272,7 @@ class MypageFrag : Fragment() {
                     }
                 }
 
-                override fun onFailure(call: Call<UpdateAccountSuccess>, t: Throwable) {}
+                override fun onFailure(call: Call<ResResultSuccess>, t: Throwable) {}
 
             })
     }
@@ -297,17 +300,17 @@ class MypageFrag : Fragment() {
         val imageUrl = imgProfile.toString()
         val updateUserInfo = UpdateUser(imageUrl, newPw)
 
-        Retrofit.UpdateUser(id, updateUserInfo).enqueue(object : Callback<UpdateUserSuccess> {
+        Retrofit.UpdateUser(id, updateUserInfo).enqueue(object : Callback<ResResultSuccess> {
             override fun onResponse(
-                call: Call<UpdateUserSuccess>,
-                response: Response<UpdateUserSuccess>
+                call: Call<ResResultSuccess>,
+                response: Response<ResResultSuccess>
             ) {
                 if (response.body()?.result == "true") {
                     Toast.makeText(context, "비밀번호가 정상적으로 업데이트 되었습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
 
-            override fun onFailure(call: Call<UpdateUserSuccess>, t: Throwable) {}
+            override fun onFailure(call: Call<ResResultSuccess>, t: Throwable) {}
 
         })
     }
