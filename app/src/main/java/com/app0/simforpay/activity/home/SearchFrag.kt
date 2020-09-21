@@ -9,16 +9,12 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.replace
 import com.app0.simforpay.R
 import com.app0.simforpay.activity.MainAct
-import com.app0.simforpay.activity.contract.ContractShareFrag
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.ContractContentSuccess
 import com.app0.simforpay.util.sharedpreferences.Key
 import com.app0.simforpay.util.sharedpreferences.MyApplication
-import kotlinx.android.synthetic.main.frag_contract.*
-import kotlinx.android.synthetic.main.frag_home.*
 import kotlinx.android.synthetic.main.frag_search.*
 import retrofit2.Call
 import retrofit2.Callback

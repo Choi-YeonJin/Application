@@ -8,13 +8,10 @@
     <dimen name="font16">16sp</dimen>
     <dimen name="font18">18sp</dimen>
     <dimen name="font20">20sp</dimen>
-    <dimen name="font22">22sp</dimen>
     <dimen name="font24">24sp</dimen>
-    <dimen name="font28">28dp</dimen>
 
     <dimen name="size2">2dp</dimen>
     <dimen name="size4">4dp</dimen>
-    <dimen name="size6">6dp</dimen>
     <dimen name="size8">8dp</dimen>
     <dimen name="size10">10dp</dimen>
     <dimen name="size12">12dp</dimen>
@@ -46,6 +43,5 @@
     <dimen name="editH">56dp</dimen>
     <dimen name="editP">8dp</dimen>
     <dimen name="bottomsheetH">48dp</dimen>
-
 
 </resources>

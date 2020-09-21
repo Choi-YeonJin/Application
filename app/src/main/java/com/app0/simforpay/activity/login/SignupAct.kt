@@ -12,10 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.app0.simforpay.R
 import com.app0.simforpay.retrofit.RetrofitHelper
+import com.app0.simforpay.retrofit.domain.ResResultSuccess
+import com.app0.simforpay.retrofit.domain.ResUesrSuccess
 import com.app0.simforpay.retrofit.domain.Signup
-import com.app0.simforpay.retrofit.domain.SignupSuccess
-import com.app0.simforpay.retrofit.domain.validUser
-import com.app0.simforpay.retrofit.domain.validUserSuccess
+import com.app0.simforpay.retrofit.domain.VaildUser
 import com.app0.simforpay.util.ImgUrl
 import com.app0.simforpay.util.RegularExpression
 import com.app0.simforpay.util.TextInput
@@ -112,10 +112,10 @@ class SignupAct : AppCompatActivity() {
 
         // ID 중복 체크
         btnCheckId.setOnClickListener {
-            val userId = validUser(suId.text.toString())
-            Retrofit.validUserCall(userId)
-                .enqueue(object : Callback<validUserSuccess> {
-                    override fun onResponse(call: Call<validUserSuccess>, response: Response<validUserSuccess>){
+            val userId = VaildUser(suId.text.toString())
+            Retrofit.vaildUserCall(userId)
+                .enqueue(object : Callback<ResResultSuccess> {
+                    override fun onResponse(call: Call<ResResultSuccess>, response: Response<ResResultSuccess>){
                         if(response.body()?.result=="true"){
                             idOverlap = true
                             ChangeIcon(layId)
@@ -128,7 +128,7 @@ class SignupAct : AppCompatActivity() {
                         }
                     }
 
-                    override fun onFailure(call: Call<validUserSuccess>, t: Throwable) {
+                    override fun onFailure(call: Call<ResResultSuccess>, t: Throwable) {
                         t.printStackTrace()
                     }
                 })
@@ -195,8 +195,8 @@ class SignupAct : AppCompatActivity() {
                 )
 
                 Retrofit.SignupCall(userInfo)
-                    .enqueue(object : Callback<SignupSuccess> {
-                        override fun onResponse(call: Call<SignupSuccess>, response: Response<SignupSuccess>){
+                    .enqueue(object : Callback<ResUesrSuccess> {
+                        override fun onResponse(call: Call<ResUesrSuccess>, response: Response<ResUesrSuccess>){
                             if(response.body()?.result=="true"){
                                 startActivity(Intent(applicationContext, SigninAct::class.java))
                                 finish()
@@ -205,7 +205,7 @@ class SignupAct : AppCompatActivity() {
                             }
                         }
 
-                        override fun onFailure(call: Call<SignupSuccess>, t: Throwable) {
+                        override fun onFailure(call: Call<ResUesrSuccess>, t: Throwable) {
                             t.printStackTrace()
                         }
                     })

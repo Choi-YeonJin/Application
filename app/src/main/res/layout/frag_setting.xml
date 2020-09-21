@@ -1,251 +1,299 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".activity.setting.SettingFrag"
-    android:paddingRight="@dimen/size16"
-    android:paddingLeft="@dimen/size16">
+    android:id="@+id/layFull"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/setting_parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        style="@style/basicP">
 
         <TextView
-            android:id="@+id/setting"
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/setting_txt1"
-            android:layout_marginTop="@dimen/size32"
+            app:layout_constraintBottom_toTopOf="@id/txt2"
             android:text="설정"
-            android:textSize="@dimen/font28"
+            android:textSize="@dimen/font24"
             android:fontFamily="@font/nanumbarungothic_bold" />
 
-        <TextView
-            android:id="@+id/setting_txt1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/setting"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/setting_txt2"
-            android:text="알림 설정"
-            android:textSize="@dimen/font22"
-            android:layout_marginTop="@dimen/size24"
-            android:fontFamily="@font/nanumbarungothic_bold"/>
+        <!--    <TextView-->
+        <!--        android:id="@+id/txt1"-->
+        <!--        android:layout_width="wrap_content"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        app:layout_constraintTop_toBottomOf="@id/title"-->
+        <!--        app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--        app:layout_constraintBottom_toTopOf="@id/contractComplNoti"-->
+        <!--        android:layout_marginTop="@dimen/size16"-->
+        <!--        android:text="알림 설정"-->
+        <!--        android:textSize="@dimen/font16"-->
+        <!--        android:fontFamily="@font/nanumbarungothic_bold"/>-->
+
+        <!--    <LinearLayout-->
+        <!--        android:id="@+id/contractComplNoti"-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        app:layout_constraintTop_toBottomOf="@id/txt1"-->
+        <!--        app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--        app:layout_constraintBottom_toTopOf="@id/line1"-->
+        <!--        android:layout_marginTop="@dimen/size16"-->
+        <!--        android:gravity="center_vertical">-->
+
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="계약 완료 알림" />-->
+
+        <!--        <View-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="0dp"-->
+        <!--            android:layout_weight="1" />-->
+
+        <!--        <ImageButton-->
+        <!--            android:layout_width="@dimen/size24"-->
+        <!--            android:layout_height="@dimen/size24"-->
+        <!--            android:src="@drawable/ic_next" />-->
+
+        <!--    </LinearLayout> &lt;!&ndash; 계약 완료 알림 &ndash;&gt;-->
+
+        <!--    <View-->
+        <!--        android:id="@+id/line1"-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="1dp"-->
+        <!--        app:layout_constraintTop_toBottomOf="@id/contractComplNoti"-->
+        <!--        app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--        app:layout_constraintRight_toRightOf="parent"-->
+        <!--        app:layout_constraintBottom_toTopOf="@id/txt2"-->
+        <!--        android:layout_marginTop="@dimen/size16"-->
+        <!--        android:layout_marginBottom="@dimen/size16"-->
+        <!--        android:background="@color/dark4" /> &lt;!&ndash; 알림 설정 &ndash;&gt;-->
 
         <TextView
-            android:id="@+id/setting_txt2"
+            android:id="@+id/txt2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/setting_txt1"
+            app:layout_constraintTop_toBottomOf="@id/title"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/view1"
-            android:text="계약 완료 알림"
-            android:textSize="@dimen/font18"
-            android:layout_marginTop="@dimen/size14"
-            android:fontFamily="@font/nanumbarungothic"/>
-
-        <ImageButton
-            android:id="@+id/btnContractNotice"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_next"
-            app:layout_constraintTop_toTopOf="@id/setting_txt2"
-            app:layout_constraintBottom_toBottomOf="@id/setting_txt2"
-            app:layout_constraintRight_toRightOf="parent"/>
-
-        <View
-            android:id="@+id/view1"
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:background="#F7F7FA"
-            app:layout_constraintTop_toBottomOf="@id/setting_txt2"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/setting_txt3"
-            android:layout_marginTop="@dimen/size16" />
-
-        <TextView
-            android:id="@+id/setting_txt3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/view1"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/privacyPolicy"
+            android:layout_marginTop="@dimen/size16"
             android:text="약관 및 정책"
-            android:textSize="@dimen/font22"
-            android:layout_marginTop="@dimen/size16"
+            android:textSize="@dimen/font16"
             android:fontFamily="@font/nanumbarungothic_bold"/>
 
-        <TextView
-            android:id="@+id/setting_txt4"
-            android:layout_width="wrap_content"
+        <!--    <LinearLayout-->
+        <!--        android:id="@+id/termsAndConditions"-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        app:layout_constraintTop_toBottomOf="@id/txt2"-->
+        <!--        app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--        app:layout_constraintBottom_toTopOf="@id/privacyPolicy"-->
+        <!--        android:layout_marginTop="@dimen/size16"-->
+        <!--        android:gravity="center_vertical">-->
+
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="약관 및 이용동의" />-->
+
+        <!--        <View-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="0dp"-->
+        <!--            android:layout_weight="1"/>-->
+
+        <!--        <ImageButton-->
+        <!--            android:layout_width="@dimen/size24"-->
+        <!--            android:layout_height="@dimen/size24"-->
+        <!--            android:src="@drawable/ic_next"/>-->
+
+        <!--    </LinearLayout> &lt;!&ndash; 약관 및 이용동의 &ndash;&gt;-->
+
+        <LinearLayout
+            android:id="@+id/privacyPolicy"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/setting_txt3"
+            app:layout_constraintTop_toBottomOf="@id/txt2"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/setting_txt5"
-            android:text="약관 및 이용 동의"
-            android:textSize="@dimen/font18"
-            android:layout_marginTop="@dimen/size14"
-            android:fontFamily="@font/nanumbarungothic"/>
+            app:layout_constraintBottom_toTopOf="@id/opensourceLicense"
+            android:layout_marginTop="@dimen/size16"
+            android:gravity="center_vertical">
 
-        <ImageButton
-            android:id="@+id/btnAgreement"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_next"
-            app:layout_constraintTop_toTopOf="@id/setting_txt4"
-            app:layout_constraintBottom_toBottomOf="@id/setting_txt4"
-            app:layout_constraintRight_toRightOf="parent"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="개인정보보호정책" />
 
-        <TextView
-            android:id="@+id/setting_txt5"
-            android:layout_width="wrap_content"
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <ImageButton
+                android:layout_width="@dimen/size24"
+                android:layout_height="@dimen/size24"
+                android:src="@drawable/ic_next"/>
+
+        </LinearLayout> <!-- 개인정보보호정책 -->
+
+        <LinearLayout
+            android:id="@+id/opensourceLicense"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/setting_txt4"
+            app:layout_constraintTop_toBottomOf="@id/privacyPolicy"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/setting_txt6"
-            android:text="개인정보보호정책"
-            android:textSize="@dimen/font18"
-            android:layout_marginTop="@dimen/size12"
-            android:fontFamily="@font/nanumbarungothic"/>
+            app:layout_constraintBottom_toTopOf="@id/line2"
+            android:layout_marginTop="@dimen/size16"
+            android:gravity="center_vertical">
 
-        <ImageButton
-            android:id="@+id/btnPrivacyPolicy"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_next"
-            app:layout_constraintTop_toTopOf="@id/setting_txt5"
-            app:layout_constraintBottom_toBottomOf="@id/setting_txt5"
-            app:layout_constraintRight_toRightOf="parent"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="오픈소스 라이선스" />
 
-        <TextView
-            android:id="@+id/setting_txt6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/setting_txt5"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/view2"
-            android:text="오픈소스 라이선스"
-            android:textSize="@dimen/font18"
-            android:layout_marginTop="@dimen/size12"
-            android:fontFamily="@font/nanumbarungothic"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
 
-        <ImageButton
-            android:id="@+id/btnOpensource"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_next"
-            app:layout_constraintTop_toTopOf="@id/setting_txt6"
-            app:layout_constraintBottom_toBottomOf="@id/setting_txt6"
-            app:layout_constraintRight_toRightOf="parent"/>
+            <ImageButton
+                android:layout_width="@dimen/size24"
+                android:layout_height="@dimen/size24"
+                android:src="@drawable/ic_next"/>
+
+        </LinearLayout> <!-- 오픈소스 라이선스 -->
 
         <View
-            android:id="@+id/view2"
-            android:layout_width="wrap_content"
+            android:id="@+id/line2"
+            android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#F7F7FA"
-            app:layout_constraintTop_toBottomOf="@id/setting_txt6"
+            app:layout_constraintTop_toBottomOf="@id/opensourceLicense"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginTop="@dimen/size16" />
-
-        <TextView
-            android:id="@+id/setting_txt7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/view2"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/setting_txt8"
-            android:text="앱 정보"
-            android:textSize="@dimen/font22"
-            android:layout_marginTop="@dimen/size16"
-            android:fontFamily="@font/nanumbarungothic_bold"/>
-
-        <TextView
-            android:id="@+id/setting_txt8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/setting_txt7"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/view3"
-            android:text="버전 정보"
-            android:textSize="@dimen/font18"
-            android:layout_marginTop="@dimen/size14"
-            android:fontFamily="@font/nanumbarungothic"/>
-
-        <TextView
-            android:id="@+id/setting_txt9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/setting_txt8"
-            app:layout_constraintBottom_toBottomOf="@id/setting_txt8"
             app:layout_constraintRight_toRightOf="parent"
-            android:textColor="#C8C9CE"
-            android:text="1.0.0"
-            android:textSize="@dimen/font12"
-            android:fontFamily="@font/nanumbarungothic"/>
-
-        <View
-            android:id="@+id/view3"
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:background="#F7F7FA"
-            app:layout_constraintTop_toBottomOf="@id/setting_txt8"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginTop="@dimen/size16" />
+            app:layout_constraintBottom_toTopOf="@id/opensourceLicense"
+            android:layout_marginTop="@dimen/size16"
+            android:layout_marginBottom="@dimen/size16"
+            android:background="@color/dark4" /> <!-- 약관 및 정책 -->
 
         <TextView
-            android:id="@+id/setting_txt10"
+            android:id="@+id/txt3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/view3"
+            app:layout_constraintTop_toBottomOf="@id/line2"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:text="회원"
-            android:textSize="@dimen/font22"
+            app:layout_constraintBottom_toTopOf="@id/version"
             android:layout_marginTop="@dimen/size16"
+            android:text="앱 정보"
+            android:textSize="@dimen/font16"
             android:fontFamily="@font/nanumbarungothic_bold"/>
 
+        <LinearLayout
+            android:id="@+id/version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/txt3"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/line3"
+            android:layout_marginTop="@dimen/size16"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="버전 정보" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1.0.0"
+                android:textColor="@color/mainGray" />
+
+        </LinearLayout> <!-- 버전 정보 -->
+
+        <View
+            android:id="@+id/line3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            app:layout_constraintTop_toBottomOf="@id/version"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/txt4"
+            android:layout_marginTop="@dimen/size16"
+            android:layout_marginBottom="@dimen/size16"
+            android:background="@color/dark4" /> <!-- 앱 정보 -->
+
         <TextView
-            android:id="@+id/setting_txt11"
+            android:id="@+id/txt4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/setting_txt10"
+            app:layout_constraintTop_toBottomOf="@id/line3"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:text="로그아웃"
-            android:textSize="@dimen/font18"
-            android:layout_marginTop="@dimen/size14"
-            android:fontFamily="@font/nanumbarungothic"/>
+            app:layout_constraintBottom_toTopOf="@id/logout"
+            android:text="회원"
+            android:textSize="@dimen/font16"
+            android:fontFamily="@font/nanumbarungothic_bold"/>
 
-        <ImageButton
-            android:id="@+id/btnLogout"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_next"
-            app:layout_constraintTop_toTopOf="@id/setting_txt11"
-            app:layout_constraintBottom_toBottomOf="@id/setting_txt11"
-            app:layout_constraintRight_toRightOf="parent"/>
-
-        <TextView
-            android:id="@+id/setting_txt12"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/logout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/setting_txt11"
+            app:layout_constraintTop_toBottomOf="@id/txt4"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:text="회원 탈퇴"
-            android:textSize="@dimen/font18"
-            android:layout_marginTop="@dimen/size12"
-            android:fontFamily="@font/nanumbarungothic"/>
-        <ImageButton
-            android:id="@+id/btnWithdrawal"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_next"
-            app:layout_constraintTop_toTopOf="@id/setting_txt12"
-            app:layout_constraintBottom_toBottomOf="@id/setting_txt12"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintBottom_toTopOf="@id/withdrawal"
+            android:layout_marginTop="@dimen/size16"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="로그아웃" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <ImageButton
+                android:layout_width="@dimen/size24"
+                android:layout_height="@dimen/size24"
+                android:src="@drawable/ic_next"/>
+
+        </LinearLayout> <!-- 로그아웃 -->
+
+        <LinearLayout
+            android:id="@+id/withdrawal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/logout"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="@dimen/size16"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="회원 탈퇴" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <ImageButton
+                android:layout_width="@dimen/size24"
+                android:layout_height="@dimen/size24"
+                android:src="@drawable/ic_next"/>
+
+        </LinearLayout> <!-- 회원 탈퇴 --><!-- 회원 -->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

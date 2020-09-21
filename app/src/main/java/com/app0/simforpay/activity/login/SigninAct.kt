@@ -5,12 +5,12 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.app0.simforpay.R
-import com.app0.simforpay.util.sharedpreferences.Key
 import com.app0.simforpay.activity.MainAct
 import com.app0.simforpay.retrofit.RetrofitHelper
+import com.app0.simforpay.retrofit.domain.ResUesrSuccess
 import com.app0.simforpay.retrofit.domain.Signin
-import com.app0.simforpay.retrofit.domain.SigninSuccess
 import com.app0.simforpay.util.TextInput
+import com.app0.simforpay.util.sharedpreferences.Key
 import com.app0.simforpay.util.sharedpreferences.MyApplication
 import kotlinx.android.synthetic.main.act_signin.*
 import retrofit2.Call
@@ -30,19 +30,19 @@ class SigninAct : AppCompatActivity() {
             val userInfo = Signin(siId.text.toString(), siPw.text.toString())
 
             Retrofit.SigninCall(userInfo)
-                .enqueue(object : Callback<SigninSuccess>{
-                    override fun onResponse(call: Call<SigninSuccess>, response: Response<SigninSuccess>) {
+                .enqueue(object : Callback<ResUesrSuccess>{
+                    override fun onResponse(call: Call<ResUesrSuccess>, response: Response<ResUesrSuccess>) {
                         if (response.body()?.result=="true"){
                             MyApplication.prefs.setString(Key.LENDER_ID.toString(), response.body()?.userId.toString())
                             startActivity(Intent(applicationContext, MainAct::class.java))
                             finish()
                         }
                         else{
-                            Toast.makeText(applicationContext, "로그인에 실패하였습니다. 잠시후 재시도 해주세요.", Toast.LENGTH_LONG).show()
+                            Toast.makeText(applicationContext, "로그인에 실패했습니다. 아이디 혹은 비밀번호를 확인해주세요.", Toast.LENGTH_LONG).show()
                         }
                     }
 
-                    override fun onFailure(call: Call<SigninSuccess>, t: Throwable) {
+                    override fun onFailure(call: Call<ResUesrSuccess>, t: Throwable) {
 
                     }
                 })

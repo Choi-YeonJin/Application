@@ -143,8 +143,7 @@ class HomeFrag : Fragment() {
         }
 
         btnNotification.setOnClickListener {
-            requireFragmentManager().beginTransaction().replace(R.id.layFull, NotificationFrag())
-                .addToBackStack(null).commit()
+            requireFragmentManager().beginTransaction().replace(R.id.layFull, NotificationFrag()).addToBackStack(null).commit()
         }
 
         btnMypage.setOnClickListener {

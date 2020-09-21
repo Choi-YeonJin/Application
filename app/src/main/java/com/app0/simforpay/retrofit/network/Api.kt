@@ -12,8 +12,8 @@ interface Api {
     @GET("user/{id}")
     fun getUser(@Path("id") id: Int): Call<User>
 
-    @GET("contract-contents/{id}")
-    fun getContractContents(@Path("id") id: Int): Call<List<ContractContentSuccess>>
+//    @GET("contract-contents/{id}")
+//    fun getContractContents(@Path("id") id: Int): Call<List<ContractContentSuccess>>
 
     @GET("contracts/{id}")
     fun getContracts(@Path("id") id: Int): Call<ArrayList<ContractContentSuccess>>
@@ -22,30 +22,33 @@ interface Api {
     fun getFreinds(@Path("id") id: Int): Call<ArrayList<FriendsSuccess>>
 
     @POST("sign-in")
-    fun SigninCall(@Body userInfo: Signin) : Call<SigninSuccess>
+    fun SigninCall(@Body userInfo: Signin) : Call<ResUesrSuccess>
 
     @POST("user")
-    fun SignupCall(@Body userInfo: Signup) : Call<SignupSuccess>
+    fun SignupCall(@Body userInfo: Signup) : Call<ResUesrSuccess>
 
     @POST("valid-userId")
-    fun validUserCall(@Body userInfo: validUser) : Call<validUserSuccess>
+    fun vaildUserCall(@Body userInfo: VaildUser) : Call<ResResultSuccess>
 
     @POST("contract")
     fun ContractCall(@Body contractInfo: Contract) : Call<ContractSuccess>
 
     @PUT("user-pw/{id}")
-    fun UpdateUser(@Path("id") id: Int,@Body updateUserInfo: UpdateUser) : Call<UpdateUserSuccess>
+    fun UpdateUser(@Path("id") id: Int,@Body updateUserInfo: UpdateUser) : Call<ResResultSuccess>
 
     @PUT("bank-registration/{id}")
-    fun UpdateUserAccount(@Path("id") id: Int,@Body updateUserInfo: UpdateAccount) : Call<UpdateAccountSuccess>
+    fun UpdateUserAccount(@Path("id") id: Int,@Body updateUserInfo: UpdateAccount) : Call<ResResultSuccess>
 
     @PUT("contract-complete/{id}")
-    fun ContractCompl(@Path("id") id: Int) : Call<UpdateSuccess>
+    fun ContractCompl(@Path("id") id: Int) : Call<ResResultSuccess>
 
     @PUT("contract/{id}")
-    fun UpdateContract(@Path("id") id: Int?,@Body updateContractInfo: Contract) : Call<UpdateSuccess>
+    fun UpdateContract(@Path("id") id: Int?,@Body updateContractInfo: Contract) : Call<ResResultSuccess>
 
     @DELETE("contract/{id}")
-    fun DeleteContract(@Path("id") id: Int) : Call<UpdateSuccess>
+    fun DeleteContract(@Path("id") id: Int) : Call<ResResultSuccess>
+
+    @DELETE("user/{id}")
+    fun DeleteUser(@Path("id") id: Int) : Call<ResResultSuccess>
 
 }

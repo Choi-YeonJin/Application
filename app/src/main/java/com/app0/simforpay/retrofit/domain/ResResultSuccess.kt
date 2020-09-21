@@ -1,5 +1,5 @@
 package com.app0.simforpay.retrofit.domain
 
-data class validUserSuccess(
+data class ResResultSuccess (
     val result : String
 )
