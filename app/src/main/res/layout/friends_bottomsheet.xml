@@ -76,7 +76,7 @@
         app:layout_constraintTop_toTopOf="@id/txt2"
         app:layout_constraintLeft_toRightOf="@id/txt2"
         android:layout_marginLeft="@dimen/size8"
-        android:text="카카오뱅크 3333123456789" />
+        android:text="카카오뱅크 00000" />
 
     <LinearLayout
         android:id="@+id/menu1"

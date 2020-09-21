@@ -18,6 +18,9 @@ interface Api {
     @GET("contracts/{id}")
     fun getContracts(@Path("id") id: Int): Call<ArrayList<ContractContentSuccess>>
 
+    @GET("friends/{id}")
+    fun getFreinds(@Path("id") id: Int): Call<ArrayList<FriendsSuccess>>
+
     @POST("sign-in")
     fun SigninCall(@Body userInfo: Signin) : Call<ResUesrSuccess>
 
