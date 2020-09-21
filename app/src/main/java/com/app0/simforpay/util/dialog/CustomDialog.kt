@@ -12,6 +12,7 @@ class CustomDialog(): DialogFragment() {
 
     var title: String? = null
     var message: String? = null
+    var subTitle: String? = null
     var btnPositiveText: String? = null
     var btnNegativeText: String? = null
     var listener: CustomDialogListener? = null
@@ -36,6 +37,7 @@ class CustomDialog(): DialogFragment() {
         view?.apply {
             dialogTitle.text = title
             dialogMessage.text = message
+            dialogSubTitle.text = subTitle
             btnNegative.text = btnNegativeText
             btnNegative.setOnClickListener {
                 dismiss()
@@ -59,6 +61,11 @@ class CustomDialog(): DialogFragment() {
 
         fun setMessage(message: String): CustomDialogBuilder {
             dialog.message = message
+            return this
+        }
+
+        fun setSubTitle(subTitle: String): CustomDialogBuilder {
+            dialog.subTitle = subTitle
             return this
         }
 

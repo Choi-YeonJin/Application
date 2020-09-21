@@ -249,8 +249,6 @@ class MypageFrag : Fragment() {
                 ).commit()
             }
         }
-
-
     }
 
     private fun updateUserAccount(bank: AutoCompleteTextView?, accountNum: TextInputEditText?) {
