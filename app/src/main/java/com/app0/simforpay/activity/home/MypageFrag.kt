@@ -246,8 +246,6 @@ class MypageFrag : Fragment() {
                 editDialog.dismiss() // dialog 닫기}
             }
         }
-
-
     }
 
     private fun updateUserAccount(bank: AutoCompleteTextView?, accountNum: TextInputEditText?) {

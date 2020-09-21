@@ -8,7 +8,10 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -30,8 +33,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.text.NumberFormat
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 private const val ARG_PARAM1 = "id"
 private const val ARG_PARAM2 = "title"
@@ -478,6 +479,7 @@ class ContractFrag : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
+
         callback.remove()
     }
 
