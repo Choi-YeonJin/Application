@@ -24,6 +24,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+private const val ARG_PARAM1 = "pageName"
 
 class SearchFrag : Fragment() {
 
@@ -31,11 +32,17 @@ class SearchFrag : Fragment() {
     lateinit var Title: ArrayList<String>
     lateinit var adapter: ArrayAdapter<String>
 
+    private var pageName: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val mainAct = activity as MainAct
         mainAct.HideBottomNavi(true)
+
+        arguments?.let {
+            pageName = it.getString(ARG_PARAM1)
+        }
     }
 
     override fun onCreateView(
@@ -51,7 +58,9 @@ class SearchFrag : Fragment() {
 
         var id=Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
 
-//        contentTitle = ArrayList()
+        if(pageName == "HomeFrag"){
+
+        }
 
         Retrofit.getContracts(id).enqueue(object : Callback<ArrayList<ContractContentSuccess>> {
             override fun onResponse(
@@ -92,9 +101,12 @@ class SearchFrag : Fragment() {
         listView.setOnItemClickListener { parent, view, position, id ->
             val element = adapter.getItemId(position) // The item that was clicked
 
-            requireFragmentManager().beginTransaction().replace(R.id.layFull,
-                HomeFrag.newInstance(element.toInt())
-            ).commit()
+//            requireFragmentManager().beginTransaction().replace(R.id.layFull,
+//                HomeFrag.newInstance(element.toInt())
+//            ).commit()
+
+            MyApplication.prefs.setString("contractPosition", element.toString())
+            fragmentManager?.popBackStackImmediate()
         }
 
 
@@ -113,6 +125,16 @@ class SearchFrag : Fragment() {
 
         val mainAct = activity as MainAct
         mainAct.HideBottomNavi(false)
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance(pageName: String) =
+            MypageFrag().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, pageName)
+                }
+            }
     }
 
 }

@@ -87,7 +87,7 @@ class ContractAdapter( models: List<Data>, context: Context, fragmentManager: Fr
                                 response: Response<UpdateSuccess>
                             ) {
                                 if (response.body()?.result == "true") {
-                                    fragmentManager.beginTransaction().replace(R.id.layFull, HomeFrag.newInstance(0))
+                                    fragmentManager.beginTransaction().replace(R.id.layFull, HomeFrag())
                                         .addToBackStack(null).commit()
                                 }
                             }
@@ -106,7 +106,8 @@ class ContractAdapter( models: List<Data>, context: Context, fragmentManager: Fr
                             ) {
                                 if (response.body()?.result == "true") {
                                     view.contractComplState.visibility = view.visibility
-                                    HomeFrag.newInstance(0)
+                                    fragmentManager.beginTransaction().replace(R.id.layFull, HomeFrag())
+                                        .addToBackStack(null).commit()
                                 }
                             }
 

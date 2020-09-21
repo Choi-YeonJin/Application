@@ -22,8 +22,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-private const val ARG_PARAM3 = "position"
-
 class HomeFrag : Fragment() {
 
     private val Retrofit = RetrofitHelper.getRetrofit()
@@ -31,7 +29,6 @@ class HomeFrag : Fragment() {
     private val Content = mutableListOf<String>()
     var cnt = 0
     private var User = arrayOf<String?>()
-    private var position: Int? = 0
     private var getContractContent = arrayListOf<ContractContentSuccess>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,9 +51,6 @@ class HomeFrag : Fragment() {
             override fun onFailure(call: Call<User>, t: Throwable) {}
 
         })
-        arguments?.let {
-            position = it.getInt(ARG_PARAM3)
-        }
 
     }
 
@@ -135,7 +129,8 @@ class HomeFrag : Fragment() {
                     list += item
                 }
                 vpContract.adapter = ContractAdapter(list, requireContext(), parentFragmentManager, getContractContent)
-                vpContract.setCurrentItem(position!!)
+                val position = MyApplication.prefs.getString("contractPosition", "0")
+                vpContract.setCurrentItem(position.toInt()!!)
             }
 
             override fun onFailure(call: Call<ArrayList<ContractContentSuccess>>, t: Throwable) {}
@@ -143,7 +138,7 @@ class HomeFrag : Fragment() {
         })
 
         btnSearch.setOnClickListener {
-            requireFragmentManager().beginTransaction().replace(R.id.layFull, SearchFrag())
+            requireFragmentManager().beginTransaction().replace(R.id.layFull, SearchFrag.newInstance("HomeFrag"))
                 .addToBackStack(null).commit()
         }
 
@@ -171,15 +166,5 @@ class HomeFrag : Fragment() {
             }
             else Toast.makeText(requireContext(), "잠시후 재시도 해주세요.", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(position: Int) =
-            HomeFrag().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_PARAM3, position)
-                }
-            }
     }
 }

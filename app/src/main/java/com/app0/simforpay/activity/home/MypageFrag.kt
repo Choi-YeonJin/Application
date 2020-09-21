@@ -241,9 +241,6 @@ class MypageFrag : Fragment() {
                 // 완료 버튼 눌리면
                 updateUserAccount(editDialogView.bank, editDialogView.accountNum)
                 editDialog.dismiss() // dialog 닫기}
-                requireFragmentManager().beginTransaction().replace(R.id.layFull,
-                    HomeFrag.newInstance(0)
-                ).commit()
             }
         }
 
@@ -266,6 +263,8 @@ class MypageFrag : Fragment() {
                     if (response.body()?.result == "true") {
                         Toast.makeText(context, "계좌정보가 정상적으로 업데이트 되었습니다.", Toast.LENGTH_SHORT)
                             .show()
+                            myBank.text = bank
+                            myAccountNum.setText(account.toString())
                     }
                 }
 
