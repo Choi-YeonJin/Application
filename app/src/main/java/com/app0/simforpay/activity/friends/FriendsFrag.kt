@@ -5,19 +5,22 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app0.simforpay.R
+import com.app0.simforpay.activity.home.SearchFrag
 import com.app0.simforpay.adapter.ContractAdapter
 import com.app0.simforpay.adapter.Data
 import com.app0.simforpay.adapter.FriendsAdapter
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.ContractContentSuccess
 import com.app0.simforpay.retrofit.domain.FriendsSuccess
+import com.app0.simforpay.retrofit.domain.User
 import com.app0.simforpay.util.sharedpreferences.Key
 import com.app0.simforpay.util.sharedpreferences.MyApplication
 import kotlinx.android.synthetic.main.frag_friends.*
-import kotlinx.android.synthetic.main.frag_home.*
+import kotlinx.android.synthetic.main.frag_search.*
 import kotlinx.android.synthetic.main.friends_bottomsheet.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -31,6 +34,9 @@ class FriendsFrag : Fragment() {
     private val Name = mutableListOf<String>()
     private val ID = mutableListOf<String>()
     var cnt = 0
+
+    lateinit var List: ArrayList<String>
+    lateinit var adapter: ArrayAdapter<String>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +54,12 @@ class FriendsFrag : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+    }
+
+    override fun onResume() {
+        super.onResume()
 
         var id=Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
 
@@ -77,13 +89,14 @@ class FriendsFrag : Fragment() {
             }
 
         })
-    }
-
-    override fun onResume() {
-        super.onResume()
 
         btnAddFriends.setOnClickListener {
             requireFragmentManager().beginTransaction().replace(R.id.layFull, RequestFrag())
+                .addToBackStack(null).commit()
+        }
+
+        btnSearch.setOnClickListener {
+            requireFragmentManager().beginTransaction().replace(R.id.layFull, SearchFrag.newInstance("FriendsFrag"))
                 .addToBackStack(null).commit()
         }
     }

@@ -9,12 +9,23 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.replace
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.app0.simforpay.R
 import com.app0.simforpay.activity.MainAct
+import com.app0.simforpay.activity.contract.ContractShareFrag
+import com.app0.simforpay.adapter.Data
+import com.app0.simforpay.adapter.FriendsAdapter
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.ContractContentSuccess
+import com.app0.simforpay.retrofit.domain.FriendsSuccess
+import com.app0.simforpay.retrofit.domain.User
 import com.app0.simforpay.util.sharedpreferences.Key
 import com.app0.simforpay.util.sharedpreferences.MyApplication
+import com.hendraanggrian.appcompat.widget.Mention
+import kotlinx.android.synthetic.main.frag_contract.*
+import kotlinx.android.synthetic.main.frag_friends.*
+import kotlinx.android.synthetic.main.frag_home.*
 import kotlinx.android.synthetic.main.frag_search.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,7 +36,7 @@ private const val ARG_PARAM1 = "pageName"
 class SearchFrag : Fragment() {
 
     private val Retrofit = RetrofitHelper.getRetrofit()
-    lateinit var Title: ArrayList<String>
+    lateinit var List: ArrayList<String>
     lateinit var adapter: ArrayAdapter<String>
 
     private var pageName: String? = null
@@ -55,31 +66,62 @@ class SearchFrag : Fragment() {
         var id=Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
 
         if(pageName == "HomeFrag"){
+            Retrofit.getContracts(id).enqueue(object : Callback<ArrayList<ContractContentSuccess>> {
+                override fun onResponse(
+                    call: Call<ArrayList<ContractContentSuccess>>,
+                    response: Response<ArrayList<ContractContentSuccess>>
+                ) {
+                    List = ArrayList()
+                    response.body()?.forEach {
+                        List.add(it.title)
+                    }
+                    adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, List)
+                    listView?.adapter = adapter
+
+                }
+
+                override fun onFailure(call: Call<ArrayList<ContractContentSuccess>>, t: Throwable) {
+
+                }
+            })
+
+            listView.setOnItemClickListener { parent, view, position, id ->
+                val element = adapter.getItemId(position) // The item that was clicked
+                MyApplication.prefs.setString("contractPosition", element.toString())
+
+                val mainAct = activity as MainAct
+                mainAct.HideBottomNavi(false)
+                requireFragmentManager().beginTransaction().replace(R.id.layFull, HomeFrag())
+                    .addToBackStack(null).commit()
+            }
+            MyApplication.prefs.setString("contractPosition", "0")
 
         }
+        else if(pageName == "FriendsFrag"){
+            Retrofit.getUsers().enqueue(object : Callback<List<User>> {
+                override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
 
-        Retrofit.getContracts(id).enqueue(object : Callback<ArrayList<ContractContentSuccess>> {
-            override fun onResponse(
-                call: Call<ArrayList<ContractContentSuccess>>,
-                response: Response<ArrayList<ContractContentSuccess>>
-            ) {
-                Title = ArrayList()
-                response.body()?.forEach {
-                    Title.add(it.title)
+                    List = ArrayList()
+                    response.body()?.forEach {
+                        List.add(it.name)
+                    }
+                    adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, List)
+                    listView.adapter = adapter
                 }
-                adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, Title)
-                listView.adapter = adapter
 
+                override fun onFailure(call: Call<List<User>>, t: Throwable) {}
+
+            })
+            listView.setOnItemClickListener { parent, view, position, id ->
+                val element = adapter.getItemId(position) // The item that was clicked
+                Toast.makeText(context,List[element.toInt()],Toast.LENGTH_SHORT).show()
             }
-
-            override fun onFailure(call: Call<ArrayList<ContractContentSuccess>>, t: Throwable) {}
-
-        })
+        }
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 Log.i("Test", "Llego al querysubmit : " + query)
-                if (Title.contains(query)) {
+                if (List.contains(query)) {
                     adapter.filter.filter(query)
                 } else {
                     Toast.makeText(context, "No Match found", Toast.LENGTH_LONG).show()
@@ -93,19 +135,6 @@ class SearchFrag : Fragment() {
                 return true
             }
         })
-
-        listView.setOnItemClickListener { parent, view, position, id ->
-            val element = adapter.getItemId(position) // The item that was clicked
-
-//            requireFragmentManager().beginTransaction().replace(R.id.layFull,
-//                HomeFrag.newInstance(element.toInt())
-//            ).commit()
-
-            MyApplication.prefs.setString("contractPosition", element.toString())
-            fragmentManager?.popBackStackImmediate()
-        }
-
-
     }
 
     override fun onResume() {
@@ -126,7 +155,7 @@ class SearchFrag : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance(pageName: String) =
-            MypageFrag().apply {
+            SearchFrag().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, pageName)
                 }
