@@ -339,17 +339,10 @@ class ContractFrag : Fragment() {
                             response: Response<ContractSuccess>
                         ) {
                             if (response.body()?.result == "true") {
-                                fragmentManager!!.beginTransaction().replace(
-                                    R.id.layFull,
-                                    ContractShareFrag.newInstance(
-                                        contractName.text.toString(),
-                                        content
-                                    )
-                                ).commit()
+                                fragmentManager!!.beginTransaction().replace(R.id.layFull, ContractShareFrag.newInstance(contractName.text.toString(), content)).commit()
 
                             } else
-                                Toast.makeText(context, "잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT)
-                                    .show()
+                                Toast.makeText(context, "잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                         }
 
                         override fun onFailure(call: Call<ContractSuccess>, t: Throwable) {
@@ -595,8 +588,7 @@ class ContractFrag : Fragment() {
                 .toInt() / cnt else price.text.toString().toInt()
 
             for (textView in borrowerPrices) {
-                textView.text =
-                    NumberFormat.getInstance(Locale.KOREA).format(borrowerPrice) + "원"
+                textView.text = NumberFormat.getInstance(Locale.KOREA).format(borrowerPrice) + "원"
             }
         }
     }
