@@ -30,11 +30,11 @@ class SettingFrag : Fragment() {
         super.onResume()
 
         privacyPolicy.setOnClickListener{
-
+            requireFragmentManager().beginTransaction().replace(R.id.layFull, PrivacypolicyFrag()).addToBackStack(null).commit()
         }
 
         opensourceLicense.setOnClickListener {
-
+            requireFragmentManager().beginTransaction().replace(R.id.layFull, OpensourceFrag()).addToBackStack(null).commit()
         }
 
         logout.setOnClickListener {

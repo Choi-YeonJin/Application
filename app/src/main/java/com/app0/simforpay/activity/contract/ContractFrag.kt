@@ -16,8 +16,11 @@ import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.app0.simforpay.R
 import com.app0.simforpay.activity.MainAct
+import com.app0.simforpay.adapter.Data
+import com.app0.simforpay.adapter.FriendsAdapter
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.*
 import com.app0.simforpay.util.TextInput
@@ -28,6 +31,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.hendraanggrian.appcompat.widget.Mention
 import com.hendraanggrian.appcompat.widget.MentionArrayAdapter
 import kotlinx.android.synthetic.main.frag_contract.*
+import kotlinx.android.synthetic.main.frag_friends.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -52,7 +56,8 @@ class ContractFrag : Fragment() {
 
     private val Retrofit = RetrofitHelper.getRetrofit()
     private val calendar = Calendar.getInstance()
-    private val userInfo = mutableMapOf<String, Pair<Int, Pair<String, String>>>()
+    //private val userInfo = mutableMapOf<String, Pair<String, Pair<String, String>>>()
+    private val friendsInfo = mutableMapOf<String, Pair<String, Pair<String, String>>>()
     private lateinit var callback: OnBackPressedCallback
     private var AllBorrower: List<String> = emptyList()
     private var OneBorrower: List<String> = emptyList()
@@ -122,20 +127,24 @@ class ContractFrag : Fragment() {
 
         val mentionAdapter: ArrayAdapter<Mention> = MentionArrayAdapter(this.requireContext())
 
-        Retrofit.getUsers().enqueue(object : Callback<List<User>> {
-            override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
+        var id=Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
+
+        Retrofit.getFreinds(id).enqueue(object : Callback<ArrayList<FriendsSuccess>> {
+            override fun onResponse(call: Call<ArrayList<FriendsSuccess>>, response: Response<ArrayList<FriendsSuccess>>) {
 
                 mentionAdapter.clear()
 
                 response.body()?.forEach {
-                    val userList = Pair(it.bank, it.account)
+                    val friendList = Pair(it.friendsBank, it.friendsAccount)
 
-                    userInfo[it.name] = Pair(it.id, userList)
-                    mentionAdapter.add(Mention(it.name, it.myId))
+                    friendsInfo[it.friendsName] = Pair(it.friendsId,friendList)
+                    mentionAdapter.add(Mention(it.friendsName, it.friendsMyid))
                 }
+
             }
 
-            override fun onFailure(call: Call<List<User>>, t: Throwable) {}
+            override fun onFailure(call: Call<ArrayList<FriendsSuccess>>, t: Throwable) {
+            }
 
         })
 
@@ -153,8 +162,8 @@ class ContractFrag : Fragment() {
 
             val name = lender.text.toString().replace("@", "").trim()
 
-            bank.setText(userInfo[name]!!.second.first)
-            accountNum.setText(userInfo[name]!!.second.second)
+            bank.setText(friendsInfo[name]!!.second.first)
+            accountNum.setText(friendsInfo[name]!!.second.second)
         }
 
         // Bank dropdown
@@ -277,7 +286,7 @@ class ContractFrag : Fragment() {
             val payback_date = complDay.text.toString()
             val price = Integer.parseInt(price.text.toString())
             val lender_name = lender.text.toString().replace("@", "").trim()
-            val lender_id: Int? = userInfo[lender_name]?.first
+            val lender_id: Int? = Integer.parseInt(friendsInfo[lender_name]?.first)
             val lender_bank = bank.text.toString()
             val lender_account: Int? = accountNum.text.toString().toIntOrNull()
             val borrowerList = arrayListOf<Borrower>()
@@ -299,7 +308,7 @@ class ContractFrag : Fragment() {
             for (i in 0 until cnt) {
 
                 val userName = borrowerIdList[i].text.toString().replace("@", "").trim()
-                val borrower_id: Int? = userInfo[userName]?.first
+                val borrower_id: Int? = Integer.parseInt(friendsInfo[userName]?.first)
                 val borrower_price =
                     priceIdList[i].text.toString().replace("원", "").replace(",", "").trim()
                         .toIntOrNull()
@@ -339,17 +348,10 @@ class ContractFrag : Fragment() {
                             response: Response<ContractSuccess>
                         ) {
                             if (response.body()?.result == "true") {
-                                fragmentManager!!.beginTransaction().replace(
-                                    R.id.layFull,
-                                    ContractShareFrag.newInstance(
-                                        contractName.text.toString(),
-                                        content
-                                    )
-                                ).commit()
+                                fragmentManager!!.beginTransaction().replace(R.id.layFull, ContractShareFrag.newInstance(contractName.text.toString(), content)).commit()
 
                             } else
-                                Toast.makeText(context, "잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT)
-                                    .show()
+                                Toast.makeText(context, "잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                         }
 
                         override fun onFailure(call: Call<ContractSuccess>, t: Throwable) {
@@ -595,8 +597,7 @@ class ContractFrag : Fragment() {
                 .toInt() / cnt else price.text.toString().toInt()
 
             for (textView in borrowerPrices) {
-                textView.text =
-                    NumberFormat.getInstance(Locale.KOREA).format(borrowerPrice) + "원"
+                textView.text = NumberFormat.getInstance(Locale.KOREA).format(borrowerPrice) + "원"
             }
         }
     }
