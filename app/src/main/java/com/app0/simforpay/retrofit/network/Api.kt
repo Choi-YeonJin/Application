@@ -51,4 +51,7 @@ interface Api {
     @DELETE("user/{id}")
     fun DeleteUser(@Path("id") id: Int) : Call<ResResultSuccess>
 
+    @HTTP(method = "DELETE", path = "friends", hasBody = true)
+    fun DeleteFriends(@Body DeleteFriendsInfo: DeleteFriends) : Call<ResResultSuccess>
+
 }
