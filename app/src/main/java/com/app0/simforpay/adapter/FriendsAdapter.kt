@@ -37,6 +37,7 @@ class FriendsAdapter(private val freindsList: List<Data>, context: Context, frag
     private val context = context
     private val fragmentManager = fragmentManager
     private val getFriendsList = getFriendsList
+    val a: String = ""
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : FriendsViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.friends_item, parent, false)
@@ -49,14 +50,16 @@ class FriendsAdapter(private val freindsList: List<Data>, context: Context, frag
         Glide.with(context).load(R.drawable.img_profile).circleCrop().into(holder.img) // image circle crop
         holder.name.text = currentItem.main
         holder.id.text = currentItem.sub
+
+        val getFriendInfo = getFriendsList[position]
+
         holder.btn.setOnClickListener {
             val dialog = CustomFriendsBottomSheetDialog.CustomBottomSheetDialogBuilder()
                 .setBtnClickListener(object :
                     CustomFriendsBottomSheetDialog.CustomBottomSheetDialogListener {
                     override fun onClickMenu3Btn() {
-//                        Toast.makeText(context,"친구삭제",Toast.LENGTH_SHORT).show()
                         val userId = Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
-                        val friendsId = Integer.parseInt(getFriendsList[position].friendsId.toString())
+                        val friendsId = Integer.parseInt(getFriendsList[position].friendsId)
                         val deleteFriendsInfo = DeleteFriends(userId, friendsId)
                         Retrofit.DeleteFriends(deleteFriendsInfo)
                             .enqueue(object : Callback<ResResultSuccess> {
@@ -76,7 +79,7 @@ class FriendsAdapter(private val freindsList: List<Data>, context: Context, frag
 
                             })
                     }
-                }).create()
+                }, getFriendInfo).create()
             dialog.show(fragmentManager, dialog.tag)
         }
     }
