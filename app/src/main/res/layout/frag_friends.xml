@@ -43,7 +43,7 @@
         android:background="@drawable/btngray_background" />
 
     <ImageButton
-        android:id="@+id/btnAddFriends"
+        android:id="@+id/btnReqFriends"
         android:layout_width="@dimen/size24"
         android:layout_height="@dimen/size24"
         app:layout_constraintTop_toTopOf="@id/title"
@@ -59,8 +59,8 @@
         android:id="@+id/notiCnt"
         android:layout_width="@dimen/size10"
         android:layout_height="@dimen/size10"
-        app:layout_constraintTop_toTopOf="@id/btnAddFriends"
-        app:layout_constraintRight_toRightOf="@id/btnAddFriends"
+        app:layout_constraintTop_toTopOf="@id/btnReqFriends"
+        app:layout_constraintRight_toRightOf="@id/btnReqFriends"
         android:text="2"
         android:textColor="@color/white"
         android:textSize="@dimen/font8"

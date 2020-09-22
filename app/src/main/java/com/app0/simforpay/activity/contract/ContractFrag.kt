@@ -249,6 +249,10 @@ class ContractFrag : Fragment() {
 
         var pointNumStr = ""
         // Set individual Price
+
+        val decimalFormat  = DecimalFormat("#,###");
+        var result:String? = null
+
         price.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 TextBorrowerPrice(cnt, borrowerPrices)

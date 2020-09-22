@@ -209,7 +209,8 @@
                     android:id="@+id/price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number" />
+                    android:inputType="number|textNoSuggestions"
+                    android:maxLength="9" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -380,16 +381,17 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
+            <me.grantland.widget.AutofitTextView
                 android:id="@+id/borrowerPrice1"
-                android:layout_width="@dimen/size80"
+                android:layout_width="@dimen/size96"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="@id/layBorrower1"
                 app:layout_constraintRight_toLeftOf="@id/btnDelBorrower"
                 app:layout_constraintBottom_toBottomOf="@id/layBorrower1"
                 android:text="원"
                 android:textAlignment="gravity"
-                android:gravity="right" /> <!-- 빌리는 사람 1 -->
+                android:gravity="right"
+                android:singleLine="true" /> <!-- 빌리는 사람 1 -->
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layBorrower2"
@@ -411,9 +413,9 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
+            <me.grantland.widget.AutofitTextView
                 android:id="@+id/borrowerPrice2"
-                android:layout_width="@dimen/size80"
+                android:layout_width="@dimen/size96"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="@id/layBorrower2"
                 app:layout_constraintRight_toLeftOf="@id/btnDelBorrower"
@@ -421,7 +423,8 @@
                 android:text="원"
                 android:textAlignment="gravity"
                 android:gravity="right"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:singleLine="true" />
 
             <Button
                 android:id="@+id/btnDelBorrower"
@@ -454,9 +457,9 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
+            <me.grantland.widget.AutofitTextView
                 android:id="@+id/borrowerPrice3"
-                android:layout_width="@dimen/size80"
+                android:layout_width="@dimen/size96"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="@id/layBorrower3"
                 app:layout_constraintRight_toLeftOf="@id/btnDelBorrower"
@@ -464,7 +467,8 @@
                 android:text="원"
                 android:textAlignment="gravity"
                 android:gravity="right"
-                android:visibility="gone" /> <!-- 빌리는 사람 3 -->
+                android:visibility="gone"
+                android:singleLine="true" /> <!-- 빌리는 사람 3 -->
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layBorrower4"
@@ -486,9 +490,9 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
+            <me.grantland.widget.AutofitTextView
                 android:id="@+id/borrowerPrice4"
-                android:layout_width="@dimen/size80"
+                android:layout_width="@dimen/size96"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="@id/layBorrower4"
                 app:layout_constraintRight_toLeftOf="@id/btnDelBorrower"
@@ -496,7 +500,8 @@
                 android:text="원"
                 android:textAlignment="gravity"
                 android:gravity="right"
-                android:visibility="gone" /> <!-- 빌리는 사람 4 -->
+                android:visibility="gone"
+                android:singleLine="true" /> <!-- 빌리는 사람 4 -->
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layBorrower5"
@@ -518,9 +523,9 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
+            <me.grantland.widget.AutofitTextView
                 android:id="@+id/borrowerPrice5"
-                android:layout_width="@dimen/size80"
+                android:layout_width="@dimen/size96"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="@id/layBorrower5"
                 app:layout_constraintRight_toLeftOf="@id/btnDelBorrower"
@@ -528,7 +533,8 @@
                 android:text="원"
                 android:textAlignment="gravity"
                 android:gravity="right"
-                android:visibility="gone" /> <!-- 빌리는 사람 5 -->
+                android:visibility="gone"
+                android:singleLine="true" /> <!-- 빌리는 사람 5 -->
 
             <TextView
                 android:id="@+id/txt7"
