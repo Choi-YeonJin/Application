@@ -26,7 +26,7 @@ class RetrofitHelper{
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl("http://yjini.site/")
+                .baseUrl("http://3.23.157.65/")
                 .client(okHttpClient)
                 .build()
 
