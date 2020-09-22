@@ -318,7 +318,13 @@ class ContractFrag : Fragment() {
             var IntPrice = price.text.toString().replace(",","")
             val price = Integer.parseInt(IntPrice)
             val lender_name = lender.text.toString().replace("@", "").trim()
-            val lender_id: Int? = Integer.parseInt(friendsInfo[lender_name]?.first)
+            var lender_id : Int
+            if(userInfo.name == lender_name){
+                lender_id = userInfo.id
+            }else{
+                lender_id = Integer.parseInt(friendsInfo[lender_name]?.first)
+            }
+
             val lender_bank = bank.text.toString()
             val lender_account: Int? = accountNum.text.toString().toIntOrNull()
             val borrowerList = arrayListOf<Borrower>()
@@ -340,7 +346,12 @@ class ContractFrag : Fragment() {
             for (i in 0 until cnt) {
 
                 val userName = borrowerIdList[i].text.toString().replace("@", "").trim()
-                val borrower_id: Int? = Integer.parseInt(friendsInfo[userName]?.first)
+                var borrower_id : Int
+                if(userInfo.name == friendsInfo[lender_name]?.first){
+                    borrower_id = userInfo.id
+                }else{
+                    borrower_id = Integer.parseInt(friendsInfo[userName]?.first)
+                }
                 val borrower_price =
                     priceIdList[i].text.toString().replace("원", "").replace(",", "").trim()
                         .toIntOrNull()
@@ -455,6 +466,7 @@ class ContractFrag : Fragment() {
         }
         if (getborrower.toString() != "null") {
             AllBorrower = getborrower!!.split("!")
+            Log.d("Testtt",AllBorrower.toString())
             for (i in 0 until AllBorrower.size - 1) {
                 OneBorrower = AllBorrower[i].split(",")
                 borrowerName += OneBorrower[3]
