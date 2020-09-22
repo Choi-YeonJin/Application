@@ -34,7 +34,7 @@ class SettingFrag : Fragment() {
         }
 
         opensourceLicense.setOnClickListener {
-
+            requireFragmentManager().beginTransaction().replace(R.id.layFull, OpensourceFrag()).addToBackStack(null).commit()
         }
 
         logout.setOnClickListener {
