@@ -66,13 +66,10 @@ class HomeFrag : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // display 비율에 맞춰 padding과 margin setting
-//        val display = activity?.windowManager?.defaultDisplay
-//        val size = Point()
-//        display?.getSize(size)
-
-        val dpValue = 80
+        val dpValue = 60
         val displaySize = resources.displayMetrics.density
         val margin = (dpValue * displaySize).toInt()
+
         vpContract.setPadding(margin / 2, 0, margin + margin / 2, 0)
         vpContract.pageMargin = margin / 2
 
