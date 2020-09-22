@@ -35,7 +35,7 @@
         android:layout_width="@dimen/size24"
         android:layout_height="@dimen/size24"
         app:layout_constraintTop_toTopOf="@id/title"
-        app:layout_constraintRight_toLeftOf="@+id/btnAddFriends"
+        app:layout_constraintRight_toLeftOf="@+id/btnReqFriends"
         app:layout_constraintBottom_toBottomOf="@id/title"
         android:padding="@dimen/size2"
         android:layout_marginRight="@dimen/size8"
