@@ -67,6 +67,7 @@ class ContractFrag : Fragment() {
     private var borrowerName: List<String> = emptyList()
     private var borrowerPrice: List<String> = emptyList()
     private var BorrowerCnt: Int = 0
+    private lateinit var userInfo:User
 
     private var getid: Int? = null
     private var gettitle: String? = null
@@ -145,6 +146,7 @@ class ContractFrag : Fragment() {
                 }
                 Retrofit.getUser(id).enqueue(object : Callback<User> {
                     override fun onResponse(call: Call<User>, response: Response<User>) {
+                        userInfo = response.body()!!
                         mentionAdapter.add(Mention(response.body()?.name.toString(), response.body()?.myId.toString()))
                     }
 
@@ -174,8 +176,16 @@ class ContractFrag : Fragment() {
 
             val name = lender.text.toString().replace("@", "").trim()
 
-            bank.setText(friendsInfo[name]!!.second.first)
-            accountNum.setText(friendsInfo[name]!!.second.second)
+
+
+            if(userInfo.name == name){
+                bank?.setText(userInfo.bank)
+                accountNum?.setText(userInfo.account)
+            }else{
+                bank?.setText(friendsInfo[name]!!.second.first)
+                accountNum?.setText(friendsInfo[name]!!.second.second)
+            }
+
         }
 
         // Bank dropdown
