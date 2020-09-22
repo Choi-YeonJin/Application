@@ -1,7 +1,6 @@
 package com.app0.simforpay.activity.friends
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,22 +9,16 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app0.simforpay.R
 import com.app0.simforpay.activity.home.SearchFrag
-import com.app0.simforpay.adapter.ContractAdapter
 import com.app0.simforpay.adapter.Data
 import com.app0.simforpay.adapter.FriendsAdapter
 import com.app0.simforpay.retrofit.RetrofitHelper
-import com.app0.simforpay.retrofit.domain.ContractContentSuccess
 import com.app0.simforpay.retrofit.domain.FriendsSuccess
-import com.app0.simforpay.retrofit.domain.User
 import com.app0.simforpay.util.sharedpreferences.Key
 import com.app0.simforpay.util.sharedpreferences.MyApplication
 import kotlinx.android.synthetic.main.frag_friends.*
-import kotlinx.android.synthetic.main.frag_search.*
-import kotlinx.android.synthetic.main.friends_bottomsheet.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
 
 class FriendsFrag : Fragment() {
 
@@ -90,7 +83,7 @@ class FriendsFrag : Fragment() {
 
         })
 
-        btnAddFriends.setOnClickListener {
+        btnReqFriends.setOnClickListener {
             requireFragmentManager().beginTransaction().replace(R.id.layFull, RequestFrag())
                 .addToBackStack(null).commit()
         }

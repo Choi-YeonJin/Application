@@ -31,6 +31,7 @@ import kotlinx.android.synthetic.main.frag_contract.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.*
 
@@ -217,6 +218,10 @@ class ContractFrag : Fragment() {
         }
 
         // Set individual Price
+
+        val decimalFormat  = DecimalFormat("#,###");
+        var result:String? = null
+
         price.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 TextBorrowerPrice(cnt, borrowerPrices)
@@ -584,8 +589,7 @@ class ContractFrag : Fragment() {
         if (price.text.toString() != "") {
             var borrowerPrice = 0
 
-            borrowerPrice = if (cbN1.isChecked) price.text.toString()
-                .toInt() / cnt else price.text.toString().toInt()
+            borrowerPrice = if (cbN1.isChecked) price.text.toString().toInt() / cnt else price.text.toString().toInt()
 
             for (textView in borrowerPrices) {
                 textView.text = NumberFormat.getInstance(Locale.KOREA).format(borrowerPrice) + "원"
