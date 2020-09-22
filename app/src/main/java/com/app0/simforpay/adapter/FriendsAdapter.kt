@@ -7,26 +7,37 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.findFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.app0.simforpay.R
-import com.app0.simforpay.retrofit.domain.ContractContentSuccess
-import com.app0.simforpay.retrofit.domain.FriendsSuccess
+import com.app0.simforpay.activity.friends.FriendsFrag
+import com.app0.simforpay.activity.home.SearchFrag
+import com.app0.simforpay.retrofit.RetrofitHelper
+import com.app0.simforpay.retrofit.domain.*
 import com.app0.simforpay.util.dialog.CustomFriendsBottomSheetDialog
+import com.app0.simforpay.util.sharedpreferences.Key
+import com.app0.simforpay.util.sharedpreferences.MyApplication
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.transition.Transition
 import kotlinx.android.synthetic.main.contract_item.view.*
+import kotlinx.android.synthetic.main.frag_mypage.*
 import kotlinx.android.synthetic.main.friends_bottomsheet.view.*
 import kotlinx.android.synthetic.main.friends_item.view.*
 import kotlinx.android.synthetic.main.friends_item.view.frId
 import kotlinx.android.synthetic.main.friends_item.view.frName
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class FriendsAdapter(private val freindsList: List<Data>, context: Context, fragmentManager: FragmentManager, getFriendsList: ArrayList<FriendsSuccess>) : RecyclerView.Adapter<FriendsAdapter.FriendsViewHolder>() {
 
+    private val Retrofit = RetrofitHelper.getRetrofit()
     private val context = context
     private val fragmentManager = fragmentManager
     private val getFriendsList = getFriendsList
+    val a: String = ""
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : FriendsViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.friends_item, parent, false)
@@ -39,14 +50,36 @@ class FriendsAdapter(private val freindsList: List<Data>, context: Context, frag
         Glide.with(context).load(R.drawable.img_profile).circleCrop().into(holder.img) // image circle crop
         holder.name.text = currentItem.main
         holder.id.text = currentItem.sub
+
+        val getFriendInfo = getFriendsList[position]
+
         holder.btn.setOnClickListener {
             val dialog = CustomFriendsBottomSheetDialog.CustomBottomSheetDialogBuilder()
                 .setBtnClickListener(object :
                     CustomFriendsBottomSheetDialog.CustomBottomSheetDialogListener {
                     override fun onClickMenu3Btn() {
+                        val userId = Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
+                        val friendsId = Integer.parseInt(getFriendsList[position].friendsId)
+                        val deleteFriendsInfo = DeleteFriends(userId, friendsId)
+                        Retrofit.DeleteFriends(deleteFriendsInfo)
+                            .enqueue(object : Callback<ResResultSuccess> {
+                                override fun onResponse(
+                                    call: Call<ResResultSuccess>,
+                                    response: Response<ResResultSuccess>
+                                ) {
+                                    if (response.body()?.result == "true") {
+                                        fragmentManager.beginTransaction()
+                                            .replace(R.id.layFull, FriendsFrag())
+                                            .addToBackStack(null).commit()
+                                    }
+                                }
 
+                                override fun onFailure(call: Call<ResResultSuccess>, t: Throwable) {
+                                }
+
+                            })
                     }
-                }).create()
+                }, getFriendInfo).create()
             dialog.show(fragmentManager, dialog.tag)
         }
     }
