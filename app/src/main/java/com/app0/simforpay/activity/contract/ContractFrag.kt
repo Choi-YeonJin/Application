@@ -2,6 +2,7 @@ package com.app0.simforpay.activity.contract
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
@@ -15,25 +16,25 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.app0.simforpay.R
 import com.app0.simforpay.activity.MainAct
-import com.app0.simforpay.adapter.Data
-import com.app0.simforpay.adapter.FriendsAdapter
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.*
 import com.app0.simforpay.util.TextInput
 import com.app0.simforpay.util.dialog.CustomDialog
 import com.app0.simforpay.util.sharedpreferences.Key
 import com.app0.simforpay.util.sharedpreferences.MyApplication
+import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.hendraanggrian.appcompat.widget.Mention
 import com.hendraanggrian.appcompat.widget.MentionArrayAdapter
+import com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
 import kotlinx.android.synthetic.main.frag_contract.*
-import kotlinx.android.synthetic.main.frag_friends.*
+import me.grantland.widget.AutofitTextView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -58,16 +59,9 @@ private const val ARG_PARAM13 = "state"
 class ContractFrag : Fragment() {
 
     private val Retrofit = RetrofitHelper.getRetrofit()
-    private val calendar = Calendar.getInstance()
-    //private val userInfo = mutableMapOf<String, Pair<String, Pair<String, String>>>()
-    private val friendsInfo = mutableMapOf<String, Pair<String, Pair<String, String>>>()
     private lateinit var callback: OnBackPressedCallback
-    private var AllBorrower: List<String> = emptyList()
-    private var OneBorrower: List<String> = emptyList()
-    private var borrowerName: List<String> = emptyList()
-    private var borrowerPrice: List<String> = emptyList()
-    private var BorrowerCnt: Int = 0
-    private lateinit var userInfo:User
+    private val calendar = Calendar.getInstance()
+    private val friendsInfo = mutableMapOf<String, Pair<String, Pair<String, String>>>()
 
     private var getid: Int? = null
     private var gettitle: String? = null
@@ -130,6 +124,7 @@ class ContractFrag : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val mentionAdapter: ArrayAdapter<Mention> = MentionArrayAdapter(this.requireContext())
+        lateinit var userInfo: User
 
         var id=Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
 
@@ -156,11 +151,9 @@ class ContractFrag : Fragment() {
             }
 
             override fun onFailure(call: Call<ArrayList<FriendsSuccess>>, t: Throwable) {
+
             }
-
         })
-
-
 
 //        Log.d("size", mentionAdapter.count.toString())
 
@@ -176,8 +169,6 @@ class ContractFrag : Fragment() {
 
             val name = lender.text.toString().replace("@", "").trim()
 
-
-
             if(userInfo.name == name){
                 bank?.setText(userInfo.bank)
                 accountNum?.setText(userInfo.account)
@@ -185,7 +176,6 @@ class ContractFrag : Fragment() {
                 bank?.setText(friendsInfo[name]!!.second.first)
                 accountNum?.setText(friendsInfo[name]!!.second.second)
             }
-
         }
 
         // Bank dropdown
@@ -207,20 +197,16 @@ class ContractFrag : Fragment() {
         TextInput.CheckFive(btnSave, contractName, tradeDay, price, lender, borrower1)
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onResume() {
         super.onResume()
 
-        //updateContract SetText
-        setContract()
-
         var cnt = 1 // borrower cnt
-        val borrowerPrices = listOf(
-            borrowerPrice1,
-            borrowerPrice2,
-            borrowerPrice3,
-            borrowerPrice4,
-            borrowerPrice5
-        )
+        val borrowerNames = listOf(borrower1, borrower2, borrower3, borrower4, borrower5)
+        val borrowerPrices = listOf(borrowerPrice1, borrowerPrice2, borrowerPrice3, borrowerPrice4, borrowerPrice5)
+
+        //updateContract SetText
+        setContract(borrowerNames, borrowerPrices)
 
         // Click Back Button
         btnBack.setOnClickListener {
@@ -247,12 +233,9 @@ class ContractFrag : Fragment() {
             swAlert.isEnabled = false
         }
 
-        var pointNumStr = ""
+        var pointNumStr: String = ""
+
         // Set individual Price
-
-        val decimalFormat  = DecimalFormat("#,###");
-        var result:String? = null
-
         price.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 TextBorrowerPrice(cnt, borrowerPrices)
@@ -263,8 +246,9 @@ class ContractFrag : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if(!TextUtils.isEmpty(s.toString()) && !s.toString().equals(pointNumStr)) {
-                    pointNumStr = makeCommaNumber(Integer.parseInt( s.toString().replace(",","") ))
+                if(!TextUtils.isEmpty(s.toString()) && s.toString() != pointNumStr) {
+                    pointNumStr = DecimalFormat("###,###").format(Integer.parseInt( s.toString().replace(",","") ))
+//                    Log.e("price", pointNumStr)
                     price.setText(pointNumStr)
                     price.setSelection(pointNumStr.length)  //커서를 오른쪽 끝으로 보냄
                 }
@@ -304,19 +288,16 @@ class ContractFrag : Fragment() {
                 val randomNum = Random().nextInt(randomPenalty.size)
 
                 penalty.setText(randomPenalty[randomNum])
-            } else {
-                penalty.setText("")
-            }
+            } else penalty.setText("")
         }
 
         btnSave.setOnClickListener {
-            val user_id =
-                Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
+            val user_id = Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
             val title = contractName.text.toString()
             val borrow_date = tradeDay.text.toString()
             val payback_date = complDay.text.toString()
-            var IntPrice = price.text.toString().replace(",","")
-            val price = Integer.parseInt(IntPrice)
+            var priceInt = price.text.toString().replace(",","")
+            val price = Integer.parseInt(priceInt)
             val lender_name = lender.text.toString().replace("@", "").trim()
             val lender_id: Int? = Integer.parseInt(friendsInfo[lender_name]?.first)
             val lender_bank = bank.text.toString()
@@ -325,35 +306,22 @@ class ContractFrag : Fragment() {
             val penalty = penalty.text.toString()
             val alarm = if (swAlert.isChecked) 1 else 0
 
-            val borrowerIdList = arrayOf(borrower1, borrower2, borrower3, borrower4, borrower5)
-            val priceIdList = arrayOf(
-                borrowerPrice1,
-                borrowerPrice2,
-                borrowerPrice3,
-                borrowerPrice4,
-                borrowerPrice5
-            )
             val payback_state = 0
 
-            var borrowerName = borrowerIdList[0].text.toString().replace("@", "").trim()
+            var borrowerName = borrowerNames[0].text.toString().replace("@", "").trim()
 
-            for (i in 0 until cnt) {
-
-                val userName = borrowerIdList[i].text.toString().replace("@", "").trim()
+            for (i in 0..cnt) {
+                val userName = borrowerNames[i].text.toString().replace("@", "").trim()
                 val borrower_id: Int? = Integer.parseInt(friendsInfo[userName]?.first)
-                val borrower_price =
-                    priceIdList[i].text.toString().replace("원", "").replace(",", "").trim()
-                        .toIntOrNull()
+                val borrower_price = borrowerPrices[i].text.toString().replace("원", "").replace(",", "").trim().toIntOrNull()
 
                 borrowerList.add(Borrower(borrower_id, userName, borrower_price, payback_state))
                 if (i >= 1) borrowerName = "$userName,$borrowerName"
-
             }
 
             var content = "${borrowerName}은(는) ${lender_name}에게 "
             if (payback_date != "") content = content + payback_date + "까지 "
-            content = content + priceIdList[0].text.toString().replace("원", "")
-                .trim() + "원을 갚을 것을 약속합니다."
+            content = content + price + "원을 갚을 것을 약속합니다."
             if (penalty != "") content = content + " 만약 이행하지 못할시에는" + penalty + "를 할 것 입니다."
 
             val contractInfo = Contract(
@@ -398,13 +366,7 @@ class ContractFrag : Fragment() {
                             response: Response<ResResultSuccess>
                         ) {
                             if (response.body()?.result == "true") {
-                                fragmentManager!!.beginTransaction().replace(
-                                    R.id.layFull,
-                                    ContractShareFrag.newInstance(
-                                        contractName.text.toString(),
-                                        content
-                                    )
-                                ).commit()
+                                fragmentManager!!.beginTransaction().replace(R.id.layFull, ContractShareFrag.newInstance(title, content)).commit()
 
                             } else
                                 Toast.makeText(context, "잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT)
@@ -419,152 +381,11 @@ class ContractFrag : Fragment() {
         }
     }
 
-    private fun makeCommaNumber(input: Int): String {
-        val formatter = DecimalFormat("###,###")
-        return formatter.format(input)
-    }
-
     override fun onDestroy() {
         super.onDestroy()
 
         val mainAct = activity as MainAct
         mainAct.HideBottomNavi(false)
-    }
-
-    private fun setContract() {
-        contractName.setText(gettitle)
-        tradeDay.setText(getborrowDate)
-        complDay.setText(getpaybackDate)
-        if (getprice.toString() != "0") {
-            var pointNumStr = ""
-            if(!TextUtils.isEmpty(getprice.toString()) && !getprice.toString().equals(pointNumStr)) {
-                pointNumStr = makeCommaNumber(Integer.parseInt( getprice.toString().replace(",","") ))
-                price.setText(pointNumStr)
-                price.setSelection(pointNumStr.length)  //커서를 오른쪽 끝으로 보냄
-            }
-        }
-        lender.setText(getlenderName)
-        bank.setText(getlenderBank)
-        if (getlenderAccount.toString() != "0" && getlenderAccount.toString() != "null") {
-            accountNum.setText(getlenderAccount.toString())
-        }
-        penalty.setText(getPenalty)
-        if (getalarm == 1) {
-            swAlert.isEnabled = true
-            swAlert.isChecked = true
-        }
-        if (getborrower.toString() != "null") {
-            AllBorrower = getborrower!!.split("!")
-            for (i in 0 until AllBorrower.size - 1) {
-                OneBorrower = AllBorrower[i].split(",")
-                borrowerName += OneBorrower[3]
-                borrowerPrice += OneBorrower[4]
-                BorrowerCnt++
-            }
-            if (BorrowerCnt != 1) {
-                VisibilBorrower(BorrowerCnt, 0)
-                LayBorrower(BorrowerCnt)
-            }
-            if (borrowerPrice[0] != getprice.toString()) {
-                cbN1.isChecked = true
-            }
-            //Borrower SetText
-            setBorrower(BorrowerCnt, borrowerName, borrowerPrice)
-        }
-    }
-
-    fun setBorrower(borrowerCnt: Int, borrowerName: List<String>, borrowerPrice: List<String>) {
-        var pointNumStr = ""
-        when (borrowerCnt) {
-            1 -> {
-                borrower1.setText(borrowerName[0])
-                if(!TextUtils.isEmpty(borrowerPrice[0]) && !borrowerPrice[0].equals(pointNumStr)) {
-                    pointNumStr = makeCommaNumber(Integer.parseInt( borrowerPrice[0].replace(",","") ))
-                    borrowerPrice1.setText(pointNumStr)
-                }
-            }
-            2 -> {
-                borrower1.setText(borrowerName[0])
-                if(!TextUtils.isEmpty(borrowerPrice[0]) && !borrowerPrice[0].equals(pointNumStr)) {
-                    pointNumStr = makeCommaNumber(Integer.parseInt( borrowerPrice[0].replace(",","") ))
-                    borrowerPrice1.setText(pointNumStr)
-                }
-                borrower2.setText(borrowerName[1])
-                if(!TextUtils.isEmpty(borrowerPrice[1]) && !borrowerPrice[1].equals(pointNumStr)) {
-                    pointNumStr = makeCommaNumber(Integer.parseInt( borrowerPrice[1].replace(",","") ))
-                    borrowerPrice2.setText(pointNumStr)
-                }
-            }
-
-            3 -> {
-                borrower1.setText(borrowerName[0])
-                if(!TextUtils.isEmpty(borrowerPrice[0]) && !borrowerPrice[0].equals(pointNumStr)) {
-                    pointNumStr = makeCommaNumber(Integer.parseInt( borrowerPrice[0].replace(",","") ))
-                    borrowerPrice1.setText(pointNumStr)
-                }
-                borrower2.setText(borrowerName[1])
-                if(!TextUtils.isEmpty(borrowerPrice[1]) && !borrowerPrice[1].equals(pointNumStr)) {
-                    pointNumStr = makeCommaNumber(Integer.parseInt( borrowerPrice[1].replace(",","") ))
-                    borrowerPrice2.setText(pointNumStr)
-                }
-                borrower3.setText(borrowerName[2])
-                if(!TextUtils.isEmpty(borrowerPrice[2]) && !borrowerPrice[2].equals(pointNumStr)) {
-                    pointNumStr = makeCommaNumber(Integer.parseInt( borrowerPrice[2].replace(",","") ))
-                    borrowerPrice3.setText(pointNumStr)
-                }
-            }
-
-            4 -> {
-                borrower1.setText(borrowerName[0])
-                if(!TextUtils.isEmpty(borrowerPrice[0]) && !borrowerPrice[0].equals(pointNumStr)) {
-                    pointNumStr = makeCommaNumber(Integer.parseInt( borrowerPrice[0].replace(",","") ))
-                    borrowerPrice1.setText(pointNumStr)
-                }
-                borrower2.setText(borrowerName[1])
-                if(!TextUtils.isEmpty(borrowerPrice[1]) && !borrowerPrice[1].equals(pointNumStr)) {
-                    pointNumStr = makeCommaNumber(Integer.parseInt( borrowerPrice[1].replace(",","") ))
-                    borrowerPrice2.setText(pointNumStr)
-                }
-                borrower3.setText(borrowerName[2])
-                if(!TextUtils.isEmpty(borrowerPrice[2]) && !borrowerPrice[2].equals(pointNumStr)) {
-                    pointNumStr = makeCommaNumber(Integer.parseInt( borrowerPrice[2].replace(",","") ))
-                    borrowerPrice3.setText(pointNumStr)
-                }
-                borrower4.setText(borrowerName[3])
-                if(!TextUtils.isEmpty(borrowerPrice[3]) && !borrowerPrice[3].equals(pointNumStr)) {
-                    pointNumStr = makeCommaNumber(Integer.parseInt( borrowerPrice[3].replace(",","") ))
-                    borrowerPrice4.setText(pointNumStr)
-                }
-            }
-
-            5 -> {
-                borrower1.setText(borrowerName[0])
-                if(!TextUtils.isEmpty(borrowerPrice[0]) && !borrowerPrice[0].equals(pointNumStr)) {
-                    pointNumStr = makeCommaNumber(Integer.parseInt( borrowerPrice[0].replace(",","") ))
-                    borrowerPrice1.setText(pointNumStr)
-                }
-                borrower2.setText(borrowerName[1])
-                if(!TextUtils.isEmpty(borrowerPrice[1]) && !borrowerPrice[1].equals(pointNumStr)) {
-                    pointNumStr = makeCommaNumber(Integer.parseInt( borrowerPrice[1].replace(",","") ))
-                    borrowerPrice2.setText(pointNumStr)
-                }
-                borrower3.setText(borrowerName[2])
-                if(!TextUtils.isEmpty(borrowerPrice[2]) && !borrowerPrice[2].equals(pointNumStr)) {
-                    pointNumStr = makeCommaNumber(Integer.parseInt( borrowerPrice[2].replace(",","") ))
-                    borrowerPrice3.setText(pointNumStr)
-                }
-                borrower4.setText(borrowerName[3])
-                if(!TextUtils.isEmpty(borrowerPrice[3]) && !borrowerPrice[3].equals(pointNumStr)) {
-                    pointNumStr = makeCommaNumber(Integer.parseInt( borrowerPrice[3].replace(",","") ))
-                    borrowerPrice4.setText(pointNumStr)
-                }
-                borrower5.setText(borrowerName[4])
-                if(!TextUtils.isEmpty(borrowerPrice[4]) && !borrowerPrice[4].equals(pointNumStr)) {
-                    pointNumStr = makeCommaNumber(Integer.parseInt( borrowerPrice[4].replace(",","") ))
-                    borrowerPrice5.setText(pointNumStr)
-                }
-            }
-        }
     }
 
     override fun onDetach() {
@@ -615,6 +436,23 @@ class ContractFrag : Fragment() {
             else
                 datePicker.minDate = calendar.time.time
         }.show()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    fun PriceComma(str: String, editText: TextInputEditText?, textView: AutofitTextView?) {
+        var pointNumStr = ""
+
+        if(!TextUtils.isEmpty(str) && str != pointNumStr) {
+            pointNumStr = DecimalFormat("###,###").format(Integer.parseInt(str.replace(",","") ))
+
+            if (editText != null) {
+                editText.setText(pointNumStr)
+                editText.setSelection(pointNumStr.length)  //커서를 오른쪽 끝으로 보냄
+            }
+            else if (textView != null){
+                textView.text = pointNumStr + "원"
+            }
+        }
     }
 
     fun VisibilBorrower(cnt: Int, btnState: Int) {
@@ -679,14 +517,84 @@ class ContractFrag : Fragment() {
 
     fun TextBorrowerPrice(cnt: Int, borrowerPrices: List<TextView>) {
         if (price.text.toString() != "") {
-            var borrowerPrice = 0
-            var IntPrice = price.text.toString().replace(",","")
-            borrowerPrice = if (cbN1.isChecked) IntPrice
-                .toInt() / cnt else IntPrice.toInt()
+            var priceStr = price.text.toString().replace(",","")
+            val priceInt = if (cbN1.isChecked) priceStr.toInt() / cnt else priceStr.toInt()
 
             for (textView in borrowerPrices) {
-                textView.text = NumberFormat.getInstance(Locale.KOREA).format(borrowerPrice) + "원"
+                textView.text = NumberFormat.getInstance(Locale.KOREA).format(priceInt).toString() + "원"
             }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun setContract(borrowerNames: List<SocialAutoCompleteTextView>, borrowerPrices: List<AutofitTextView>) {
+        var allBorrower: List<String>
+        var oneBorrower: List<String>
+        var names: List<String> = emptyList()
+        var prices: List<String> = emptyList()
+        var cnt = 0
+
+        contractName.setText(gettitle)
+        tradeDay.setText(getborrowDate)
+        complDay.setText(getpaybackDate)
+
+        if (getprice.toString() != "0") {
+            PriceComma(getprice.toString(), price, null)
+        }
+
+        lender.setText(getlenderName)
+        bank.setText(getlenderBank)
+
+        if (getlenderAccount.toString() != "0" && getlenderAccount.toString() != "null") {
+            accountNum.setText(getlenderAccount.toString())
+        }
+
+        if (getborrower.toString() != "null") {
+            allBorrower = getborrower!!.split("!")
+
+            for (i in 0 until allBorrower.size-1) {
+                // 마지막 공백은 제외, index=0 시작
+                // ..(마지막 수 포함), until (마지막 수 미포함)
+               oneBorrower = allBorrower[i].split(",")
+                names += oneBorrower[3]
+                prices += oneBorrower[4]
+                cnt++
+                Log.e("one", oneBorrower.toString())
+                Log.e("one", oneBorrower[3].toString())
+            }
+
+            if (cnt != 1) { // 최소 한 명의 빌리는 사람이 존재
+                VisibilBorrower(cnt, 0)
+                LayBorrower(cnt)
+            }
+            if (prices[0] != getprice.toString()) {
+                cbN1.isChecked = true
+            }
+
+            setBorrower(cnt, names, prices, borrowerNames, borrowerPrices)
+        }
+
+        penalty.setText(getPenalty)
+
+        if (getalarm == 1) {
+            swAlert.isEnabled = true
+            swAlert.isChecked = true
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    fun setBorrower(
+        cnt: Int,
+        names: List<String>,
+        prices: List<String>,
+        borrowerNames: List<SocialAutoCompleteTextView>,
+        borrowerPrices: List<AutofitTextView>
+    ) {
+        var pointNumStr = ""
+
+        for(i in 0 until cnt){
+            borrowerNames[i].setText(names[i])
+            PriceComma(prices[i], null, borrowerPrices[i])
         }
     }
 
@@ -695,7 +603,7 @@ class ContractFrag : Fragment() {
         fun newInstance(
             id: Int,
             title: String,
-            borroweDate: String,
+            borrowerDate: String,
             paybackDate: String,
             price: Int,
             lenderName: String,
@@ -711,7 +619,7 @@ class ContractFrag : Fragment() {
                 arguments = Bundle().apply {
                     putInt(ARG_PARAM1, id)
                     putString(ARG_PARAM2, title)
-                    putString(ARG_PARAM3, borroweDate)
+                    putString(ARG_PARAM3, borrowerDate)
                     putString(ARG_PARAM4, paybackDate)
                     putInt(ARG_PARAM5, price)
                     putString(ARG_PARAM6, lenderName)
@@ -722,7 +630,6 @@ class ContractFrag : Fragment() {
                     putString(ARG_PARAM11, content)
                     putInt(ARG_PARAM12, alarm)
                     putInt(ARG_PARAM13, state)
-
                 }
             }
     }
