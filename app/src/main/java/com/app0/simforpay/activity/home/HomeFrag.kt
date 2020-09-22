@@ -78,25 +78,17 @@ class HomeFrag : Fragment() {
 
             }
 
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
 
             }
 
             override fun onPageSelected(position: Int) {
                 // 첫페이지와 끝페이지 padding, margin 값 조절
-                Log.d("page", position.toString())
+                Log.e("page", position.toString())
+                Log.e("vpContract", vpContract.size.toString())
                 when (position) {
                     0 -> vpContract.setPadding(margin / 2, 0, margin + margin / 2, 0)
-                    vpContract.size - 1 -> vpContract.setPadding(
-                        margin + margin / 2,
-                        0,
-                        margin / 2,
-                        0
-                    )
+                    cnt -> vpContract.setPadding(margin + margin / 2, 0, margin / 2, 0)
                     else -> vpContract.setPadding(margin, 0, margin, 0)
                 }
 
