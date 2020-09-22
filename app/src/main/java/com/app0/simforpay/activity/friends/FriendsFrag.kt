@@ -101,15 +101,4 @@ class FriendsFrag : Fragment() {
         }
     }
 
-    private fun generateDummyList(size: Int): List<Data> {
-        val list = ArrayList<Data>()
-
-        for (i in 0 until size) {
-            val item = Data("이름", "@아이디")
-            list += item
-        }
-
-        return list
-    }
-
 }
