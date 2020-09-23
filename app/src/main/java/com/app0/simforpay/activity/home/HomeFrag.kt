@@ -2,13 +2,11 @@ package com.app0.simforpay.activity.home
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.app0.simforpay.R
@@ -50,6 +48,7 @@ class HomeFrag : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // mypage에 넘길 data
         var id = Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
 
         Retrofit.getUser(id).enqueue(object : Callback<User> {
@@ -100,8 +99,7 @@ class HomeFrag : Fragment() {
 
             override fun onPageSelected(position: Int) {
                 // 첫페이지와 끝페이지 padding, margin 값 조절
-                Log.e("page", position.toString())
-                Log.e("vpContract", vpContract.size.toString())
+//                Log.e("page", position.toString())
                 when (position) {
                     0 -> vpContract.setPadding(margin / 2, 0, margin + margin / 2, 0)
                     cnt -> vpContract.setPadding(margin + margin / 2, 0, margin / 2, 0)
@@ -127,15 +125,22 @@ class HomeFrag : Fragment() {
                     cnt++
                 }
 
-                val list = ArrayList<Data>()
-
-                for (i in 0 until cnt) {
-                    val item = Data(Title[i], Content[i])
-                    list += item
+                if(cnt == 0){
+                    imgHome.visibility = View.VISIBLE
                 }
-                vpContract.adapter = ContractAdapter(list, requireContext(), parentFragmentManager, getContractContent)
-                val position = MyApplication.prefs.getString("contractPosition", "0")
-                vpContract.setCurrentItem(position.toInt()!!)
+                else{
+                    imgHome.visibility = View.GONE
+
+                    val list = ArrayList<Data>()
+
+                    for (i in 0 until cnt) {
+                        val item = Data(Title[i], Content[i])
+                        list += item
+                    }
+                    vpContract.adapter = ContractAdapter(list, requireContext(), parentFragmentManager, getContractContent)
+                    val position = MyApplication.prefs.getString("contractPosition", "0")
+                    vpContract.setCurrentItem(position.toInt()!!)
+                }
             }
 
             override fun onFailure(call: Call<ArrayList<ContractContentSuccess>>, t: Throwable) {}
