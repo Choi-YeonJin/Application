@@ -1,4 +1,5 @@
 package com.app0.simforpay.adapter
+
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -10,14 +11,12 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app0.simforpay.R
-import com.app0.simforpay.activity.contract.ContractShareFrag
 import com.app0.simforpay.activity.friends.FriendsFrag
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.*
 import com.app0.simforpay.util.sharedpreferences.Key
 import com.app0.simforpay.util.sharedpreferences.MyApplication
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.frag_contract.*
 import kotlinx.android.synthetic.main.friends_item.view.frId
 import kotlinx.android.synthetic.main.friends_item.view.frName
 import kotlinx.android.synthetic.main.friends_item.view.imgFr

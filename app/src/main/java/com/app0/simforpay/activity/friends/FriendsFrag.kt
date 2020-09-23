@@ -50,7 +50,14 @@ class FriendsFrag : Fragment() {
         super.onResume()
 
         Log.d("RequestFriendsCount",MyApplication.prefs.getString("RequestFriendsCount", "0"))
-        notiCnt.setText(MyApplication.prefs.getString("RequestFriendsCount", "0"))
+       val noti = MyApplication.prefs.getString("RequestFriendsCount", "0")
+        if(noti.toInt() == 0){
+            notiCnt.visibility = View.INVISIBLE
+        }
+        else{
+            notiCnt.visibility = View.VISIBLE
+            notiCnt.text = noti
+        }
 
         var id=Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
 
@@ -82,14 +89,12 @@ class FriendsFrag : Fragment() {
 
         })
 
-        btnReqFriends.setOnClickListener {
-            requireFragmentManager().beginTransaction().replace(R.id.layFull, RequestFrag())
-                .addToBackStack(null).commit()
+        btnSearch.setOnClickListener {
+            requireFragmentManager().beginTransaction().replace(R.id.layFull, SearchFrag.newInstance("FriendsFrag")).addToBackStack(null).commit()
         }
 
-        btnSearch.setOnClickListener {
-            requireFragmentManager().beginTransaction().replace(R.id.layFull, SearchFrag.newInstance("FriendsFrag"))
-                .addToBackStack(null).commit()
+        btnReqFriends.setOnClickListener {
+            requireFragmentManager().beginTransaction().replace(R.id.layFull, RequestFrag()).addToBackStack(null).commit()
         }
     }
 

@@ -12,15 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.app0.simforpay.R
 import com.app0.simforpay.activity.MainAct
 import com.app0.simforpay.adapter.Data
-import com.app0.simforpay.adapter.FriendsAdapter
 import com.app0.simforpay.adapter.FriendsReqAdapter
 import com.app0.simforpay.retrofit.RetrofitHelper
-import com.app0.simforpay.retrofit.domain.FriendsSuccess
 import com.app0.simforpay.retrofit.domain.GetUserbyName
 import com.app0.simforpay.retrofit.domain.User
-import com.hendraanggrian.appcompat.widget.Mention
-import kotlinx.android.synthetic.main.frag_friends.*
-import kotlinx.android.synthetic.main.frag_friends_req.*
 import kotlinx.android.synthetic.main.frag_friends_req.rvFriends
 import kotlinx.android.synthetic.main.frag_request.btnBack
 import retrofit2.Call
@@ -33,11 +28,11 @@ class FriendsReqFrag : Fragment() {
 
     private val Retrofit = RetrofitHelper.getRetrofit()
     private var getFriendsList = listOf<User>()
-    private val Name = mutableListOf<String>()
     private val ID = mutableListOf<String>()
+    private var name: String? = null
+    private val names = mutableListOf<String>()
 
     private lateinit var callback: OnBackPressedCallback
-    private var name: String? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -81,7 +76,7 @@ class FriendsReqFrag : Fragment() {
                 getFriendsList = response.body()!!
 
                 response.body()?.forEach {
-                    Name.add(it.name)
+                    names.add(it.name)
                     ID.add(it.myId)
                     cnt++
                 }
@@ -89,7 +84,7 @@ class FriendsReqFrag : Fragment() {
                 val list = ArrayList<Data>()
 
                 for (i in 0 until cnt)  {
-                    val item = Data(Name[i], ID[i])
+                    val item = Data(names[i], ID[i])
                     list += item
                 }
                 rvFriends.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL ,false)
@@ -117,17 +112,6 @@ class FriendsReqFrag : Fragment() {
 
         val mainAct = activity as MainAct
         mainAct.HideBottomNavi(false)
-    }
-
-    private fun generateDummyList(size: Int): List<Data> {
-        val list = ArrayList<Data>()
-
-        for (i in 0 until size) {
-            val item = Data("이름", "@아이디")
-            list += item
-        }
-
-        return list
     }
 
     companion object {

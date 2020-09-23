@@ -1,5 +1,6 @@
 package com.app0.simforpay.activity.home
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,27 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.replace
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.app0.simforpay.R
 import com.app0.simforpay.activity.MainAct
-import com.app0.simforpay.activity.contract.ContractShareFrag
 import com.app0.simforpay.activity.friends.FriendsReqFrag
-import com.app0.simforpay.activity.friends.RequestFrag
-import com.app0.simforpay.adapter.Data
-import com.app0.simforpay.adapter.FriendsAdapter
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.ContractContentSuccess
-import com.app0.simforpay.retrofit.domain.FriendsSuccess
 import com.app0.simforpay.retrofit.domain.User
 import com.app0.simforpay.util.sharedpreferences.Key
 import com.app0.simforpay.util.sharedpreferences.MyApplication
-import com.hendraanggrian.appcompat.widget.Mention
-import kotlinx.android.synthetic.main.frag_contract.*
-import kotlinx.android.synthetic.main.frag_friends.*
-import kotlinx.android.synthetic.main.frag_home.*
 import kotlinx.android.synthetic.main.frag_search.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -43,6 +34,20 @@ class SearchFrag : Fragment() {
     private var getUserList = listOf<User>()
 
     private var pageName: String? = null
+
+    private lateinit var callback: OnBackPressedCallback
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        // Press Back Button
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                fragmentManager?.popBackStackImmediate()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,10 +98,7 @@ class SearchFrag : Fragment() {
                 val element = adapter.getItemId(position) // The item that was clicked
                 MyApplication.prefs.setString("contractPosition", element.toString())
 
-                val mainAct = activity as MainAct
-                mainAct.HideBottomNavi(false)
-                requireFragmentManager().beginTransaction().replace(R.id.layFull, HomeFrag())
-                    .addToBackStack(null).commit()
+                fragmentManager?.popBackStackImmediate()
             }
             MyApplication.prefs.setString("contractPosition", "0")
 
@@ -121,7 +123,7 @@ class SearchFrag : Fragment() {
                 val element = adapter.getItemId(position) // The item that was clicked
                 requireFragmentManager().beginTransaction().replace(R.id.layFull, FriendsReqFrag.newInstance(List[element.toInt()])).commit()
 
-                Toast.makeText(context,List[element.toInt()],Toast.LENGTH_SHORT).show()
+//                Toast.makeText(context,List[element.toInt()],Toast.LENGTH_SHORT).show()
             }
         }
 

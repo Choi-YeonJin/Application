@@ -2,7 +2,6 @@ package com.app0.simforpay.activity.friends
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,12 +13,9 @@ import com.app0.simforpay.activity.MainAct
 import com.app0.simforpay.adapter.Data
 import com.app0.simforpay.adapter.RequestAdapter
 import com.app0.simforpay.retrofit.RetrofitHelper
-import com.app0.simforpay.retrofit.domain.FriendsSuccess
 import com.app0.simforpay.retrofit.domain.GetReqFriendsSuccess
-import com.app0.simforpay.retrofit.domain.User
 import com.app0.simforpay.util.sharedpreferences.Key
 import com.app0.simforpay.util.sharedpreferences.MyApplication
-import com.hendraanggrian.appcompat.widget.Mention
 import kotlinx.android.synthetic.main.frag_request.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,11 +23,12 @@ import retrofit2.Response
 
 class RequestFrag : Fragment() {
 
-    private lateinit var callback: OnBackPressedCallback
     private val Retrofit = RetrofitHelper.getRetrofit()
     private var getReqFriendsList = arrayListOf<GetReqFriendsSuccess>()
     private val Name = mutableListOf<String>()
     private val ID = mutableListOf<String>()
+
+    private lateinit var callback: OnBackPressedCallback
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -60,15 +57,14 @@ class RequestFrag : Fragment() {
         return inflater.inflate(R.layout.frag_request, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun onResume() {
+        super.onResume()
 
         var id=Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
         var cnt = 0
 
         Retrofit.getReqFreinds(id).enqueue(object : Callback<ArrayList<GetReqFriendsSuccess>> {
-            override fun onResponse( call: Call<ArrayList<GetReqFriendsSuccess>>, response: Response<ArrayList<GetReqFriendsSuccess>> )
+            override fun onResponse(call: Call<ArrayList<GetReqFriendsSuccess>>, response: Response<ArrayList<GetReqFriendsSuccess>>)
             {
                 getReqFriendsList = response.body()!!
 
@@ -91,16 +87,11 @@ class RequestFrag : Fragment() {
                 rvRequest.adapter = RequestAdapter(list, requireContext(), parentFragmentManager,getReqFriendsList)
                 rvRequest.setHasFixedSize(true)
 
+                requestCnt.text = cnt.toString() + "명"
             }
             override fun onFailure(call: Call<ArrayList<GetReqFriendsSuccess>>, t: Throwable) {
             }
-        })
-
-
-    }
-
-    override fun onResume() {
-        super.onResume()
+        }) // 완료 되면 바텀 네비
 
         btnBack.setOnClickListener {
             fragmentManager?.popBackStackImmediate()

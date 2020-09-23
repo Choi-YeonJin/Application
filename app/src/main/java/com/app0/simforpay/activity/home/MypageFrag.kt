@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.app0.simforpay.R
@@ -262,8 +261,7 @@ class MypageFrag : Fragment() {
                     response: Response<ResResultSuccess>
                 ) {
                     if (response.body()?.result == "true") {
-                        Toast.makeText(context, "계좌정보가 정상적으로 업데이트 되었습니다.", Toast.LENGTH_SHORT)
-                            .show()
+//                        Toast.makeText(context, "계좌정보가 정상적으로 업데이트 되었습니다.", Toast.LENGTH_SHORT).show()
                             myBank.text = bank
                             myAccountNum.setText(account.toString())
                     }
@@ -303,7 +301,7 @@ class MypageFrag : Fragment() {
                 response: Response<ResResultSuccess>
             ) {
                 if (response.body()?.result == "true") {
-                    Toast.makeText(context, "비밀번호가 정상적으로 업데이트 되었습니다.", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(context, "비밀번호가 정상적으로 업데이트 되었습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
 
