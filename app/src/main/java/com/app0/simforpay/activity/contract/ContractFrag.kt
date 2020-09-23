@@ -354,7 +354,9 @@ class ContractFrag : Fragment() {
                 alarm
             )
 
-            if (getid.toString() == "null") {
+            if (getid.toString() == "null") { // 작성
+                MyApplication.prefs.setBoolean(Key.ContractConnect.toString(), true)
+
                 Retrofit.ContractCall(contractInfo)
                     .enqueue(object : Callback<ContractSuccess> {
                         override fun onResponse(
@@ -373,6 +375,8 @@ class ContractFrag : Fragment() {
                         }
                     })
             } else {
+                MyApplication.prefs.setBoolean(Key.ContractConnect.toString(), false)
+
                 Retrofit.UpdateContract(getid, contractInfo)
                     .enqueue(object : Callback<ResResultSuccess> {
                         override fun onResponse(

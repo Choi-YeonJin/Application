@@ -15,6 +15,9 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.app0.simforpay.R
+import com.app0.simforpay.activity.home.HomeFrag
+import com.app0.simforpay.util.sharedpreferences.Key
+import com.app0.simforpay.util.sharedpreferences.MyApplication
 import kotlinx.android.synthetic.main.frag_contract_share.*
 import java.io.File
 import java.io.FileOutputStream
@@ -27,6 +30,7 @@ class ContractShareFrag : Fragment() {
     private lateinit var callback: OnBackPressedCallback
     private var name: String? = null
     private var content: String? = null
+    private val connect = MyApplication.prefs.getBoolean(Key.ContractConnect.toString(), true)
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -34,7 +38,10 @@ class ContractShareFrag : Fragment() {
         // Press Back Button
         callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_fragContract_to_fragHome)
+                if(connect)
+                    findNavController().navigate(R.id.action_fragContract_to_fragHome)
+                else
+                    fragmentManager!!.beginTransaction().replace(R.id.layFull, HomeFrag()).commit()
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
@@ -69,7 +76,10 @@ class ContractShareFrag : Fragment() {
         super.onResume()
 
         shBtnCompl.setOnClickListener {
-            findNavController().navigate(R.id.action_fragContract_to_fragHome)
+            if(connect)
+                findNavController().navigate(R.id.action_fragContract_to_fragHome)
+            else
+                requireFragmentManager().beginTransaction().replace(R.id.layFull, HomeFrag()).commit()
         }
 
         // save image

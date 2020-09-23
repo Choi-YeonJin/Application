@@ -10,6 +10,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.app0.simforpay.R
+import com.app0.simforpay.activity.MainAct
 import com.app0.simforpay.adapter.ContractAdapter
 import com.app0.simforpay.adapter.Data
 import com.app0.simforpay.retrofit.RetrofitHelper
@@ -54,6 +55,9 @@ class HomeFrag : Fragment() {
         arguments?.let {
             position = it.getInt(ARG_PARAM1)
         }
+
+        val mainAct = activity as MainAct
+        mainAct.HideBottomNavi(false)
 
         // mypage에 넘길 data
         var id = Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
