@@ -9,6 +9,18 @@
     android:background="@color/white"
     android:clickable="true">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:lottie_rawRes="@raw/lf30_editor_nxkhy9ug"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:lottie_autoPlay="true"
+        android:visibility="visible"/>
+
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
         android:layout_width="0dp"
