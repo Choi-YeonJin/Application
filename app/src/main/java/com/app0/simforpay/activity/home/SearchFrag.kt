@@ -111,6 +111,8 @@ class SearchFrag : Fragment() {
                     call: Call<ArrayList<ContractContentSuccess>>,
                     response: Response<ArrayList<ContractContentSuccess>>
                 ) {
+                    loading_image.visibility = View.GONE
+
                     List = ArrayList()
                     response.body()?.forEach {
                         List.add(it.title)
@@ -136,6 +138,7 @@ class SearchFrag : Fragment() {
             Retrofit.getUsers().enqueue(object : Callback<List<User>> {
                 override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
                     getUserList = response.body()!!
+                    loading_image.visibility = View.GONE
                     List = ArrayList()
 
                     response.body()?.forEach { //전체 유저 갯수만큼 foreach(5)
