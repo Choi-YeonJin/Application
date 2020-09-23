@@ -11,19 +11,15 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.app0.simforpay.R
 import com.app0.simforpay.activity.MainAct
 import com.app0.simforpay.activity.friends.FriendsReqFrag
-import com.app0.simforpay.adapter.Data
-import com.app0.simforpay.adapter.FriendsAdapter
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.ContractContentSuccess
 import com.app0.simforpay.retrofit.domain.FriendsSuccess
 import com.app0.simforpay.retrofit.domain.User
 import com.app0.simforpay.util.sharedpreferences.Key
 import com.app0.simforpay.util.sharedpreferences.MyApplication
-import kotlinx.android.synthetic.main.frag_friends.*
 import kotlinx.android.synthetic.main.frag_search.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -77,7 +73,6 @@ class SearchFrag : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val Name = mutableListOf<String>()
-        val Friends = mutableListOf<String>()
         var cnt = 0
 
         var id=Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
@@ -113,12 +108,9 @@ class SearchFrag : Fragment() {
 
             listView.setOnItemClickListener { parent, view, position, id ->
                 val element = adapter.getItemId(position) // The item that was clicked
-                MyApplication.prefs.setString("contractPosition", element.toString())
 
-                fragmentManager?.popBackStackImmediate()
+                requireFragmentManager().beginTransaction().replace(R.id.layFull, HomeFrag.newInstance(element.toInt())).commit()
             }
-            MyApplication.prefs.setString("contractPosition", "0")
-
         }
         else if(pageName == "FriendsFrag"){
             Retrofit.getUsers().enqueue(object : Callback<List<User>> {
@@ -152,9 +144,7 @@ class SearchFrag : Fragment() {
                         }
                         cnt=0
 
-
 //                        else List.add(it.name)
-
                     }
                     Log.d("List",List.toString())
                     adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, List)
@@ -174,7 +164,7 @@ class SearchFrag : Fragment() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                Log.i("Test", "Llego al querysubmit : " + query)
+                Log.i("Test", "Llego al querysubmit : $query")
                 if (List.contains(query)) {
                     adapter.filter.filter(query)
                 } else {
@@ -185,7 +175,7 @@ class SearchFrag : Fragment() {
 
             override fun onQueryTextChange(newText: String): Boolean {
                 adapter.filter.filter(newText)
-                Log.i("Test", "Llego al querytextchange : " + newText)
+                Log.i("Test", "Llego al querytextchange : $newText")
                 return true
             }
         })
