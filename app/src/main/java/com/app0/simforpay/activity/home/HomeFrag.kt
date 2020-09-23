@@ -22,8 +22,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+private const val ARG_PARAM1 = "position"
+
 class HomeFrag : Fragment() {
 
+    private var position: Int = 0
     private val Retrofit = RetrofitHelper.getRetrofit()
     private val Title = mutableListOf<String>()
     private val Content = mutableListOf<String>()
@@ -47,6 +50,10 @@ class HomeFrag : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        arguments?.let {
+            position = it.getInt(ARG_PARAM1)
+        }
 
         // mypage에 넘길 data
         var id = Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
@@ -138,8 +145,7 @@ class HomeFrag : Fragment() {
                         list += item
                     }
                     vpContract.adapter = ContractAdapter(list, requireContext(), parentFragmentManager, getContractContent)
-                    val position = MyApplication.prefs.getString("contractPosition", "0")
-                    vpContract.setCurrentItem(position.toInt()!!)
+                    vpContract.currentItem = position
                 }
             }
 
@@ -148,13 +154,12 @@ class HomeFrag : Fragment() {
         })
 
         btnSearch.setOnClickListener {
-            requireFragmentManager().beginTransaction().replace(R.id.layFull, SearchFrag.newInstance("HomeFrag"))
-                .addToBackStack(null).commit()
+            requireFragmentManager().beginTransaction().replace(R.id.layFull, SearchFrag.newInstance("HomeFrag")).addToBackStack(null).commit()
         }
 
-        btnNotification.setOnClickListener {
-            requireFragmentManager().beginTransaction().replace(R.id.layFull, NotificationFrag()).addToBackStack(null).commit()
-        }
+//        btnNotification.setOnClickListener {
+//            requireFragmentManager().beginTransaction().replace(R.id.layFull, NotificationFrag()).addToBackStack(null).commit()
+//        }
 
         btnMypage.setOnClickListener {
 //            for(i in 0..5){
@@ -175,5 +180,15 @@ class HomeFrag : Fragment() {
             }
             else Toast.makeText(requireContext(), "잠시후 재시도 해주세요.", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance(position: Int) =
+            HomeFrag().apply {
+                arguments = Bundle().apply {
+                    putInt(ARG_PARAM1, position)
+                }
+            }
     }
 }

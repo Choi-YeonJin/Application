@@ -74,7 +74,7 @@ class RequestFrag : Fragment() {
                     cnt++
                 }
 
-                MyApplication.prefs.setString("RequestFriendsCount",cnt.toString())
+                MyApplication.prefs.setInt(Key.FriendsReqCnt.toString(), cnt)
 
                 val list = ArrayList<Data>()
 
@@ -91,7 +91,7 @@ class RequestFrag : Fragment() {
             }
             override fun onFailure(call: Call<ArrayList<GetReqFriendsSuccess>>, t: Throwable) {
             }
-        }) // 완료 되면 바텀 네비
+        })
 
         btnBack.setOnClickListener {
             fragmentManager?.popBackStackImmediate()

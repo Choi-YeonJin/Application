@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.app0.simforpay.R
 import com.app0.simforpay.activity.MainAct
 import com.app0.simforpay.activity.friends.FriendsReqFrag
@@ -127,12 +126,9 @@ class SearchFrag : Fragment() {
             })
             listView.setOnItemClickListener { parent, view, position, id ->
                 val element = adapter.getItemId(position) // The item that was clicked
-                MyApplication.prefs.setString("contractPosition", element.toString())
 
-                fragmentManager?.popBackStackImmediate()
+                requireFragmentManager().beginTransaction().replace(R.id.layFull, HomeFrag.newInstance(element.toInt())).commit()
             }
-            MyApplication.prefs.setString("contractPosition", "0")
-
         }
         else if(pageName == "FriendsFrag"){
             Retrofit.getUsers().enqueue(object : Callback<List<User>> {
@@ -169,7 +165,6 @@ class SearchFrag : Fragment() {
                             else List.add(it.name)
                         }
 //                        else List.add(it.name)
-
                     }
                     Log.d("List",List.toString())
                     adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, List)
@@ -189,7 +184,7 @@ class SearchFrag : Fragment() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                Log.i("Test", "Llego al querysubmit : " + query)
+                Log.i("Test", "Llego al querysubmit : $query")
                 if (List.contains(query)) {
                     adapter.filter.filter(query)
                 } else {
@@ -200,7 +195,7 @@ class SearchFrag : Fragment() {
 
             override fun onQueryTextChange(newText: String): Boolean {
                 adapter.filter.filter(newText)
-                Log.i("Test", "Llego al querytextchange : " + newText)
+                Log.i("Test", "Llego al querytextchange : $newText")
                 return true
             }
         })

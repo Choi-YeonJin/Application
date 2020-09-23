@@ -32,34 +32,34 @@
             android:layout_width="@dimen/size24"
             android:layout_height="@dimen/size24"
             app:layout_constraintTop_toTopOf="@id/title"
-            app:layout_constraintRight_toLeftOf="@+id/btnNotification"
+            app:layout_constraintRight_toLeftOf="@+id/btnMypage"
             android:padding="@dimen/size2"
             android:layout_marginRight="@dimen/size8"
             android:src="@drawable/ic_search"
             android:background="@drawable/btngray_background" />
 
-        <ImageButton
-            android:id="@+id/btnNotification"
-            android:layout_width="@dimen/size24"
-            android:layout_height="@dimen/size24"
-            app:layout_constraintTop_toTopOf="@id/title"
-            app:layout_constraintRight_toLeftOf="@+id/btnMypage"
-            android:padding="@dimen/size2"
-            android:layout_marginRight="@dimen/size8"
-            android:src="@drawable/ic_notification"
-            android:background="@drawable/btnyellow_background" />
+<!--        <ImageButton-->
+<!--            android:id="@+id/btnNotification"-->
+<!--            android:layout_width="@dimen/size24"-->
+<!--            android:layout_height="@dimen/size24"-->
+<!--            app:layout_constraintTop_toTopOf="@id/title"-->
+<!--            app:layout_constraintRight_toLeftOf="@+id/btnMypage"-->
+<!--            android:padding="@dimen/size2"-->
+<!--            android:layout_marginRight="@dimen/size8"-->
+<!--            android:src="@drawable/ic_notification"-->
+<!--            android:background="@drawable/btnyellow_background" />-->
 
-        <TextView
-            android:id="@+id/notiCnt"
-            android:layout_width="@dimen/size10"
-            android:layout_height="@dimen/size10"
-            app:layout_constraintTop_toTopOf="@id/btnNotification"
-            app:layout_constraintRight_toRightOf="@id/btnNotification"
-            android:text="2"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font8"
-            android:gravity="center"
-            android:background="@drawable/notification_background" />
+<!--        <TextView-->
+<!--            android:id="@+id/notiCnt"-->
+<!--            android:layout_width="@dimen/size10"-->
+<!--            android:layout_height="@dimen/size10"-->
+<!--            app:layout_constraintTop_toTopOf="@id/btnNotification"-->
+<!--            app:layout_constraintRight_toRightOf="@id/btnNotification"-->
+<!--            android:text="2"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="@dimen/font8"-->
+<!--            android:gravity="center"-->
+<!--            android:background="@drawable/notification_background" />-->
 
         <ImageButton
             android:id="@+id/btnMypage"
