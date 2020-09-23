@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.PagerAdapter
 import com.app0.simforpay.R
@@ -13,6 +14,7 @@ import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.ContractContentSuccess
 import com.app0.simforpay.retrofit.domain.ResResultSuccess
 import com.app0.simforpay.util.dialog.CustomContractBottomSheetDialog
+import com.app0.simforpay.util.dialog.CustomDialog
 import kotlinx.android.synthetic.main.contract_item.view.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -74,26 +76,10 @@ class ContractAdapter( models: List<Data>, context: Context, fragmentManager: Fr
                             getContractContent[position].alarm,
                             getContractContent[position].state)
                         ).addToBackStack(null).commit()
-
-//                        Toast.makeText(context, "로딩 중", Toast.LENGTH_SHORT).show()
                     }
 
                     override fun onClickMenu2Btn() {
-                        Retrofit.DeleteContract(getContractContent[position].id).enqueue(object :
-                            Callback<ResResultSuccess> {
-                            override fun onResponse(
-                                call: Call<ResResultSuccess>,
-                                response: Response<ResResultSuccess>
-                            ) {
-                                if (response.body()?.result == "true") {
-                                    fragmentManager.beginTransaction().replace(R.id.layFull, HomeFrag())
-                                        .addToBackStack(null).commit()
-                                }
-                            }
-
-                            override fun onFailure(call: Call<ResResultSuccess>, t: Throwable) {}
-
-                        })
+                        ShowAlertDialog(position)
                     }
 
                     override fun onClickMenu3Btn() {
@@ -105,8 +91,7 @@ class ContractAdapter( models: List<Data>, context: Context, fragmentManager: Fr
                             ) {
                                 if (response.body()?.result == "true") {
                                     view.contractComplState.visibility = view.visibility
-                                    fragmentManager.beginTransaction().replace(R.id.layFull, HomeFrag())
-                                        .addToBackStack(null).commit()
+                                    fragmentManager.beginTransaction().replace(R.id.layFull, HomeFrag()).commit()
                                 }
                             }
 
@@ -124,6 +109,34 @@ class ContractAdapter( models: List<Data>, context: Context, fragmentManager: Fr
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
         container.removeView(`object` as View)
+    }
+
+    fun ShowAlertDialog(position: Int) {
+        val dialog = CustomDialog.CustomDialogBuilder()
+            .setTitle("삭제하시겠습니까?")
+            .setMessage("삭제된 계약서는 복구하실 수 없습니다.")
+            .setNegativeBtnText("취소")
+            .setPositiveBtnText("확인")
+            .setBtnClickListener(object : CustomDialog.CustomDialogListener {
+                override fun onClickPositiveBtn() {
+                    Retrofit.DeleteContract(getContractContent[position].id).enqueue(object :
+                        Callback<ResResultSuccess> {
+                        override fun onResponse(
+                            call: Call<ResResultSuccess>,
+                            response: Response<ResResultSuccess>
+                        ) {
+                            if (response.body()?.result == "true") {
+                                fragmentManager.beginTransaction().replace(R.id.layFull, HomeFrag()).commit()
+                                Toast.makeText(context, "계약서 삭제 완료", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+                        override fun onFailure(call: Call<ResResultSuccess>, t: Throwable) {}
+
+                    })
+                }
+            }).create()
+        dialog.show(fragmentManager, dialog.tag)
     }
 
     init {
