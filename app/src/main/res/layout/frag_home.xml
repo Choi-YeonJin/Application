@@ -49,6 +49,18 @@
             android:src="@drawable/ic_notification"
             android:background="@drawable/btnyellow_background" />
 
+        <TextView
+            android:id="@+id/notiCnt"
+            android:layout_width="@dimen/size10"
+            android:layout_height="@dimen/size10"
+            app:layout_constraintTop_toTopOf="@id/btnNotification"
+            app:layout_constraintRight_toRightOf="@id/btnNotification"
+            android:text="2"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font8"
+            android:gravity="center"
+            android:background="@drawable/notification_background" />
+
         <ImageButton
             android:id="@+id/btnMypage"
             android:layout_width="@dimen/size24"

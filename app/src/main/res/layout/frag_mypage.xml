@@ -84,7 +84,7 @@
     <TextView
         android:id="@+id/myPhone"
         android:layout_width="0dp"
-        android:layout_height="@dimen/txtBackH"
+        android:layout_height="@dimen/txtBackgroundH"
         app:layout_constraintTop_toBottomOf="@id/myId"
         app:layout_constraintLeft_toRightOf="@id/txt1"
         app:layout_constraintRight_toRightOf="parent"
@@ -108,7 +108,7 @@
     <TextView
         android:id="@+id/myPw"
         android:layout_width="0dp"
-        android:layout_height="@dimen/txtBackH"
+        android:layout_height="@dimen/txtBackgroundH"
         app:layout_constraintTop_toBottomOf="@id/myPhone"
         app:layout_constraintLeft_toRightOf="@id/txt1"
         app:layout_constraintRight_toLeftOf="@id/btnPwChange"
@@ -142,7 +142,7 @@
     <TextView
         android:id="@+id/myBank"
         android:layout_width="80sp"
-        android:layout_height="@dimen/txtBackH"
+        android:layout_height="@dimen/txtBackgroundH"
         app:layout_constraintTop_toBottomOf="@id/myPw"
         app:layout_constraintLeft_toRightOf="@id/txt1"
         app:layout_constraintRight_toLeftOf="@id/myAccountNum"
@@ -155,7 +155,7 @@
     <TextView
         android:id="@+id/myAccountNum"
         android:layout_width="0dp"
-        android:layout_height="@dimen/txtBackH"
+        android:layout_height="@dimen/txtBackgroundH"
         app:layout_constraintTop_toBottomOf="@id/myPw"
         app:layout_constraintLeft_toRightOf="@id/myBank"
         app:layout_constraintRight_toLeftOf="@id/btnAccountChange"

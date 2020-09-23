@@ -20,9 +20,9 @@
     </style>
 
     <style name="basicP">
-        <item name="android:paddingLeft">@dimen/layPLR</item>
-        <item name="android:paddingRight">@dimen/layPLR</item>
-        <item name="android:paddingTop">@dimen/layPT</item>
+        <item name="android:paddingLeft">@dimen/size16</item>
+        <item name="android:paddingRight">@dimen/size16</item>
+        <item name="android:paddingTop">@dimen/size24</item>
     </style>
 
     <style name="CustomSlideAnim" parent="android:style/Animation.Activity">

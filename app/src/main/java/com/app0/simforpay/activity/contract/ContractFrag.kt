@@ -62,6 +62,7 @@ class ContractFrag : Fragment() {
     private lateinit var callback: OnBackPressedCallback
     private val calendar = Calendar.getInstance()
     private val friendsInfo = mutableMapOf<String, Pair<String, Pair<String, String>>>()
+    lateinit var userInfo: User
 
     private var getid: Int? = null
     private var gettitle: String? = null
@@ -124,7 +125,6 @@ class ContractFrag : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val mentionAdapter: ArrayAdapter<Mention> = MentionArrayAdapter(this.requireContext())
-        lateinit var userInfo: User
 
         var id=Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
 

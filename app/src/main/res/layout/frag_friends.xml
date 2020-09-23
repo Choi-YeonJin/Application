@@ -20,12 +20,12 @@
         android:fontFamily="@font/nanumbarungothic_bold" />
 
     <TextView
+        android:id="@+id/friendsCnt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toRightOf="@id/title"
         app:layout_constraintBottom_toBottomOf="@id/title"
         android:layout_marginLeft="@dimen/size4"
-        android:text="174명"
         android:textColor="@color/mainBlue"
         android:textSize="@dimen/font20"
         android:fontFamily="@font/nanumbarungothic_bold" />

@@ -45,12 +45,6 @@ class FriendsFrag : Fragment() {
         return inflater.inflate(R.layout.frag_friends, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-
-    }
-
     override fun onResume() {
         super.onResume()
 
@@ -76,6 +70,7 @@ class FriendsFrag : Fragment() {
                 rvFriends.adapter = FriendsAdapter(list, requireContext(), parentFragmentManager,getFriendsList)
                 rvFriends.setHasFixedSize(true)
 
+                friendsCnt.text = cnt.toString() + "명"
             }
 
             override fun onFailure(call: Call<ArrayList<FriendsSuccess>>, t: Throwable) {
