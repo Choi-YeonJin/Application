@@ -17,13 +17,13 @@ import com.app0.simforpay.activity.MainAct
 import com.app0.simforpay.activity.friends.FriendsReqFrag
 import com.app0.simforpay.adapter.Data
 import com.app0.simforpay.adapter.FriendsAdapter
+import com.app0.simforpay.adapter.RequestAdapter
 import com.app0.simforpay.retrofit.RetrofitHelper
-import com.app0.simforpay.retrofit.domain.ContractContentSuccess
-import com.app0.simforpay.retrofit.domain.FriendsSuccess
-import com.app0.simforpay.retrofit.domain.User
+import com.app0.simforpay.retrofit.domain.*
 import com.app0.simforpay.util.sharedpreferences.Key
 import com.app0.simforpay.util.sharedpreferences.MyApplication
 import kotlinx.android.synthetic.main.frag_friends.*
+import kotlinx.android.synthetic.main.frag_request.*
 import kotlinx.android.synthetic.main.frag_search.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -77,7 +77,8 @@ class SearchFrag : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val Name = mutableListOf<String>()
-        val Friends = mutableListOf<String>()
+        val applicantId = mutableListOf<String>()
+        val recipientId = mutableListOf<String>()
         var cnt = 0
 
         var id=Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
@@ -89,6 +90,18 @@ class SearchFrag : Fragment() {
                 }
             }
             override fun onFailure(call: Call<ArrayList<FriendsSuccess>>, t: Throwable) {
+            }
+        })
+
+        Retrofit.getAllReqFreinds().enqueue(object : Callback<ArrayList<GetAllReqFriendsSuccess>> {
+            override fun onResponse(call: Call<ArrayList<GetAllReqFriendsSuccess>>, response: Response<ArrayList<GetAllReqFriendsSuccess>>)
+            {
+                response.body()?.forEach {
+                    applicantId.add(it.applicantId)
+                    recipientId.add(it.recipientId)
+                }
+            }
+            override fun onFailure(call: Call<ArrayList<GetAllReqFriendsSuccess>>, t: Throwable) {
             }
         })
 
@@ -110,7 +123,6 @@ class SearchFrag : Fragment() {
 
                 }
             })
-
             listView.setOnItemClickListener { parent, view, position, id ->
                 val element = adapter.getItemId(position) // The item that was clicked
                 MyApplication.prefs.setString("contractPosition", element.toString())
@@ -129,30 +141,30 @@ class SearchFrag : Fragment() {
                     response.body()?.forEach { //전체 유저 갯수만큼 foreach(5)
 //                        Log.d("FrendsListSize",Name.size.toString()) //현재 친구의 갯구
 //                        Log.d("FrendsList",Name.toString())// 현재 친구 이름 list
-                        for(i in 0 until Name.size){
-                            Log.d("User",it.name)
-                            Log.d("Frineds",Name[i])
+                        if(Name.size != 0){
+                            for(i in 0 until Name.size){
 
-//                            if(Name[i] != it.name) List.add(Name[i]) //친구인 상태가 아니라면 SearchList에 추가
-                            if(Name[i] == it.name) Log.d("Noti","Same")
-                            else if(Name[i] != it.name) Log.d("Noti","Not Same")
+                                if(Name[i] == it.name) Log.d("Noti","Same")
+                                else if(Name[i] != it.name) Log.d("Noti","Not Same")
 
-                            if(Name[i] != it.name){
-                                Log.d("result","cnt : " + cnt)
-                                cnt++
+                                if(Name[i] != it.name){
+                                    Log.d("result","cnt : " + cnt)
+                                    cnt++
+                                }
+                                if(cnt == Name.size) {
+                                    Log.d("result","List add : " + it.name)
+
+                                    if(it.id == id)
+                                    else List.add(it.name)
+                                }else{
+                                    Log.d("result","Not add")
+                                }
                             }
-                            if(cnt == Name.size) {
-                                Log.d("result","List add : " + it.name)
-
-                                if(it.id == id)
-                                else List.add(it.name)
-                            }else{
-                                Log.d("result","Not add")
-                            }
+                            cnt=0
+                        }else{
+                            if(it.id == id)
+                            else List.add(it.name)
                         }
-                        cnt=0
-
-
 //                        else List.add(it.name)
 
                     }
