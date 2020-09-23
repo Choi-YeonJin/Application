@@ -6,12 +6,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
-import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -25,11 +22,7 @@ import com.app0.simforpay.retrofit.domain.VaildUser
 import com.app0.simforpay.util.ImgUrl
 import com.app0.simforpay.util.RegularExpression
 import com.app0.simforpay.util.TextInput
-import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputLayout
-import com.gun0912.tedpermission.PermissionListener
-import com.gun0912.tedpermission.TedPermission
-import gun0912.tedimagepicker.builder.TedImagePicker
 import kotlinx.android.synthetic.main.act_signup.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -63,16 +56,16 @@ class SignupAct : AppCompatActivity() {
         }
 
         // Select Profile Image
-        btnAddImgProfile.setOnClickListener {
-
-            TedImagePicker.with(this)
-                .start { uri ->
-//                    Log.d("test", uri.toString())
-                    val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
-                    imageUri = bitmap
-                    Glide.with(this).load(uri).circleCrop().into(imgProfile)
-                }
-        }
+//        btnAddImgProfile.setOnClickListener {
+//
+//            TedImagePicker.with(this)
+//                .start { uri ->
+////                    Log.d("test", uri.toString())
+//                    val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
+//                    imageUri = bitmap
+//                    Glide.with(this).load(uri).circleCrop().into(imgProfile)
+//                }
+//        }
 
         // Change layName StartIcon
         name.addTextChangedListener(object : TextWatcher {
