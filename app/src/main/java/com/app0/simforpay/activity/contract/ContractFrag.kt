@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -299,19 +298,14 @@ class ContractFrag : Fragment() {
             val price = Integer.parseInt(priceInt)
             val lender_name = lender.text.toString().replace("@", "").trim()
 
-            var lender_id : Int
-
-            if(lender.text.toString().contains("@")){
-
+            var lender_id = if(lender.text.toString().contains("@")){
                 if(userInfo.name == lender_name){
-                    lender_id = userInfo.id
+                    userInfo.id
                 }else{
-                    lender_id = Integer.parseInt(friendsInfo[lender_name]?.first)
+                    Integer.parseInt(friendsInfo[lender_name]?.first)
                 }
+            } else 1
 
-            }else{
-                lender_id = 1
-            }
             val lender_bank = bank.text.toString()
             val lender_account: Int? = accountNum.text.toString().toIntOrNull()
             val borrowerList = arrayListOf<Borrower>()
@@ -321,19 +315,19 @@ class ContractFrag : Fragment() {
             val payback_state = 0
 
             var borrowerName = borrowerNames[0].text.toString().replace("@", "").trim()
+            var borrower_price: Int? = 0
 
             for (i in 0..cnt-1) {
                 val userName = borrowerNames[i].text.toString().replace("@", "").trim()
-                var borrower_id : Int = 41
+                var borrower_id : Int = 1
                 if(borrowerNames[i].text.toString().contains("@")){
-
-                    if(userInfo.name == userName+" "){
+                    if(userInfo.name == userName){
                         borrower_id = userInfo.id
                     }else{
                         borrower_id = Integer.parseInt(friendsInfo[userName]?.first)
                     }
                 }
-                val borrower_price = borrowerPrices[i].text.toString().replace("원", "").replace(",", "").trim().toIntOrNull()
+                borrower_price = borrowerPrices[i].text.toString().replace("원", "").replace(",", "").trim().toIntOrNull()
 
                 borrowerList.add(Borrower(borrower_id, userName, borrower_price, payback_state))
                 if (i >= 1) borrowerName = "$userName,$borrowerName"
@@ -341,8 +335,8 @@ class ContractFrag : Fragment() {
 
             var content = "${borrowerName}은(는) ${lender_name}에게 "
             if (payback_date != "") content = content + payback_date + "까지 "
-            content = content + price + "원을 갚을 것을 약속합니다."
-            if (penalty != "") content = content + " 만약 이행하지 못할시에는" + penalty + "를 할 것 입니다."
+            content = content + borrower_price.toString() + "원을 갚을 것을 약속합니다."
+            if (penalty != "") content = content + " 만약 이행하지 못할시에는 " + penalty + "를 할 것 입니다."
 
             val contractInfo = Contract(
                 user_id,
@@ -389,8 +383,7 @@ class ContractFrag : Fragment() {
                                 fragmentManager!!.beginTransaction().replace(R.id.layFull, ContractShareFrag.newInstance(title, content)).commit()
 
                             } else
-                                Toast.makeText(context, "잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT)
-                                    .show()
+                                Toast.makeText(context, "잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                         }
 
                         override fun onFailure(call: Call<ResResultSuccess>, t: Throwable) {
@@ -562,7 +555,7 @@ class ContractFrag : Fragment() {
             PriceComma(getprice.toString(), price, null)
         }
 
-        lender.setText(getlenderName)
+        lender.setText("@$getlenderName")
         bank.setText(getlenderBank)
 
         if (getlenderAccount.toString() != "0" && getlenderAccount.toString() != "null") {
@@ -579,8 +572,6 @@ class ContractFrag : Fragment() {
                 names += oneBorrower[3]
                 prices += oneBorrower[4]
                 cnt++
-                Log.e("one", oneBorrower.toString())
-                Log.e("one", oneBorrower[3].toString())
             }
 
             if (cnt != 1) { // 최소 한 명의 빌리는 사람이 존재
@@ -613,7 +604,7 @@ class ContractFrag : Fragment() {
         var pointNumStr = ""
 
         for(i in 0 until cnt){
-            borrowerNames[i].setText(names[i])
+            borrowerNames[i].setText("@" + names[i])
             PriceComma(prices[i], null, borrowerPrices[i])
         }
     }

@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.PagerAdapter
 import com.app0.simforpay.R
@@ -76,7 +75,7 @@ class ContractAdapter( models: List<Data>, context: Context, fragmentManager: Fr
                             getContractContent[position].state)
                         ).addToBackStack(null).commit()
 
-                        Toast.makeText(context, "로딩 중", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(context, "로딩 중", Toast.LENGTH_SHORT).show()
                     }
 
                     override fun onClickMenu2Btn() {
