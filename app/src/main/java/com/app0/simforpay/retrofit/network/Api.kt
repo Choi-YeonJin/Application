@@ -21,8 +21,11 @@ interface Api {
     @GET("friends/{id}")
     fun getFreinds(@Path("id") id: Int): Call<ArrayList<FriendsSuccess>>
 
-    @GET("request-friends/{id}")
+    @GET("request-friend/{id}")
     fun getReqFreinds(@Path("id") id: Int): Call<ArrayList<GetReqFriendsSuccess>>
+
+    @GET("request-friends/{id}")
+    fun getAllReqFreinds(): Call<ArrayList<GetAllReqFriendsSuccess>>
 
     @POST("select-userByName")
     fun getUserbyName(@Body userInfo: GetUserbyName): Call<List<User>>
