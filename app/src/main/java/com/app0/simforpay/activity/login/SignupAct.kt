@@ -212,7 +212,7 @@ class SignupAct : AppCompatActivity() {
                 layPhoneNum.error = "전화번호 형식이 틀렸습니다."
 
             if (idOverlap && idCheck && pwCheck && pwAgainCheck && phoneCheck) {
-                val imgUrl = if (imageUri != null) ImgUrl.BitmapToString(imageUri!!) else ""
+                val imgUrl = if (imageUri != null) ImgUrl.BitmapToString(imageUri!!) else "Default"
 
                 val userInfo = Signup(
                     suId.text.toString(),

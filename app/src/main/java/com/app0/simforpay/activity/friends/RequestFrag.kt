@@ -2,6 +2,7 @@ package com.app0.simforpay.activity.friends
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,11 +13,25 @@ import com.app0.simforpay.R
 import com.app0.simforpay.activity.MainAct
 import com.app0.simforpay.adapter.Data
 import com.app0.simforpay.adapter.RequestAdapter
+import com.app0.simforpay.retrofit.RetrofitHelper
+import com.app0.simforpay.retrofit.domain.FriendsSuccess
+import com.app0.simforpay.retrofit.domain.GetReqFriendsSuccess
+import com.app0.simforpay.retrofit.domain.User
+import com.app0.simforpay.util.sharedpreferences.Key
+import com.app0.simforpay.util.sharedpreferences.MyApplication
+import com.hendraanggrian.appcompat.widget.Mention
 import kotlinx.android.synthetic.main.frag_request.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class RequestFrag : Fragment() {
 
     private lateinit var callback: OnBackPressedCallback
+    private val Retrofit = RetrofitHelper.getRetrofit()
+    private var getReqFriendsList = arrayListOf<GetReqFriendsSuccess>()
+    private val Name = mutableListOf<String>()
+    private val ID = mutableListOf<String>()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -48,11 +63,40 @@ class RequestFrag : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val reqList = generateDummyList(3)
 
-        rvRequest.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL ,false)
-        rvRequest.adapter = RequestAdapter(reqList, requireContext())
-        rvRequest.setHasFixedSize(true)
+        var id=Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
+        var cnt = 0
+
+        Retrofit.getReqFreinds(id).enqueue(object : Callback<ArrayList<GetReqFriendsSuccess>> {
+            override fun onResponse( call: Call<ArrayList<GetReqFriendsSuccess>>, response: Response<ArrayList<GetReqFriendsSuccess>> )
+            {
+                getReqFriendsList = response.body()!!
+
+                response.body()?.forEach {
+                    Name.add(it.applicantName)
+                    ID.add(it.applicantMyid)
+                    cnt++
+                }
+
+                MyApplication.prefs.setString("RequestFriendsCount",cnt.toString())
+
+                val list = ArrayList<Data>()
+
+                for (i in 0 until cnt) {
+                    val item = Data(Name[i], "@"+ID[i])
+                    list += item
+                }
+
+                rvRequest.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL ,false)
+                rvRequest.adapter = RequestAdapter(list, requireContext(), parentFragmentManager,getReqFriendsList)
+                rvRequest.setHasFixedSize(true)
+
+            }
+            override fun onFailure(call: Call<ArrayList<GetReqFriendsSuccess>>, t: Throwable) {
+            }
+        })
+
+
     }
 
     override fun onResume() {
@@ -68,16 +112,5 @@ class RequestFrag : Fragment() {
 
         val mainAct = activity as MainAct
         mainAct.HideBottomNavi(false)
-    }
-
-    private fun generateDummyList(size: Int): List<Data> {
-        val list = ArrayList<Data>()
-
-        for (i in 0 until size) {
-            val item = Data("이름", "@아이디")
-            list += item
-        }
-
-        return list
     }
 }
