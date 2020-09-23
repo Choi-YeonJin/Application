@@ -203,8 +203,8 @@ class ContractFrag : Fragment() {
         val borrowerNames = listOf(borrower1, borrower2, borrower3, borrower4, borrower5)
         val borrowerPrices = listOf(borrowerPrice1, borrowerPrice2, borrowerPrice3, borrowerPrice4, borrowerPrice5)
 
-        //updateContract SetText
-        setContract(borrowerNames, borrowerPrices)
+        //Contract modify edittext set the text
+        if(getid.toString() != "null") setContract(borrowerNames, borrowerPrices)
 
         // Click Back Button
         btnBack.setOnClickListener {
