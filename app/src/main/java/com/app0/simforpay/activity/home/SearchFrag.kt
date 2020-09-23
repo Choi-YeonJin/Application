@@ -142,7 +142,6 @@ class SearchFrag : Fragment() {
 //                        Log.d("FrendsList",Name.toString())// 현재 친구 이름 list
                         if(Name.size != 0){
                             for(i in 0 until Name.size){
-
                                 if(Name[i] == it.name) Log.d("Noti","Same")
                                 else if(Name[i] != it.name) Log.d("Noti","Not Same")
 
@@ -152,17 +151,36 @@ class SearchFrag : Fragment() {
                                 }
                                 if(cnt == Name.size) {
                                     Log.d("result","List add : " + it.name)
-
-                                    if(it.id == id)
-                                    else List.add(it.name)
+                                    if(applicantId.size != 0){
+                                        for(i in 0 until applicantId.size){
+                                            if(it.id == id)
+                                            else if((applicantId[i] == id.toString() && recipientId[i] == it.id.toString()) || (recipientId[i] == id.toString() && applicantId[i] == it.id.toString())){
+                                                Log.d("app","conflict")
+                                            }
+                                            else List.add(it.name)
+                                        }
+                                    }else{
+                                        if(it.id == id)
+                                        else List.add(it.name)
+                                    }
                                 }else{
                                     Log.d("result","Not add")
                                 }
                             }
                             cnt=0
                         }else{
-                            if(it.id == id)
-                            else List.add(it.name)
+                            if(applicantId.size != 0){
+                                for(i in 0 until applicantId.size){
+                                    if(it.id == id)
+                                    else if((applicantId[i] == id.toString() && recipientId[i] == it.id.toString()) || (recipientId[i] == id.toString() && applicantId[i] == it.id.toString())){
+                                        Log.d("app","conflict")
+                                    }
+                                    else List.add(it.name)
+                                }
+                            }else{
+                                if(it.id == id)
+                                else List.add(it.name)
+                            }
                         }
 //                        else List.add(it.name)
                     }
