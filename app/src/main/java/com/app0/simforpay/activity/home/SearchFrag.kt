@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.app0.simforpay.R
 import com.app0.simforpay.activity.MainAct
 import com.app0.simforpay.activity.contract.ContractShareFrag
+import com.app0.simforpay.activity.friends.FriendsReqFrag
+import com.app0.simforpay.activity.friends.RequestFrag
 import com.app0.simforpay.adapter.Data
 import com.app0.simforpay.adapter.FriendsAdapter
 import com.app0.simforpay.retrofit.RetrofitHelper
@@ -38,6 +40,7 @@ class SearchFrag : Fragment() {
     private val Retrofit = RetrofitHelper.getRetrofit()
     lateinit var List: ArrayList<String>
     lateinit var adapter: ArrayAdapter<String>
+    private var getUserList = listOf<User>()
 
     private var pageName: String? = null
 
@@ -63,6 +66,8 @@ class SearchFrag : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        lateinit var searchViewText: String
+
         var id=Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
 
         if(pageName == "HomeFrag"){
@@ -77,7 +82,6 @@ class SearchFrag : Fragment() {
                     }
                     adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, List)
                     listView?.adapter = adapter
-
                 }
 
                 override fun onFailure(call: Call<ArrayList<ContractContentSuccess>>, t: Throwable) {
@@ -100,13 +104,14 @@ class SearchFrag : Fragment() {
         else if(pageName == "FriendsFrag"){
             Retrofit.getUsers().enqueue(object : Callback<List<User>> {
                 override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-
+                    getUserList = response.body()!!
                     List = ArrayList()
                     response.body()?.forEach {
                         List.add(it.name)
                     }
+                    Log.d("List",List.toString())
                     adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, List)
-                    listView.adapter = adapter
+                    listView?.adapter = adapter
                 }
 
                 override fun onFailure(call: Call<List<User>>, t: Throwable) {}
@@ -114,6 +119,8 @@ class SearchFrag : Fragment() {
             })
             listView.setOnItemClickListener { parent, view, position, id ->
                 val element = adapter.getItemId(position) // The item that was clicked
+                requireFragmentManager().beginTransaction().replace(R.id.layFull, FriendsReqFrag.newInstance(List[element.toInt()])).commit()
+
                 Toast.makeText(context,List[element.toInt()],Toast.LENGTH_SHORT).show()
             }
         }

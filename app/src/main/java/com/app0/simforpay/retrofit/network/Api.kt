@@ -21,6 +21,12 @@ interface Api {
     @GET("friends/{id}")
     fun getFreinds(@Path("id") id: Int): Call<ArrayList<FriendsSuccess>>
 
+    @GET("request-friends/{id}")
+    fun getReqFreinds(@Path("id") id: Int): Call<ArrayList<GetReqFriendsSuccess>>
+
+    @POST("select-userByName")
+    fun getUserbyName(@Body userInfo: GetUserbyName): Call<List<User>>
+
     @POST("sign-in")
     fun SigninCall(@Body userInfo: Signin) : Call<ResUesrSuccess>
 
@@ -32,6 +38,15 @@ interface Api {
 
     @POST("contract")
     fun ContractCall(@Body contractInfo: Contract) : Call<ContractSuccess>
+
+    @POST("friends")
+    fun FriendsReqCall(@Body friendsReqInfo: FriendReq) : Call<FriendReqSuccess>
+
+    @POST("rqfriends")
+    fun AcceptReqFriend(@Body idInfo: id) : Call<ResResultSuccess>
+
+    @POST("refuse-rqfriends")
+    fun RefuseReqFriend(@Body idInfo: id) : Call<ResResultSuccess>
 
     @PUT("user-pw/{id}")
     fun UpdateUser(@Path("id") id: Int,@Body updateUserInfo: UpdateUser) : Call<ResResultSuccess>

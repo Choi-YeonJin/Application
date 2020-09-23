@@ -168,13 +168,12 @@ class ContractFrag : Fragment() {
             adapterView.adapter = mentionAdapter
 
             val name = lender.text.toString().replace("@", "").trim()
-
-            if(userInfo.name == name){
+            if(userInfo.name == name+" "){
                 bank?.setText(userInfo.bank)
                 accountNum?.setText(userInfo.account)
             }else{
-                bank?.setText(friendsInfo[name]!!.second.first)
-                accountNum?.setText(friendsInfo[name]!!.second.second)
+                bank?.setText(friendsInfo[name]?.second?.first)
+                accountNum?.setText(friendsInfo[name]?.second?.second)
             }
         }
 
@@ -299,13 +298,20 @@ class ContractFrag : Fragment() {
             var priceInt = price.text.toString().replace(",","")
             val price = Integer.parseInt(priceInt)
             val lender_name = lender.text.toString().replace("@", "").trim()
-            var lender_id : Int
-            if(userInfo.name == lender_name){
-                lender_id = userInfo.id
-            }else{
-                lender_id = Integer.parseInt(friendsInfo[lender_name]?.first)
-            }
 
+            var lender_id : Int
+
+            if(lender.text.toString().contains("@")){
+
+                if(userInfo.name == lender_name+" "){
+                    lender_id = userInfo.id
+                }else{
+                    lender_id = Integer.parseInt(friendsInfo[lender_name]?.first)
+                }
+
+            }else{
+                lender_id = 41
+            }
             val lender_bank = bank.text.toString()
             val lender_account: Int? = accountNum.text.toString().toIntOrNull()
             val borrowerList = arrayListOf<Borrower>()
@@ -316,13 +322,16 @@ class ContractFrag : Fragment() {
 
             var borrowerName = borrowerNames[0].text.toString().replace("@", "").trim()
 
-            for (i in 0..cnt) {
+            for (i in 0..cnt-1) {
                 val userName = borrowerNames[i].text.toString().replace("@", "").trim()
-                var borrower_id : Int
-                if(userInfo.name == friendsInfo[lender_name]?.first){
-                    borrower_id = userInfo.id
-                }else{
-                    borrower_id = Integer.parseInt(friendsInfo[userName]?.first)
+                var borrower_id : Int = 41
+                if(borrowerNames[i].text.toString().contains("@")){
+
+                    if(userInfo.name == userName+" "){
+                        borrower_id = userInfo.id
+                    }else{
+                        borrower_id = Integer.parseInt(friendsInfo[userName]?.first)
+                    }
                 }
                 val borrower_price = borrowerPrices[i].text.toString().replace("원", "").replace(",", "").trim().toIntOrNull()
 

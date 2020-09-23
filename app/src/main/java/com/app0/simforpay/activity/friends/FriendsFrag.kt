@@ -1,6 +1,7 @@
 package com.app0.simforpay.activity.friends
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,6 +48,9 @@ class FriendsFrag : Fragment() {
 
     override fun onResume() {
         super.onResume()
+
+        Log.d("RequestFriendsCount",MyApplication.prefs.getString("RequestFriendsCount", "0"))
+        notiCnt.setText(MyApplication.prefs.getString("RequestFriendsCount", "0"))
 
         var id=Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
 
