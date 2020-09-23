@@ -132,25 +132,21 @@ class HomeFrag : Fragment() {
                     cnt++
                 }
 
-                if(cnt == 0){
-                    imgHome.visibility = View.VISIBLE
-                }
-                else{
-                    imgHome.visibility = View.GONE
+                imgHome.visibility = View.GONE
 
-                    val list = ArrayList<Data>()
+                val list = ArrayList<Data>()
 
-                    for (i in 0 until cnt) {
-                        val item = Data(Title[i], Content[i])
-                        list += item
-                    }
-                    vpContract.adapter = ContractAdapter(list, requireContext(), parentFragmentManager, getContractContent)
-                    vpContract.currentItem = position
+                for (i in 0 until cnt) {
+                    val item = Data(Title[i], Content[i])
+                    list += item
                 }
+                vpContract.adapter = ContractAdapter(list, requireContext(), parentFragmentManager, getContractContent)
+                vpContract.currentItem = position
             }
 
-            override fun onFailure(call: Call<ArrayList<ContractContentSuccess>>, t: Throwable) {}
-
+            override fun onFailure(call: Call<ArrayList<ContractContentSuccess>>, t: Throwable) {
+                imgHome.visibility = View.VISIBLE
+            }
         })
 
         btnSearch.setOnClickListener {

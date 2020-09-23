@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="font8">12sp</dimen>
+    <dimen name="font10">14sp</dimen>
+    <dimen name="font12">16sp</dimen>
+    <dimen name="font14">18sp</dimen>
+    <dimen name="font16">20sp</dimen>
+    <dimen name="font18">22sp</dimen>
+    <dimen name="font20">24sp</dimen>
+    <dimen name="font24">28sp</dimen>
+
+    <dimen name="size2">8dp</dimen>
+    <dimen name="size4">10dp</dimen>
+    <dimen name="size8">12dp</dimen>
+    <dimen name="size10">14dp</dimen>
+    <dimen name="size12">16dp</dimen>
+    <dimen name="size14">20dp</dimen>
+    <dimen name="size16">24dp</dimen>
+    <dimen name="size20">32dp</dimen>
+    <dimen name="size24">40dp</dimen>
+    <dimen name="size32">48dp</dimen>
+    <dimen name="size40">56dp</dimen>
+    <dimen name="size48">64dp</dimen>
+    <dimen name="size56">72dp</dimen>
+    <dimen name="size64">80dp</dimen>
+    <dimen name="size72">88dp</dimen>
+    <dimen name="size80">102dp</dimen>
+    <dimen name="size96">136dp</dimen>
+    <dimen name="size128">144dp</dimen>
+    <dimen name="size136">152dp</dimen>
+    <dimen name="size144">160dp</dimen>
+
+    <dimen name="icWH">40dp</dimen>
+    <dimen name="imgProfileWH">96dp</dimen>
+    <dimen name="txtBackgroundH">64dp</dimen>
+
+    <dimen name="splLogoW">88dp</dimen>
+    <dimen name="siLogoW">56dp</dimen>
+
+    // no change
+    <dimen name="btnWH">40dp</dimen>
+    <dimen name="editH">56dp</dimen>
+    <dimen name="editP">8dp</dimen>
+    <dimen name="bottomsheetH">48dp</dimen>
+
+</resources>
