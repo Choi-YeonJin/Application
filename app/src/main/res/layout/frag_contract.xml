@@ -304,6 +304,7 @@
                     android:id="@+id/bank"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:padding="@dimen/editP"
                     android:focusableInTouchMode="false"
                     android:inputType="text" />
 

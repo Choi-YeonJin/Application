@@ -168,7 +168,7 @@ class ContractFrag : Fragment() {
             adapterView.adapter = mentionAdapter
 
             val name = lender.text.toString().replace("@", "").trim()
-            if(userInfo.name == name+" "){
+            if(userInfo.name == name){
                 bank?.setText(userInfo.bank)
                 accountNum?.setText(userInfo.account)
             }else{
@@ -303,14 +303,14 @@ class ContractFrag : Fragment() {
 
             if(lender.text.toString().contains("@")){
 
-                if(userInfo.name == lender_name+" "){
+                if(userInfo.name == lender_name){
                     lender_id = userInfo.id
                 }else{
                     lender_id = Integer.parseInt(friendsInfo[lender_name]?.first)
                 }
 
             }else{
-                lender_id = 41
+                lender_id = 1
             }
             val lender_bank = bank.text.toString()
             val lender_account: Int? = accountNum.text.toString().toIntOrNull()
