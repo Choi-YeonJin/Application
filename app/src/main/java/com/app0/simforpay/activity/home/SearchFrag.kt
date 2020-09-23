@@ -11,14 +11,19 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.app0.simforpay.R
 import com.app0.simforpay.activity.MainAct
 import com.app0.simforpay.activity.friends.FriendsReqFrag
+import com.app0.simforpay.adapter.Data
+import com.app0.simforpay.adapter.FriendsAdapter
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.ContractContentSuccess
+import com.app0.simforpay.retrofit.domain.FriendsSuccess
 import com.app0.simforpay.retrofit.domain.User
 import com.app0.simforpay.util.sharedpreferences.Key
 import com.app0.simforpay.util.sharedpreferences.MyApplication
+import kotlinx.android.synthetic.main.frag_friends.*
 import kotlinx.android.synthetic.main.frag_search.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -71,9 +76,21 @@ class SearchFrag : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        lateinit var searchViewText: String
+        val Name = mutableListOf<String>()
+        val Friends = mutableListOf<String>()
+        var cnt = 0
 
         var id=Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
+
+        Retrofit.getFreinds(id).enqueue(object : Callback<ArrayList<FriendsSuccess>> {
+            override fun onResponse(call: Call<ArrayList<FriendsSuccess>>, response: Response<ArrayList<FriendsSuccess>>) {
+                response.body()?.forEach {
+                    Name.add(it.friendsName)
+                }
+            }
+            override fun onFailure(call: Call<ArrayList<FriendsSuccess>>, t: Throwable) {
+            }
+        })
 
         if(pageName == "HomeFrag"){
             Retrofit.getContracts(id).enqueue(object : Callback<ArrayList<ContractContentSuccess>> {
@@ -108,8 +125,36 @@ class SearchFrag : Fragment() {
                 override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
                     getUserList = response.body()!!
                     List = ArrayList()
-                    response.body()?.forEach {
-                        List.add(it.name)
+
+                    response.body()?.forEach { //전체 유저 갯수만큼 foreach(5)
+//                        Log.d("FrendsListSize",Name.size.toString()) //현재 친구의 갯구
+//                        Log.d("FrendsList",Name.toString())// 현재 친구 이름 list
+                        for(i in 0 until Name.size){
+                            Log.d("User",it.name)
+                            Log.d("Frineds",Name[i])
+
+//                            if(Name[i] != it.name) List.add(Name[i]) //친구인 상태가 아니라면 SearchList에 추가
+                            if(Name[i] == it.name) Log.d("Noti","Same")
+                            else if(Name[i] != it.name) Log.d("Noti","Not Same")
+
+                            if(Name[i] != it.name){
+                                Log.d("result","cnt : " + cnt)
+                                cnt++
+                            }
+                            if(cnt == Name.size) {
+                                Log.d("result","List add : " + it.name)
+
+                                if(it.id == id)
+                                else List.add(it.name)
+                            }else{
+                                Log.d("result","Not add")
+                            }
+                        }
+                        cnt=0
+
+
+//                        else List.add(it.name)
+
                     }
                     Log.d("List",List.toString())
                     adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, List)
