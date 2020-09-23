@@ -157,9 +157,9 @@ class HomeFrag : Fragment() {
             requireFragmentManager().beginTransaction().replace(R.id.layFull, SearchFrag.newInstance("HomeFrag")).addToBackStack(null).commit()
         }
 
-        btnNotification.setOnClickListener {
-            requireFragmentManager().beginTransaction().replace(R.id.layFull, NotificationFrag()).addToBackStack(null).commit()
-        }
+//        btnNotification.setOnClickListener {
+//            requireFragmentManager().beginTransaction().replace(R.id.layFull, NotificationFrag()).addToBackStack(null).commit()
+//        }
 
         btnMypage.setOnClickListener {
 //            for(i in 0..5){

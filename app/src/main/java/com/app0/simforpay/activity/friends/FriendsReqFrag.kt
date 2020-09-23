@@ -40,7 +40,7 @@ class FriendsReqFrag : Fragment() {
         // Press Back Button
         callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                fragmentManager?.popBackStackImmediate()
+                requireFragmentManager().beginTransaction().replace(R.id.layFull, FriendsFrag()).commit()
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
@@ -103,15 +103,8 @@ class FriendsReqFrag : Fragment() {
         super.onResume()
 
         btnBack.setOnClickListener {
-            fragmentManager?.popBackStackImmediate()
+            requireFragmentManager().beginTransaction().replace(R.id.layFull, FriendsFrag()).commit()
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        val mainAct = activity as MainAct
-        mainAct.HideBottomNavi(false)
     }
 
     companion object {

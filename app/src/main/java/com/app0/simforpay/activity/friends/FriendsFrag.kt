@@ -1,7 +1,6 @@
 package com.app0.simforpay.activity.friends
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +8,7 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app0.simforpay.R
+import com.app0.simforpay.activity.MainAct
 import com.app0.simforpay.activity.home.SearchFrag
 import com.app0.simforpay.adapter.Data
 import com.app0.simforpay.adapter.FriendsAdapter
@@ -36,6 +36,8 @@ class FriendsFrag : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val mainAct = activity as MainAct
+        mainAct.HideBottomNavi(false)
     }
 
     override fun onCreateView(
@@ -49,14 +51,13 @@ class FriendsFrag : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        Log.d("RequestFriendsCount",MyApplication.prefs.getString("RequestFriendsCount", "0"))
-       val noti = MyApplication.prefs.getString("RequestFriendsCount", "0")
+        val noti = MyApplication.prefs.getInt(Key.FriendsReqCnt.toString(), 0)
         if(noti.toInt() == 0){
             notiCnt.visibility = View.INVISIBLE
         }
         else{
             notiCnt.visibility = View.VISIBLE
-            notiCnt.text = noti
+            notiCnt.text = noti.toString()
         }
 
         var id=Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
