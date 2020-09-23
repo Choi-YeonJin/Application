@@ -37,7 +37,7 @@
         app:layout_constraintLeft_toRightOf="@id/title"
         app:layout_constraintBottom_toBottomOf="@id/title"
         android:layout_marginLeft="@dimen/size8"
-        android:text="2명"
+        android:text="0명"
         android:textSize="@dimen/font20"
         android:textColor="@color/mainYellow"
         android:fontFamily="@font/nanumbarungothic_bold" />

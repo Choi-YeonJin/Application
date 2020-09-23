@@ -4,80 +4,86 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layFull"
-    android:background="@color/white"
-    style="@style/basicP"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:text="친구"
-        android:textSize="@dimen/font24"
-        android:fontFamily="@font/nanumbarungothic_bold" />
-
-    <TextView
-        android:id="@+id/friendsCnt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@id/title"
-        app:layout_constraintBottom_toBottomOf="@id/title"
-        android:layout_marginLeft="@dimen/size4"
-        android:textColor="@color/mainBlue"
-        android:textSize="@dimen/font20"
-        android:fontFamily="@font/nanumbarungothic_bold" />
-
-    <ImageButton
-        android:id="@+id/btnSearch"
-        android:layout_width="@dimen/size24"
-        android:layout_height="@dimen/size24"
-        app:layout_constraintTop_toTopOf="@id/title"
-        app:layout_constraintRight_toLeftOf="@+id/btnReqFriends"
-        android:padding="@dimen/size2"
-        android:layout_marginRight="@dimen/size8"
-        android:src="@drawable/ic_search"
-        android:background="@drawable/btngray_background" />
-
-    <ImageButton
-        android:id="@+id/btnReqFriends"
-        android:layout_width="@dimen/size24"
-        android:layout_height="@dimen/size24"
-        app:layout_constraintTop_toTopOf="@id/title"
-        app:layout_constraintRight_toRightOf="parent"
-        android:padding="@dimen/size2"
-        android:layout_marginRight="@dimen/size8"
-        android:src="@drawable/ic_add"
-        android:tint="@color/mainYellow"
-        android:background="@drawable/btnyellow_background" />
-    
-    <TextView
-        android:id="@+id/notiCnt"
-        android:layout_width="@dimen/size10"
-        android:layout_height="@dimen/size10"
-        app:layout_constraintTop_toTopOf="@id/btnReqFriends"
-        app:layout_constraintRight_toRightOf="@id/btnReqFriends"
-        android:text="2"
-        android:textColor="@color/white"
-        android:textSize="@dimen/font8"
-        android:gravity="center"
-        android:background="@drawable/notification_background" />
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvFriends"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/size32"
-        android:overScrollMode="never"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        app:layout_constraintVertical_bias="1.0"
-        tools:listitem="@layout/friends_item" />
+        android:layout_height="match_parent"
+        style="@style/basicP">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="친구"
+            android:textSize="@dimen/font24"
+            android:fontFamily="@font/nanumbarungothic_bold" />
+
+        <TextView
+            android:id="@+id/friendsCnt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@id/title"
+            app:layout_constraintBottom_toBottomOf="@id/title"
+            android:layout_marginLeft="@dimen/size4"
+            android:text="0명"
+            android:textColor="@color/mainBlue"
+            android:textSize="@dimen/font20"
+            android:fontFamily="@font/nanumbarungothic_bold" />
+
+        <ImageButton
+            android:id="@+id/btnSearch"
+            android:layout_width="@dimen/size24"
+            android:layout_height="@dimen/size24"
+            app:layout_constraintTop_toTopOf="@id/title"
+            app:layout_constraintRight_toLeftOf="@+id/btnReqFriends"
+            android:padding="@dimen/size2"
+            android:layout_marginRight="@dimen/size8"
+            android:src="@drawable/ic_search"
+            android:background="@drawable/btngray_background" />
+
+        <ImageButton
+            android:id="@+id/btnReqFriends"
+            android:layout_width="@dimen/size24"
+            android:layout_height="@dimen/size24"
+            app:layout_constraintTop_toTopOf="@id/title"
+            app:layout_constraintRight_toRightOf="parent"
+            android:padding="@dimen/size2"
+            android:layout_marginRight="@dimen/size8"
+            android:src="@drawable/ic_add"
+            android:tint="@color/mainYellow"
+            android:background="@drawable/btnyellow_background" />
+
+        <TextView
+            android:id="@+id/notiCnt"
+            android:layout_width="@dimen/size10"
+            android:layout_height="@dimen/size10"
+            app:layout_constraintTop_toTopOf="@id/btnReqFriends"
+            app:layout_constraintRight_toRightOf="@id/btnReqFriends"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font8"
+            android:gravity="center"
+            android:background="@drawable/notification_background" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvFriends"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/size32"
+            android:overScrollMode="never"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            app:layout_constraintVertical_bias="1.0"
+            tools:listitem="@layout/friends_item" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
