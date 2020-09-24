@@ -112,16 +112,24 @@ class SearchFrag : Fragment() {
                 ) {
                     loading_image.visibility = View.GONE
 
+
+
                     List = ArrayList()
                     response.body()?.forEach {
                         List.add(it.title)
                     }
+
                     adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, List)
                     listView?.adapter = adapter
                 }
 
                 override fun onFailure(call: Call<ArrayList<ContractContentSuccess>>, t: Throwable) {
+                    loading_image.visibility = View.GONE
+                    List = ArrayList()
+                    List.add("작성된 계약서가 없습니다.")
 
+                    adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, List)
+                    listView?.adapter = adapter
                 }
             })
             listView.setOnItemClickListener { parent, view, position, id ->
@@ -137,10 +145,10 @@ class SearchFrag : Fragment() {
                     loading_image.visibility = View.GONE
                     List = ArrayList()
 
-                    response.body()?.forEach { //전체 유저 갯수만큼 foreach(5)
+                    response.body()?.forEach { //전체 유저 갯수만큼 foreach()
 //                        Log.d("FrendsListSize",Name.size.toString()) //현재 친구의 갯구
 //                        Log.d("FrendsList",Name.toString())// 현재 친구 이름 list
-                        if(Name.size != 0){
+                        if(Name.size != 0){ // 현재 친구리스트에 친구가 있다면
                             for(i in 0 until Name.size){
                                 if(Name[i] == it.name) Log.d("Noti","Same")
                                 else if(Name[i] != it.name) Log.d("Noti","Not Same")
@@ -168,7 +176,7 @@ class SearchFrag : Fragment() {
                                 }
                             }
                             cnt=0
-                        }else{
+                        }else{// 현재 친구리스트에 친구가 없다면
                             if(applicantId.size != 0){
                                 for(i in 0 until applicantId.size){
                                     if(it.id == id)
@@ -182,18 +190,26 @@ class SearchFrag : Fragment() {
                                 else List.add(it.name)
                             }
                         }
+                        Log.d("AAAAAAAAAAAAAAAAAAAAAAA",List.toString())
 //                        else List.add(it.name)
                     }
-                    Log.d("List",List.toString())
                     adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, List)
                     listView?.adapter = adapter
                 }
 
-                override fun onFailure(call: Call<List<User>>, t: Throwable) {}
+                override fun onFailure(call: Call<List<User>>, t: Throwable) {
+                    loading_image.visibility = View.GONE
+                    List = ArrayList()
+                    List.add("유저가 없습니다.")
+
+                    adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, List)
+                    listView?.adapter = adapter
+                }
 
             })
             listView.setOnItemClickListener { parent, view, position, id ->
                 val element = adapter.getItemId(position) // The item that was clicked
+                Log.d("Nameeeeeeeeeeeeeeeee",List[element.toInt()])
                 requireFragmentManager().beginTransaction().replace(R.id.layFull, FriendsReqFrag.newInstance(List[element.toInt()])).commit()
 
 //                Toast.makeText(context,List[element.toInt()],Toast.LENGTH_SHORT).show()
