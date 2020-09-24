@@ -39,7 +39,7 @@
     <dimen name="siLogoW">64dp</dimen>
 
     // no change
-    <dimen name="btnWH">40dp</dimen>
+    <dimen name="btnWH">48dp</dimen>
     <dimen name="editH">56dp</dimen>
     <dimen name="editP">8dp</dimen>
     <dimen name="bottomsheetH">48dp</dimen>

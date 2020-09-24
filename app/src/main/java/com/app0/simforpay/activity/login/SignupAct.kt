@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -241,14 +242,15 @@ class SignupAct : AppCompatActivity() {
             }
         }
 
-        TextInput.CheckFive(
-            suBtnCompl,
-            name,
-            phoneNum,
-            suId,
-            suPw,
-            pwAgain
-        ) // 모든 eidttext에 text가 있어야 Button 활성화
+        btnPrivacy.setOnClickListener {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("http://3.23.157.65/Privacy-Policy.html"))
+            startActivity(browserIntent)
+        }
+
+        cbAgree.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked) TextInput.CheckFive(suBtnCompl, name, phoneNum, suId, suPw, pwAgain) // 모든 eidttext에 text가 있어야 Button 활성화
+            suBtnCompl.isEnabled = cbAgree.isChecked
+        }
     }
 
     class PermissionCheck(val permissionActivity: Activity, val requirePermissions: Array<String>) {
@@ -260,14 +262,21 @@ class SignupAct : AppCompatActivity() {
             var failRequestPermissionList = ArrayList<String>()
 
             for(permission in  requirePermissions) {
-                if(ContextCompat.checkSelfPermission(permissionActivity.applicationContext, permission) != PackageManager.PERMISSION_GRANTED) {
+                if(ContextCompat.checkSelfPermission(
+                        permissionActivity.applicationContext,
+                        permission
+                    ) != PackageManager.PERMISSION_GRANTED) {
                     failRequestPermissionList.add(permission)
                 }
             }
 
             if(failRequestPermissionList.isNotEmpty()) {
                 val array = arrayOfNulls<String>(failRequestPermissionList.size)
-                ActivityCompat.requestPermissions(permissionActivity, failRequestPermissionList.toArray(array), permissionRequestCode)
+                ActivityCompat.requestPermissions(
+                    permissionActivity, failRequestPermissionList.toArray(
+                        array
+                    ), permissionRequestCode
+                )
             }
         }
     }

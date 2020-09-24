@@ -97,6 +97,7 @@
                 app:layout_constraintTop_toBottomOf="@id/layName"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="@dimen/size8"
                 android:hint="전화번호"
                 app:startIconDrawable="@drawable/ic_phone">
 
@@ -117,6 +118,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/btnCheckId"
                 app:layout_constraintBottom_toTopOf="@id/layPw"
+                android:layout_marginTop="@dimen/size8"
                 android:layout_marginRight="@dimen/size8"
                 android:hint="아이디"
                 app:startIconDrawable="@drawable/ic_person"
@@ -149,6 +151,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/layPwAgain"
+                android:layout_marginTop="@dimen/size8"
                 android:hint="비밀번호"
                 app:startIconDrawable="@drawable/ic_lock"
                 app:endIconMode="password_toggle"
@@ -171,6 +174,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/layPw"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="@dimen/size8"
                 android:hint="비밀번호 확인"
                 app:startIconDrawable="@drawable/ic_lock"
                 app:endIconMode="password_toggle">
@@ -183,6 +187,27 @@
                     android:maxLength="20" />
 
             </com.google.android.material.textfield.TextInputLayout> <!-- 비밀번호 확인 -->
+
+            <CheckBox
+                android:id="@+id/cbAgree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/btnPrivacy"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/btnPrivacy"
+                android:text="동의" />
+
+            <Button
+                android:id="@+id/btnPrivacy"
+                style="@style/CustomTxtBtnStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/layPwAgain"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="@dimen/size24"
+                android:layout_marginBottom="@dimen/size40"
+                android:text="개인정보 처리방침 내용보기" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
