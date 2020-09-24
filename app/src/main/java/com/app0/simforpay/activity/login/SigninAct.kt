@@ -1,9 +1,14 @@
 package com.app0.simforpay.activity.login
 
+import android.Manifest
+import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.app0.simforpay.R
 import com.app0.simforpay.activity.MainAct
 import com.app0.simforpay.retrofit.RetrofitHelper
@@ -24,7 +29,14 @@ class SigninAct : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.act_signin)
-      
+
+        var requestPermissions = arrayOf(
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+
+        val permissionCheck = SigninAct.PermissionCheck(this, requestPermissions)
+        permissionCheck.permissionCheck()
+
         btnSignin.setOnClickListener{
 
             val userInfo = Signin(siId.text.toString(), siPw.text.toString())
@@ -56,5 +68,33 @@ class SigninAct : AppCompatActivity() {
         }
 
         TextInput.CheckTwo(btnSignin, siId, siPw)
+    }
+
+    class PermissionCheck(val permissionActivity: Activity, val requirePermissions: Array<String>) {
+
+        private val permissionRequestCode = 100
+
+        //권한 체크용
+        public fun permissionCheck() {
+            var failRequestPermissionList = ArrayList<String>()
+
+            for(permission in  requirePermissions) {
+                if(ContextCompat.checkSelfPermission(
+                        permissionActivity.applicationContext,
+                        permission
+                    ) != PackageManager.PERMISSION_GRANTED) {
+                    failRequestPermissionList.add(permission)
+                }
+            }
+
+            if(failRequestPermissionList.isNotEmpty()) {
+                val array = arrayOfNulls<String>(failRequestPermissionList.size)
+                ActivityCompat.requestPermissions(
+                    permissionActivity, failRequestPermissionList.toArray(
+                        array
+                    ), permissionRequestCode
+                )
+            }
+        }
     }
 }

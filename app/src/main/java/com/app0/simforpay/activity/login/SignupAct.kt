@@ -44,12 +44,7 @@ class SignupAct : AppCompatActivity() {
         var pwCheck = false // pw 정규식 만족 여부(bool)
         var pwAgainCheck = false // pw와 pwAgain 일치 여부(bool)
 
-        var requestPermissions = arrayOf(
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )
 
-        val permissionCheck = PermissionCheck(this, requestPermissions)
-        permissionCheck.permissionCheck()
 
         // Click Back Button
         btnBack.setOnClickListener {
@@ -253,33 +248,7 @@ class SignupAct : AppCompatActivity() {
         }
     }
 
-    class PermissionCheck(val permissionActivity: Activity, val requirePermissions: Array<String>) {
 
-        private val permissionRequestCode = 100
-
-        //권한 체크용
-        public fun permissionCheck() {
-            var failRequestPermissionList = ArrayList<String>()
-
-            for(permission in  requirePermissions) {
-                if(ContextCompat.checkSelfPermission(
-                        permissionActivity.applicationContext,
-                        permission
-                    ) != PackageManager.PERMISSION_GRANTED) {
-                    failRequestPermissionList.add(permission)
-                }
-            }
-
-            if(failRequestPermissionList.isNotEmpty()) {
-                val array = arrayOfNulls<String>(failRequestPermissionList.size)
-                ActivityCompat.requestPermissions(
-                    permissionActivity, failRequestPermissionList.toArray(
-                        array
-                    ), permissionRequestCode
-                )
-            }
-        }
-    }
 
     fun DefaultIcon(textInputLayout: TextInputLayout) {
         if (textInputLayout.id == R.id.layName)
