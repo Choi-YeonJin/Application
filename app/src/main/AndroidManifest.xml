@@ -29,6 +29,11 @@
         <activity android:name="com.app0.simforpay.activity.login.SigninAct" />
         <activity android:name="com.app0.simforpay.activity.login.PhoneAct" android:theme="@style/SlideActTheme" />
         <activity android:name="com.app0.simforpay.activity.login.SignupAct" android:theme="@style/SlideActTheme" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
     </application>
 
 </manifest>
