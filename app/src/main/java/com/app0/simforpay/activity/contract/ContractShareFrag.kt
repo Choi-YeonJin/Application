@@ -38,8 +38,10 @@ class ContractShareFrag : Fragment() {
         // Press Back Button
         callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if(connect)
+                if(connect){
+                    fragmentManager!!.beginTransaction().remove(this@ContractShareFrag).commit()
                     findNavController().navigate(R.id.action_fragContract_to_fragHome)
+                }
                 else
                     fragmentManager!!.beginTransaction().replace(R.id.layFull, HomeFrag()).commit()
             }
@@ -76,8 +78,10 @@ class ContractShareFrag : Fragment() {
         super.onResume()
 
         shBtnCompl.setOnClickListener {
-            if(connect)
+            if(connect){
+                fragmentManager!!.beginTransaction().remove(this@ContractShareFrag).commit()
                 findNavController().navigate(R.id.action_fragContract_to_fragHome)
+            }
             else
                 requireFragmentManager().beginTransaction().replace(R.id.layFull, HomeFrag()).commit()
         }

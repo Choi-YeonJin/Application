@@ -34,12 +34,12 @@
     <dimen name="icWH">40dp</dimen>
     <dimen name="imgProfileWH">96dp</dimen>
     <dimen name="txtBackgroundH">64dp</dimen>
+    <dimen name="btnWH">48dp</dimen>
 
     <dimen name="splLogoW">88dp</dimen>
     <dimen name="siLogoW">56dp</dimen>
 
     // no change
-    <dimen name="btnWH">48dp</dimen>
     <dimen name="editH">56dp</dimen>
     <dimen name="editP">8dp</dimen>
     <dimen name="bottomsheetH">48dp</dimen>

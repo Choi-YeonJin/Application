@@ -74,8 +74,6 @@ class RequestFrag : Fragment() {
                     cnt++
                 }
 
-                MyApplication.prefs.setInt(Key.FriendsReqCnt.toString(), cnt-1)
-
                 val list = ArrayList<Data>()
 
                 for (i in 0 until cnt) {

@@ -16,10 +16,10 @@
         android:name="com.app0.simforpay.activity.home.HomeFrag"
         tools:layout="@layout/frag_home" />
 
-    <fragment
-        android:id="@+id/fragCalendar"
-        android:name="com.app0.simforpay.activity.calendar.CalendarFrag"
-        tools:layout="@layout/frag_calendar" />
+<!--    <fragment-->
+<!--        android:id="@+id/fragCalendar"-->
+<!--        android:name="com.app0.simforpay.activity.calendar.CalendarFrag"-->
+<!--        tools:layout="@layout/frag_calendar" />-->
 
     <fragment
         android:id="@+id/fragContract"

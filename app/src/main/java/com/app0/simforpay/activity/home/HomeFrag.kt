@@ -40,13 +40,13 @@ class HomeFrag : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        // Press Back Button
-        callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                activity?.finish()
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+//        // Press Back Button
+//        callback = object : OnBackPressedCallback(true) {
+//            override fun handleOnBackPressed() {
+//                activity?.finish()
+//            }
+//        }
+//        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

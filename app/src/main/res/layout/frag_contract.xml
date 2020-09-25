@@ -41,11 +41,23 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/btnBack"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/layContractName"
+                app:layout_constraintBottom_toTopOf="@id/helperTxt"
                 android:layout_marginTop="@dimen/size24"
                 android:text="계약서"
                 android:textSize="@dimen/font24"
                 android:fontFamily="@font/nanumbarungothic_bold" />
+
+            <TextView
+                android:id="@+id/helperTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/title"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/layContractName"
+                android:layout_marginTop="@dimen/size8"
+                android:text="빌려주는 사람이나 빌리는 사람을 입력할 때, 회원은 \@회원이름으로 비회원은 텍스트로 입력해주세요. 자신의 이름도 @내이름으로 입력해야 계약서가 저장됩니다."
+                android:textColor="@color/mainBlue"
+                android:textSize="@dimen/font12" />
 
             <TextView
                 android:id="@+id/txt1"
@@ -70,7 +82,7 @@
                 android:id="@+id/layContractName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/title"
+                app:layout_constraintTop_toBottomOf="@id/helperTxt"
                 app:layout_constraintLeft_toRightOf="@id/txt5"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/layTradeDay"
@@ -257,22 +269,22 @@
                 android:textColor="@color/mainYellow" />
 
            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layLender"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/layPrice"
-                app:layout_constraintLeft_toRightOf="@id/txt5"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/layBank"
-                android:layout_marginLeft="@dimen/size8"
-                android:layout_marginTop="@dimen/size8">
+               android:id="@+id/layLender"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               app:layout_constraintTop_toBottomOf="@id/layPrice"
+               app:layout_constraintLeft_toRightOf="@id/txt5"
+               app:layout_constraintRight_toRightOf="parent"
+               app:layout_constraintBottom_toTopOf="@+id/layBank"
+               android:layout_marginLeft="@dimen/size8"
+               android:layout_marginTop="@dimen/size8">
 
                 <com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
                     android:id="@+id/lender"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/editH"
                     android:paddingLeft="@dimen/editP"
-                    android:inputType="text"/>
+                    android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout> <!-- 빌려주는 사람 -->
 
