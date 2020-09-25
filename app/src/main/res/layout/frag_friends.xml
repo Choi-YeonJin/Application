@@ -42,7 +42,7 @@
             app:layout_constraintTop_toTopOf="@id/title"
             app:layout_constraintRight_toLeftOf="@+id/btnReqFriends"
             android:padding="@dimen/size2"
-            android:layout_marginRight="@dimen/size8"
+            android:layout_marginRight="@dimen/size12"
             android:src="@drawable/ic_search"
             android:background="@drawable/btngray_background" />
 
