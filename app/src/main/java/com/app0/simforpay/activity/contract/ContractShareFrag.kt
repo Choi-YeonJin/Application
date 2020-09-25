@@ -79,7 +79,7 @@ class ContractShareFrag : Fragment() {
 
         shBtnCompl.setOnClickListener {
             if(connect){
-                fragmentManager!!.beginTransaction().remove(this@ContractShareFrag).commit()
+                requireFragmentManager().beginTransaction().remove(this@ContractShareFrag).commit()
                 findNavController().navigate(R.id.action_fragContract_to_fragHome)
             }
             else

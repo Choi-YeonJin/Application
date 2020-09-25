@@ -78,10 +78,11 @@ class SearchFrag : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val FriendsName = mutableListOf<String>()
+        var FriendsNameList =""
         val applicantId = mutableListOf<String>()
+        var applicantIdList =""
         val recipientId = mutableListOf<String>()
-        var cnt = 0
-        var SearchViewText = ""
+        var recipientIdList =""
 
         var id = Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
 
@@ -92,6 +93,7 @@ class SearchFrag : Fragment() {
             ) {
                 response.body()?.forEach {
                     FriendsName.add(it.friendsName)
+                    FriendsNameList+=it.friendsName+","
                 }
             }
 
@@ -107,7 +109,9 @@ class SearchFrag : Fragment() {
                 ) {
                     response.body()?.forEach {
                         applicantId.add(it.applicantId)
+                        applicantIdList += it.applicantId+","
                         recipientId.add(it.recipientId)
+                        recipientIdList += it.recipientId+","
                     }
                 }
 
@@ -234,7 +238,7 @@ class SearchFrag : Fragment() {
             listView.setOnItemClickListener { parent, view, position, id ->
                 val strText = parent.getItemAtPosition(position) as String
                 requireFragmentManager().beginTransaction()
-                    .replace(R.id.layFull, FriendsReqFrag.newInstance(strText))
+                    .replace(R.id.layFull, FriendsReqFrag.newInstance(strText,FriendsNameList,applicantIdList,recipientIdList))
                     .commit()
 
 //                Toast.makeText(context,List[element.toInt()],Toast.LENGTH_SHORT).show()
@@ -246,7 +250,6 @@ class SearchFrag : Fragment() {
                 Log.i("Test", "Llego al querysubmit : $query")
                 if (List.contains(query)) {
                     adapter.filter.filter(query)
-                    SearchViewText = query!!
                 } else {
                     Toast.makeText(context, "No Match found", Toast.LENGTH_LONG).show()
                 }
@@ -255,7 +258,6 @@ class SearchFrag : Fragment() {
 
             override fun onQueryTextChange(newText: String): Boolean {
                 adapter.filter.filter(newText)
-                SearchViewText = newText
                 Log.i("Test", "Llego al querytextchange : $newText")
                 return true
             }
