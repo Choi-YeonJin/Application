@@ -146,26 +146,24 @@ class SearchFrag : Fragment() {
                     List = ArrayList()
 
                     response.body()?.forEach { //전체 유저 갯수만큼 foreach()
-//                        Log.d("FrendsListSize",Name.size.toString()) //현재 친구의 갯구
-//                        Log.d("FrendsList",Name.toString())// 현재 친구 이름 list
-                        if(Name.size != 0){ // 현재 친구리스트에 친구가 있다면
-                            for(i in 0 until Name.size){
-                                if(Name[i] == it.name) Log.d("Noti","Same")
-                                else if(Name[i] != it.name) Log.d("Noti","Not Same")
-
-                                if(Name[i] != it.name){
-                                    Log.d("result","cnt : " + cnt)
-                                    cnt++
-                                }
-                                if(cnt == Name.size) {
-                                    Log.d("result","List add : " + it.name)
-                                    if(applicantId.size != 0){
-                                        for(i in 0 until applicantId.size){
-                                            if(it.id == id)
-                                            else if((applicantId[i] == id.toString() && recipientId[i] == it.id.toString()) || (recipientId[i] == id.toString() && applicantId[i] == it.id.toString())){
-                                                Log.d("app","conflict")
-                                            }
-                                            else List.add(it.name)
+//                        Log.d("Friends",FriendsName.size.toString())
+                        List.add(it.name)
+                        if (FriendsName.size != 0) { // 현재 친구리스트에 친구가 있다면
+                            Log.d("validFriends", "have friends")
+                            for (i in 0 until FriendsName.size) {
+                                if (applicantId.size != 0) { // 현재 유저가 신청 받거나, 신청 보내는 사람중에 잇는지 확인
+                                    Log.d("Applicant", "Sure")
+                                    for (x in 0 until applicantId.size) {
+                                        if (applicantId[x].toInt() == id) { // 현재 유저가 신청을 보냈는지 확인
+                                            if (it.id == id) List.remove(it.name)
+                                            if (it.name == "admin") List.remove(it.name)
+                                            if (it.name == FriendsName[i]) List.remove(it.name)
+                                            if (it.id == recipientId[x].toInt()) List.remove(it.name)
+                                        } else if (recipientId[x].toInt() == id) { // 현재 유저가 신청을 받았는지 확인
+                                            if (it.id == id) List.remove(it.name)
+                                            if (it.name == "admin") List.remove(it.name)
+                                            if (it.name == FriendsName[i]) List.remove(it.name)
+                                            if (it.id == applicantId[x].toInt()) List.remove(it.name)
                                         }
                                     }else{
                                         if(it.id == id)
@@ -183,17 +181,42 @@ class SearchFrag : Fragment() {
                                     else if((applicantId[i] == id.toString() && recipientId[i] == it.id.toString()) || (recipientId[i] == id.toString() && applicantId[i] == it.id.toString())){
                                         Log.d("app","conflict")
                                     }
-                                    else List.add(it.name)
+                                } else // 요청을 보냈거나, 받은 게 없는 경우
+                                {
+                                    if (it.id == id) List.remove(it.name)
+                                    if (it.name == "admin") List.remove(it.name)
+                                    if (it.name == FriendsName[i]) List.remove(it.name)
                                 }
                             }else{
                                 if(it.id == id)
                                 else List.add(it.name)
                             }
+                        } else {// 현재 친구리스트에 친구가 없다면
+                            Log.d("validFriends", "Not have friends")
+                            if (applicantId.size != 0) { // 현재 유저가 신청 받거나, 신청 보내는 사람중에 잇는지 확인
+                                Log.d("Applicant", "Sure")
+                                for (x in 0 until applicantId.size) {
+                                    if (applicantId[x].toInt() == id) { // 현재 유저가 신청을 보냈는지 확인
+                                        if (it.id == id) List.remove(it.name)
+                                        if (it.name == "admin") List.remove(it.name)
+                                        if (it.id == recipientId[x].toInt()) List.remove(it.name)
+                                    } else if (recipientId[x].toInt() == id) { // 현재 유저가 신청을 받았는지 확인
+                                        if (it.id == id) List.remove(it.name)
+                                        if (it.name == "admin") List.remove(it.name)
+                                        if (it.id == applicantId[x].toInt()) List.remove(it.name)
+                                    }
+                                }
+                            } else // 요청을 보냈거나, 받은 게 없는 경우
+                            {
+                                if (it.id == id) List.remove(it.name)
+                                if (it.name == "admin") List.remove(it.name)
+                            }
                         }
                         Log.d("AAAAAAAAAAAAAAAAAAAAAAA",List.toString())
 //                        else List.add(it.name)
                     }
-                    adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, List)
+                    adapter =
+                        ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, List)
                     listView?.adapter = adapter
                 }
 
