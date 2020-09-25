@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.ListView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
@@ -80,6 +81,7 @@ class SearchFrag : Fragment() {
         val applicantId = mutableListOf<String>()
         val recipientId = mutableListOf<String>()
         var cnt = 0
+        var SearchViewText = ""
 
         var id = Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
 
@@ -224,17 +226,15 @@ class SearchFrag : Fragment() {
                     List = ArrayList()
                     List.add("유저가 없습니다.")
 
-                    adapter =
-                        ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, List)
+                    adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, List)
                     listView?.adapter = adapter
                 }
 
             })
             listView.setOnItemClickListener { parent, view, position, id ->
-                val element = adapter.getItemId(position) // The item that was clicked
-                Log.d("Nameeeeeeeeeeeeeeeee", List[element.toInt()])
+                val strText = parent.getItemAtPosition(position) as String
                 requireFragmentManager().beginTransaction()
-                    .replace(R.id.layFull, FriendsReqFrag.newInstance(List[element.toInt()]))
+                    .replace(R.id.layFull, FriendsReqFrag.newInstance(strText))
                     .commit()
 
 //                Toast.makeText(context,List[element.toInt()],Toast.LENGTH_SHORT).show()
@@ -246,6 +246,7 @@ class SearchFrag : Fragment() {
                 Log.i("Test", "Llego al querysubmit : $query")
                 if (List.contains(query)) {
                     adapter.filter.filter(query)
+                    SearchViewText = query!!
                 } else {
                     Toast.makeText(context, "No Match found", Toast.LENGTH_LONG).show()
                 }
@@ -254,6 +255,7 @@ class SearchFrag : Fragment() {
 
             override fun onQueryTextChange(newText: String): Boolean {
                 adapter.filter.filter(newText)
+                SearchViewText = newText
                 Log.i("Test", "Llego al querytextchange : $newText")
                 return true
             }
