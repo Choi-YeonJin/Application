@@ -1,6 +1,7 @@
 package com.app0.simforpay.activity.friends
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import com.app0.simforpay.adapter.Data
 import com.app0.simforpay.adapter.FriendsAdapter
 import com.app0.simforpay.retrofit.RetrofitHelper
 import com.app0.simforpay.retrofit.domain.FriendsSuccess
+import com.app0.simforpay.retrofit.domain.GetReqFriendsSuccess
 import com.app0.simforpay.util.sharedpreferences.Key
 import com.app0.simforpay.util.sharedpreferences.MyApplication
 import kotlinx.android.synthetic.main.frag_friends.*
@@ -51,16 +53,29 @@ class FriendsFrag : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        val noti = MyApplication.prefs.getInt(Key.FriendsReqCnt.toString(), 0)
-        if(noti.toInt() == 0){
-            notiCnt.visibility = View.INVISIBLE
-        }
-        else{
-            notiCnt.visibility = View.VISIBLE
-            notiCnt.text = noti.toString()
-        }
-
         var id=Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
+
+        Retrofit.getReqFreinds(id).enqueue(object : Callback<ArrayList<GetReqFriendsSuccess>> {
+            override fun onResponse(call: Call<ArrayList<GetReqFriendsSuccess>>, response: Response<ArrayList<GetReqFriendsSuccess>>)
+            {
+                var noti = 0
+
+                response.body()?.forEach {
+                    noti++
+                }
+
+                Log.e("NNNN", noti.toString())
+                if(noti == 0){
+                    notiCnt.visibility = View.INVISIBLE
+                }
+                else{
+                    notiCnt.visibility = View.VISIBLE
+                    notiCnt.text = noti.toString()
+                }
+            }
+            override fun onFailure(call: Call<ArrayList<GetReqFriendsSuccess>>, t: Throwable) {
+            }
+        })
 
         Retrofit.getFreinds(id).enqueue(object : Callback<ArrayList<FriendsSuccess>> {
             override fun onResponse(call: Call<ArrayList<FriendsSuccess>>, response: Response<ArrayList<FriendsSuccess>>) {
@@ -73,6 +88,9 @@ class FriendsFrag : Fragment() {
                 }
 
                 imgFriends.visibility = View.GONE
+                if(cnt == 0){
+                    imgFriends.visibility = View.VISIBLE
+                }
 
                 val list = ArrayList<Data>()
 
