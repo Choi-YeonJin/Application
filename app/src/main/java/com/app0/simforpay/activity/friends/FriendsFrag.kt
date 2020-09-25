@@ -72,6 +72,8 @@ class FriendsFrag : Fragment() {
                     cnt++
                 }
 
+                imgFriends.visibility = View.GONE
+
                 val list = ArrayList<Data>()
 
                 for (i in 0 until cnt)  {
@@ -86,6 +88,7 @@ class FriendsFrag : Fragment() {
             }
 
             override fun onFailure(call: Call<ArrayList<FriendsSuccess>>, t: Throwable) {
+                imgFriends.visibility = View.VISIBLE
             }
 
         })
