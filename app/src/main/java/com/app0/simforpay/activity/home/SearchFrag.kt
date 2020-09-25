@@ -194,11 +194,28 @@ class SearchFrag : Fragment() {
                             }
                         } else {// 현재 친구리스트에 친구가 없다면
                             Log.d("validFriends", "Not have friends")
-                            if (it.id == id) List.remove(it.name)
-                            if (it.name == "admin")List.remove(it.name)
+                            if (applicantId.size != 0) { // 현재 유저가 신청 받거나, 신청 보내는 사람중에 잇는지 확인
+                                Log.d("Applicant", "Sure")
+                                for (x in 0 until applicantId.size) {
+                                    if (applicantId[x].toInt() == id) { // 현재 유저가 신청을 보냈는지 확인
+                                        if (it.id == id) List.remove(it.name)
+                                        if (it.name == "admin") List.remove(it.name)
+                                        if (it.id == recipientId[x].toInt()) List.remove(it.name)
+                                    } else if (recipientId[x].toInt() == id) { // 현재 유저가 신청을 받았는지 확인
+                                        if (it.id == id) List.remove(it.name)
+                                        if (it.name == "admin") List.remove(it.name)
+                                        if (it.id == applicantId[x].toInt()) List.remove(it.name)
+                                    }
+                                }
+                            } else // 요청을 보냈거나, 받은 게 없는 경우
+                            {
+                                if (it.id == id) List.remove(it.name)
+                                if (it.name == "admin") List.remove(it.name)
+                            }
                         }
                     }
-                    adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, List)
+                    adapter =
+                        ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, List)
                     listView?.adapter = adapter
                 }
 
