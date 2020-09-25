@@ -27,6 +27,7 @@ import kotlinx.android.synthetic.main.frag_search.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.system.exitProcess
 
 private const val ARG_PARAM1 = "pageName"
 
@@ -75,36 +76,47 @@ class SearchFrag : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val Name = mutableListOf<String>()
+        val FriendsName = mutableListOf<String>()
         val applicantId = mutableListOf<String>()
         val recipientId = mutableListOf<String>()
         var cnt = 0
 
-        var id=Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
+        var id = Integer.parseInt(MyApplication.prefs.getString(Key.LENDER_ID.toString(), ""))
 
         Retrofit.getFreinds(id).enqueue(object : Callback<ArrayList<FriendsSuccess>> {
-            override fun onResponse(call: Call<ArrayList<FriendsSuccess>>, response: Response<ArrayList<FriendsSuccess>>) {
+            override fun onResponse(
+                call: Call<ArrayList<FriendsSuccess>>,
+                response: Response<ArrayList<FriendsSuccess>>
+            ) {
                 response.body()?.forEach {
-                    Name.add(it.friendsName)
+                    FriendsName.add(it.friendsName)
                 }
             }
+
             override fun onFailure(call: Call<ArrayList<FriendsSuccess>>, t: Throwable) {
             }
         })
 
-        Retrofit.getAllReqFreinds().enqueue(object : Callback<ArrayList<GetAllReqFriendsSuccess>> {
-            override fun onResponse(call: Call<ArrayList<GetAllReqFriendsSuccess>>, response: Response<ArrayList<GetAllReqFriendsSuccess>>)
-            {
-                response.body()?.forEach {
-                    applicantId.add(it.applicantId)
-                    recipientId.add(it.recipientId)
+        Retrofit.getAllReqFreinds(id)
+            .enqueue(object : Callback<ArrayList<GetAllReqFriendsSuccess>> {
+                override fun onResponse(
+                    call: Call<ArrayList<GetAllReqFriendsSuccess>>,
+                    response: Response<ArrayList<GetAllReqFriendsSuccess>>
+                ) {
+                    response.body()?.forEach {
+                        applicantId.add(it.applicantId)
+                        recipientId.add(it.recipientId)
+                    }
                 }
-            }
-            override fun onFailure(call: Call<ArrayList<GetAllReqFriendsSuccess>>, t: Throwable) {
-            }
-        })
 
-        if(pageName == "HomeFrag"){
+                override fun onFailure(
+                    call: Call<ArrayList<GetAllReqFriendsSuccess>>,
+                    t: Throwable
+                ) {
+                }
+            })
+
+        if (pageName == "HomeFrag") {
             Retrofit.getContracts(id).enqueue(object : Callback<ArrayList<ContractContentSuccess>> {
                 override fun onResponse(
                     call: Call<ArrayList<ContractContentSuccess>>,
@@ -119,26 +131,32 @@ class SearchFrag : Fragment() {
                         List.add(it.title)
                     }
 
-                    adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, List)
+                    adapter =
+                        ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, List)
                     listView?.adapter = adapter
                 }
 
-                override fun onFailure(call: Call<ArrayList<ContractContentSuccess>>, t: Throwable) {
+                override fun onFailure(
+                    call: Call<ArrayList<ContractContentSuccess>>,
+                    t: Throwable
+                ) {
                     loading_image.visibility = View.GONE
                     List = ArrayList()
                     List.add("작성된 계약서가 없습니다.")
 
-                    adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, List)
+                    adapter =
+                        ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, List)
                     listView?.adapter = adapter
                 }
             })
             listView.setOnItemClickListener { parent, view, position, id ->
                 val element = adapter.getItemId(position) // The item that was clicked
 
-                requireFragmentManager().beginTransaction().replace(R.id.layFull, HomeFrag.newInstance(element.toInt())).commit()
+                requireFragmentManager().beginTransaction()
+                    .replace(R.id.layFull, HomeFrag.newInstance(element.toInt())).commit()
             }
-        }
-        else if(pageName == "FriendsFrag"){
+        } else if (pageName == "FriendsFrag") {
+            searchView.queryHint = "찾고싶은 친구를 입력해주세요"
             Retrofit.getUsers().enqueue(object : Callback<List<User>> {
                 override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
                     getUserList = response.body()!!
@@ -146,52 +164,39 @@ class SearchFrag : Fragment() {
                     List = ArrayList()
 
                     response.body()?.forEach { //전체 유저 갯수만큼 foreach()
-//                        Log.d("FrendsListSize",Name.size.toString()) //현재 친구의 갯구
-//                        Log.d("FrendsList",Name.toString())// 현재 친구 이름 list
-                        if(Name.size != 0){ // 현재 친구리스트에 친구가 있다면
-                            for(i in 0 until Name.size){
-                                if(Name[i] == it.name) Log.d("Noti","Same")
-                                else if(Name[i] != it.name) Log.d("Noti","Not Same")
-
-                                if(Name[i] != it.name){
-                                    Log.d("result","cnt : " + cnt)
-                                    cnt++
-                                }
-                                if(cnt == Name.size) {
-                                    Log.d("result","List add : " + it.name)
-                                    if(applicantId.size != 0){
-                                        for(i in 0 until applicantId.size){
-                                            if(it.id == id)
-                                            else if((applicantId[i] == id.toString() && recipientId[i] == it.id.toString()) || (recipientId[i] == id.toString() && applicantId[i] == it.id.toString())){
-                                                Log.d("app","conflict")
-                                            }
-                                            else List.add(it.name)
+//                        Log.d("Friends",FriendsName.size.toString())
+                        List.add(it.name)
+                        if (FriendsName.size != 0) { // 현재 친구리스트에 친구가 있다면
+                            Log.d("validFriends","have friends")
+                            for (i in 0 until FriendsName.size) {
+                                if (applicantId.size != 0) { // 현재 유저가 신청 받거나, 신청 보내는 사람중에 잇는지 확인
+                                    Log.d("Applicant","Sure")
+                                    for (x in 0 until applicantId.size) {
+                                        if (applicantId[x].toInt() == id) { // 현재 유저가 신청을 보냈는지 확인
+                                            if (it.id == id) List.remove(it.name)
+                                            if (it.name == "admin")List.remove(it.name)
+                                            if (it.name == FriendsName[i])List.remove(it.name)
+                                            if (it.id == recipientId[x].toInt()) List.remove(it.name)
                                         }
-                                    }else{
-                                        if(it.id == id)
-                                        else List.add(it.name)
+                                        else if (recipientId[x].toInt() == id) { // 현재 유저가 신청을 받았는지 확인
+                                            if (it.id == id) List.remove(it.name)
+                                            if (it.name == "admin")List.remove(it.name)
+                                            if (it.name == FriendsName[i])List.remove(it.name)
+                                            if (it.id == applicantId[x].toInt()) List.remove(it.name)
+                                        }
                                     }
-                                }else{
-                                    Log.d("result","Not add")
+                                }else // 요청을 보냈거나, 받은 게 없는 경우
+                                {
+                                    if (it.id == id) List.remove(it.name)
+                                    if (it.name == "admin")List.remove(it.name)
+                                    if (it.name == FriendsName[i])List.remove(it.name)
                                 }
                             }
-                            cnt=0
-                        }else{// 현재 친구리스트에 친구가 없다면
-                            if(applicantId.size != 0){
-                                for(i in 0 until applicantId.size){
-                                    if(it.id == id)
-                                    else if((applicantId[i] == id.toString() && recipientId[i] == it.id.toString()) || (recipientId[i] == id.toString() && applicantId[i] == it.id.toString())){
-                                        Log.d("app","conflict")
-                                    }
-                                    else List.add(it.name)
-                                }
-                            }else{
-                                if(it.id == id)
-                                else List.add(it.name)
-                            }
+                        } else {// 현재 친구리스트에 친구가 없다면
+                            Log.d("validFriends", "Not have friends")
+                            if (it.id == id) List.remove(it.name)
+                            if (it.name == "admin")List.remove(it.name)
                         }
-                        Log.d("AAAAAAAAAAAAAAAAAAAAAAA",List.toString())
-//                        else List.add(it.name)
                     }
                     adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, List)
                     listView?.adapter = adapter
@@ -202,15 +207,18 @@ class SearchFrag : Fragment() {
                     List = ArrayList()
                     List.add("유저가 없습니다.")
 
-                    adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, List)
+                    adapter =
+                        ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, List)
                     listView?.adapter = adapter
                 }
 
             })
             listView.setOnItemClickListener { parent, view, position, id ->
                 val element = adapter.getItemId(position) // The item that was clicked
-                Log.d("Nameeeeeeeeeeeeeeeee",List[element.toInt()])
-                requireFragmentManager().beginTransaction().replace(R.id.layFull, FriendsReqFrag.newInstance(List[element.toInt()])).commit()
+                Log.d("Nameeeeeeeeeeeeeeeee", List[element.toInt()])
+                requireFragmentManager().beginTransaction()
+                    .replace(R.id.layFull, FriendsReqFrag.newInstance(List[element.toInt()]))
+                    .commit()
 
 //                Toast.makeText(context,List[element.toInt()],Toast.LENGTH_SHORT).show()
             }

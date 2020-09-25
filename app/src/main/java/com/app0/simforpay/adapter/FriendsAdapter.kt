@@ -50,8 +50,16 @@ class FriendsAdapter(private val freindsList: List<Data>, context: Context, frag
         Glide.with(context).load(R.drawable.img_profile).circleCrop().into(holder.img) // image circle crop
         holder.name.text = currentItem.main
         holder.id.text = currentItem.sub
+//        var getFriendInfo:FriendsSuccess
+//
+//        if(position == 0){
+//            getFriendInfo = getFriendsList[position]
+//        }else{
+//            getFriendInfo = getFriendsList[position-1]
+//        }
 
         val getFriendInfo = getFriendsList[position]
+
 
         holder.btn.setOnClickListener {
             val dialog = CustomFriendsBottomSheetDialog.CustomBottomSheetDialogBuilder()
