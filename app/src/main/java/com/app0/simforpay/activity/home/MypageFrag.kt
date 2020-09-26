@@ -35,6 +35,8 @@ import kotlinx.android.synthetic.main.frag_mypage.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.math.BigInteger
+import java.security.MessageDigest
 
 private const val ARG_PARAM1 = "name"
 private const val ARG_PARAM2 = "id"
@@ -86,6 +88,7 @@ class MypageFrag : Fragment() {
 
     }
 
+    @ExperimentalStdlibApi
     override fun onResume() {
         super.onResume()
 
@@ -131,6 +134,7 @@ class MypageFrag : Fragment() {
         mainAct.HideBottomNavi(false)
     }
 
+    @ExperimentalStdlibApi
     fun ShowEditDialog(dialog: Int) {
         val editDialogView = LayoutInflater.from(requireContext()).inflate(dialog, null)
         val editBuilder = AlertDialog.Builder(requireContext()).setView(editDialogView)
@@ -141,7 +145,9 @@ class MypageFrag : Fragment() {
                 override fun afterTextChanged(s: Editable?) {
                     editDialogView.layOldPw.error = null // 비밀번호 인증 실패 후 edittext 바뀌면 error 제거
                     val oldpw = editDialogView.oldPw.text.toString()
-                    checkOldPw(oldpw, editDialogView.layOldPw) //현재 비밀번호 확인
+                        val md = MessageDigest.getInstance("MD5")
+                        val md5PW =  BigInteger(1, md.digest(oldpw.encodeToByteArray())).toString(16).padStart(32, '0')
+                    checkOldPw(md5PW, editDialogView.layOldPw) //현재 비밀번호 확인
                 }
 
                 override fun beforeTextChanged(
